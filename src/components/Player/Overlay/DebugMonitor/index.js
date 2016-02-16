@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import css from 'react-css-modules';
 
-import { videoStateType, percentageType } from '../../../propTypes';
+import { videoStateShape, percentageShape } from '../../../propTypes';
 import styles from './styles';
 
 const { number } = PropTypes;
@@ -22,8 +22,8 @@ export const DebugMonitor = (props) => {
       <ul styleName='playback'>
         <li><span styleName='label'>{`currentTime:`}</span>{currentTime}</li>
         <li><span styleName='label'>{`duration:`}</span>{duration}</li>
-        <li><span styleName='label'>{`buffered:`}</span>{`${played}%`}</li>
-        <li><span styleName='label'>{`played:`}</span>{`${buffered}%`}</li>
+        <li><span styleName='label'>{`buffered:`}</span>{`${buffered}%`}</li>
+        <li><span styleName='label'>{`played:`}</span>{`${played}%`}</li>
       </ul>
       {networkState &&
         <dl styleName='network-state'>
@@ -49,10 +49,10 @@ export const DebugMonitor = (props) => {
 
 DebugMonitor.propTypes = {
   duration: number,
-  percentage: percentageType,
+  percentage: percentageShape,
   currentTime: number,
-  networkState: videoStateType,
-  readyState: videoStateType
+  networkState: videoStateShape,
+  readyState: videoStateShape
 };
 
 export default css(DebugMonitor, styles);

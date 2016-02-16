@@ -1,18 +1,24 @@
+@import "../../variables";
+
 :root {
-  --button-font-family: "Roboto";
+  --button-font-family: var(--font-family);
   --button-padding: 0.2rem 1rem;
-  --button-height: 3.6rem;
+  --button-height: 2rem;
   --button-squared-border-radius: 2px;
   --button-font-size: 1.4rem;
 
-  --button-normal-background: #232c32;
-  --button-normal-text-color: #e8eff0;
+  --button-background: var(--brand-black);
+  --button-text-color: var(--brand-light);
 
-  --button-hover-background: color(var(--button-normal-background) tint(5%));
+  --button-normal-size: 4.8rem;
+  --button-small-size: 2.6rem;
+  --button-big-size: 9rem;
 
-  --button-disabled-background: color(var(--button-normal-background) a(5%));
-  --button-disabled-filled-text-color: color(var(--button-normal-text-color) a(10%));
-  --button-disabled-neutral-text-color: color(var(--button-normal-text-color) a(60%));
+  --button-hover-background: color(var(--button-background) tint(5%));
+
+  --button-disabled-background: color(var(--button-background) a(5%));
+  --button-disabled-filled-text-color: color(var(--button-text-color) a(10%));
+  --button-disabled-neutral-text-color: color(var(--button-text-color) a(60%));
 }
 
 .button {
@@ -21,8 +27,8 @@
   align-content: center;
   align-items: center;
   justify-content: center;
-  padding: var(--button-padding);
-  height: var(--button-height);
+  box-sizing: border-box;
+  min-height: var(--button-height);
   text-align: center;
   white-space: nowrap;
   text-transform: uppercase;
@@ -32,13 +38,14 @@
   border: 0;
   outline: none;
   background-color: transparent;
+  user-select: none;
 }
 
 .enabled {
   cursor: pointer;
-  color: var(--button-normal-text-color);
+  color: var(--button-text-color);
 
-  &:hover { color: color(var(--button-normal-text-color) shade(50%)); }
+  &:hover { color: color(var(--button-text-color) shade(50%)); }
 }
 
 .disabled {
@@ -51,7 +58,7 @@
 }
 
 .filled {
-  background-color: var(--button-normal-background);
+  background-color: var(--button-background);
   &:hover { background-color: var(--button-hover-background); }
 }
 
@@ -60,10 +67,29 @@
   color: var(--button-disabled-filled-text-color);
 }
 
+.rectangular {
+  &.small {
+    min-width: var(--button-small-size);
+    max-height: var(--button-small-size);
+  }
+
+  &.normal {
+    min-width: var(--button-normal-size);
+    max-height: var(--button-normal-size);
+  }
+
+  &.big {
+    min-width: var(--button-big-size);
+    max-height: var(--button-big-size);
+  }
+}
+
 .squared {
+  composes: rectangular;
 }
 
 .rounded {
+  composes: rectangular;
   border-radius: var(--button-squared-border-radius);
 }
 
@@ -72,6 +98,24 @@
   box-shadow:
     0 1px 1.5px 0 rgba(#000, 0.12),
     0 1px 1px 0 rgba(#000, 0.24);
+
+  &.small {
+    size: var(--button-small-size);
+    min-width: var(--button-small-size);
+    min-height: var(--button-small-size);
+  }
+
+  &.normal {
+    size: var(--button-normal-size);
+    min-width: var(--button-normal-size);
+    min-height: var(--button-normal-size);
+  }
+
+  &.big {
+    size: var(--button-big-size);
+    min-width: var(--button-big-size);
+    min-height: var(--button-big-size);
+  }
 }
 
 .flat {
@@ -84,10 +128,6 @@
     0 1px 5px 0 rgba(#000, 0.12);
 }
 
-.small { size: 3.6rem; }
-.normal { size: 4.8rem; }
-.big { size: 9rem; }
-
 .content {
   display: inline-block;
   vertical-align: middle;
@@ -95,6 +135,7 @@
 
 .icon {
   composes: content;
+  & ~ .label { margin-left: 0.4em; }
 }
 
 .label {

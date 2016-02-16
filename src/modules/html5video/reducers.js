@@ -32,5 +32,6 @@ export const updateCurrentTime = ({ percentage, ...state }, { currentTime }) => 
 };
 
 export const updateError = (state, { errorCode }) => ({
-  ...state, error: getError(errorCode)
+  ...state,
+  error: getError(errorCode)
 });

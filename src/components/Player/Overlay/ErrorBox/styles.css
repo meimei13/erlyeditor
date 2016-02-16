@@ -1,8 +1,10 @@
+@import "../../../../variables";
+
 :root {
   --error-box-background-color: rgba(90, 2, 2, 0.8);
   --error-box-font-size: 1.4rem;
-  --error-box-text-color: color(#e8eff0 shade(10%));
-  --error-box-border-color: #562525;
+  --error-box-text-color: color(var(--brand-light) shade(10%));
+  --error-box-border-color: color(var(--brand-black) tint(35%));
 
   --title-font-size: 2rem;
   --content-line-height: 1.8em;

@@ -1,16 +1,18 @@
+@import "../../../../variables";
+
 :root {
   --debug-monitor-background-color: rgba(#000, 0.6);
   --debug-monitor-font-size: 1.2rem;
-  --debug-monitor-text-color: color(#e8eff0 shade(10%));
+  --debug-monitor-text-color: color(var(--brand-light) shade(10%));
   --debug-monitor-border-color: #0a0a0a;
 
-  --playback-background-color: rgba(#f05050, 0.1);
-  --network-state-background-color: rgba(#4cb6cb, 0.1);
-  --ready-state-background-color: rgba(#1ab667, 0.1);
+  --playback-background-color: rgba(var(--brand-danger), 0.1);
+  --network-state-background-color: rgba(var(--brand-info), 0.1);
+  --ready-state-background-color: rgba(var(--brand-danger), 0.1);
 
   --code-font-size: 1.4rem;
-  --code-text-color: #e8eff0;
-  --title-text-color: color(#fad733 shade(10%));
+  --code-text-color: var(--brand-light);
+  --title-text-color: color(var(--brand-warning) shade(10%));
 }
 
 .debug-monitor {
@@ -58,6 +60,7 @@
 
 .ready-state {
   composes: content;
+  height: 5.2em;
   background-color: var(--ready-state-background-color);
 }
 

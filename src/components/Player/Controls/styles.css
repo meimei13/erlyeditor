@@ -1,8 +1,14 @@
+@import "../../../variables";
+
 :root {
-  --controls-background: rgba(#232c32, 0.8);
+  --controls-height: 2em;
+  --controls-background: rgba(var(--brand-black), 0.8);
 }
 
 .controls {
   display: flex;
+  align-items: center;
+  height: var(--controls-height);
+  z-index: 20;
   background-color: var(--controls-background);
 }

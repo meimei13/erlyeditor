@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import StatsPlugin from 'stats-webpack-plugin';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 
-import { resolve, sourceMap } from '../../../config';
+import { sourceMap } from '../../../config';
 import common from './common';
 
 const is = ext => s => s.endsWith(`.${ext}`);
@@ -10,15 +10,15 @@ const transformAssets = ({ assetsByChunkName: { app, vendors } }) => {
   const assets = {
     scripts: [
       ...vendors.filter(is('js')),
-      ...app.filter(is('js')),
+      ...app.filter(is('js'))
     ],
     styles: [
       ...vendors.filter(is('css')),
-      ...app.filter(is('css')),
+      ...app.filter(is('css'))
     ]
   };
   return JSON.stringify(assets, null, 2);
-}
+};
 
 export default [
   ...common,
@@ -40,4 +40,4 @@ export default [
     fields: null,
     transform: transformAssets
   })
-]
+];

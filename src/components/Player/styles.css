@@ -1,6 +1,10 @@
+@import "../../variables";
+
 :root {
   --player-background: #000;
-  --player-text-color: #e8eff0;
+  --player-text-color: var(--brand-light);
+
+  --player-outline-color: color(var(--brand-black) tint(10%));
 }
 
 .player {
@@ -8,6 +12,10 @@
   user-select: none;
   background-color: var(--player-background);
   color: var(--player-text-color);
+
+  &:focus {
+    outline: 1px dotted var(--player-outline-color);
+  }
 }
 
 .container {

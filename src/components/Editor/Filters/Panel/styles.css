@@ -1,0 +1,40 @@
+@import "../../../../variables";
+
+:root {
+  --container-width: 10em;
+  --container-background-color: var(--brand-black);
+
+  --list-item-margin: 0.2em;
+}
+
+.container {
+  display: flex;
+  max-width: var(--container-width);
+  width: var(--container-width);
+  background-color: var(--container-background-color);
+}
+
+.panel,
+.panelHeader {
+  border-top-right-radius: 0;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex: 2;
+}
+
+.item { margin: var(--list-item-margin); }
+
+.itemBig {
+  composes: item;
+}
+
+.itemSmall {
+  composes: item;
+  border-radius: 50%;
+}

@@ -50,13 +50,14 @@ const Html = ({ state, assets, body }) => {
         <meta name='msapplication-TileImage' content='/mstile-144x144.png' />
 
         <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
+
         {styles.map((href) => <link key={href} href={`/${href}`} rel='stylesheet' />)}
       </head>
 
       <body>
         <div id='root' dangerouslySetInnerHTML={{ __html: body }} />
         <script dangerouslySetInnerHTML={{ __html: `window.__state = ${serializedState};` }} />
-        {scripts.map((src) => <script key={src} src={`/${src}`} defer />)}
+        {scripts.map(src => <script key={src} src={`/${src}`} defer />)}
       </body>
     </html>
   );

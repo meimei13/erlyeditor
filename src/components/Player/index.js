@@ -1,14 +1,16 @@
 import clamp from 'lodash/clamp';
 import React, { Component, PropTypes } from 'react';
+import { compose } from 'redux';
 import css from 'react-css-modules';
+import { HotKeys } from 'react-hotkeys';
 
 import {
   videoProps,
-  videoAPIType,
-  playbackRateType,
-  playerActionsType
+  playbackRateShape,
+  playerActionsShape
 } from '../propTypes';
 
+import hoverable from '../hoc/hoverable';
 import HUD from './HUD';
 import Info from './Info';
 import SeekBar from './SeekBar';
@@ -19,26 +21,34 @@ import styles from './styles';
 
 const { bool, number, string, node, shape } = PropTypes;
 
+const vimKeyMap = {
+  rewind10: 'h',
+  forward10: 'l',
+  rewind30: 'ctrl+h',
+  forward30: 'ctrl+l',
+  decreasePlaybackRate: 'shift+h',
+  increasePlaybackRate: 'shift+l',
+  togglePlay: 'p'
+};
+
 export class Player extends Component {
   static propTypes = {
     className: string,
     children: node.isRequired,
 
     debug: bool,
+    hovered: bool,
     width: number,
     height: number,
-    playbackRate: playbackRateType,
+    playbackRate: playbackRateShape,
 
-    actions: playerActionsType.isRequired,
-
-    video: shape(videoProps).isRequired,
-    api: videoAPIType
+    actions: playerActionsShape.isRequired,
+    video: shape(videoProps).isRequired
   };
 
   static defaultProps = {
     debug: Boolean(__DEVELOPMENT__),
     width: 640,
-    height: 480,
     playbackRate: {
       step: 0.25,
       min: 0.25,
@@ -46,68 +56,87 @@ export class Player extends Component {
     }
   };
 
-  state = { focused: false };
+  handleToggleMute = () => this.sendCommand('toggleMute');
+  handleToggleLoop = () => this.sendCommand('toggleLoop');
+  handleTogglePlay = () => this.sendCommand('togglePlay');
+  handleToggleFullScreen = () => this.sendCommand('toggleFullScreen');
+  handleVolumeChange = volume => this.sendCommand('setVolume', volume);
+  handleSeek = offset => this.sendCommand('seek', offset);
 
-  focus = () => this.setState({ focused: true });
-  unfocus = () => this.setState({ focused: false });
-
-  decreasePlaybackRate = () => this.setPlaybackRate(-1);
-  increasePlaybackRate = () => this.setPlaybackRate(+1);
+  handleDecreasePlaybackRate = () => this.setPlaybackRate(-1);
+  handleIncreasePlaybackRate = () => this.setPlaybackRate(+1);
 
   setPlaybackRate = factor => {
-    const { api, video, playbackRate: { min, max, step } } = this.props;
+    const { video, playbackRate: { min, max, step } } = this.props;
     const value = clamp(video.playbackRate + step * factor, min, max);
-    api.setPlaybackRate(value);
+    this.sendCommand('setPlaybackRate', value);
   };
+
+  sendCommand = (command, ...args) =>
+    Object.values(this.refs).forEach(r => r[command](...args));
+
+  renderVideos() {
+    return React.Children.map(this.props.children, (video, index) =>
+      React.cloneElement(video, { ref: `video-${index}` }));
+  }
 
   renderContainer() {
     if (!React.Children.count) return null;
 
-    const { children, debug, api, video } = this.props;
-    const { focused } = this.state;
+    const { debug, video, hovered } = this.props;
 
     return (
       <div styleName='container'>
-        {children}
-        <Overlay {...video} debug={debug} onTogglePlay={api.togglePlay}>
-          <HUD {...video} focused={focused} />
+        {this.renderVideos()}
+        <Overlay {...video} debug={debug} onTogglePlay={this.handleTogglePlay}>
+          <HUD {...video} hovered={hovered} />
         </Overlay>
       </div>
     );
   }
 
   render() {
-    const { className, width, height, actions, video, api } = this.props;
-    const { focused } = this.state;
+    const { className, width, height, actions, video, hovered } = this.props;
+
+    const keyboardHandlers = {
+      togglePlay: this.handleTogglePlay,
+      decreasePlaybackRate: this.handleDecreasePlaybackRate,
+      increasePlaybackRate: this.handleIncreasePlaybackRate
+    };
 
     return (
-      <div className={className}
+      <HotKeys tabIndex={0}
+        keyMap={vimKeyMap}
+        handlers={keyboardHandlers}
+        className={className}
         styleName='player'
         style={{ width, height }}
-        onMouseEnter={this.focus}
-        onMouseLeave={this.unfocus}>
+      >
         {this.renderContainer()}
         <SeekBar {...video}
           disabled={Boolean(video.error)}
           step={1}
-          onSeek={api.seek}
+          onSeek={this.handleSeek}
         />
         <Info />
         <Controls {...video}
           error={Boolean(video.error)}
-          visible={focused}
+          visible={hovered}
           onToggleDebugMonitor={actions.toggleDebugMonitor}
-          onVolumeChange={api.setVolume}
-          onTogglePlay={api.togglePlay}
-          onToggleMute={api.toggleMute}
-          onToggleLoop={api.toggleLoop}
-          onToggleFullScreen={api.toggleFullScreen}
-          onDecreasePlaybackRate={this.decreasePlaybackRate}
-          onIncreasePlaybackRate={this.increasePlaybackRate}
+          onVolumeChange={this.handleVolumeChange}
+          onTogglePlay={this.handleTogglePlay}
+          onToggleMute={this.handleToggleMute}
+          onToggleLoop={this.handleToggleLoop}
+          onToggleFullScreen={this.handleToggleFullScreen}
+          onDecreasePlaybackRate={this.handleDecreasePlaybackRate}
+          onIncreasePlaybackRate={this.handleIncreasePlaybackRate}
         />
-      </div>
+      </HotKeys>
     );
   }
 }
 
-export default css(Player, styles, { allowMultiple: true });
+export default compose(
+  hoverable,
+  css(styles, { allowMultiple: true })
+)(Player);

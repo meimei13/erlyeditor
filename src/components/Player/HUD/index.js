@@ -4,7 +4,7 @@ import css from 'react-css-modules';
 import PlaybackRate from './PlaybackRate';
 import Time from './Time';
 
-import { videoStateType } from '../../propTypes';
+import { videoStateShape } from '../../propTypes';
 import styles from './styles';
 
 const { bool, number, string } = PropTypes;
@@ -13,7 +13,7 @@ export const HUD = (props) => {
   const {
     className,
     error,
-    focused,
+    hovered,
     currentTime,
     duration,
     playbackRate
@@ -21,8 +21,8 @@ export const HUD = (props) => {
 
   return (
     <div className={className} styleName='hud'>
-      {!error && focused && <Time { ...{ currentTime, duration } } />}
-      {!error && focused && <PlaybackRate value={playbackRate} />}
+      {!error && hovered && <Time { ...{ currentTime, duration } } />}
+      {!error && hovered && <PlaybackRate value={playbackRate} />}
     </div>
   );
 };
@@ -30,8 +30,8 @@ export const HUD = (props) => {
 
 HUD.propTypes = {
   className: string,
-  error: videoStateType,
-  focused: bool,
+  error: videoStateShape,
+  hovered: bool,
   currentTime: number,
   duration: number,
   playbackRate: number

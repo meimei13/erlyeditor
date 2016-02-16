@@ -2,7 +2,7 @@ import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
 
-import { percentageType } from '../../propTypes';
+import { percentageShape } from '../../propTypes';
 import Slider from '../../Slider';
 import Progress from './Progress';
 import Indicator from './Indicator';
@@ -19,7 +19,7 @@ export class SeekBar extends Component {
     disabled: bool,
     currentTime: number.isRequired,
     duration: number.isRequired,
-    percentage: percentageType.isRequired,
+    percentage: percentageShape.isRequired,
     seeking: bool,
     onSeek: func
   };

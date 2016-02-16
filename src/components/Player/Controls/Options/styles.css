@@ -1,11 +1,16 @@
+@import "../../../../variables";
+
 :root {
-  --button-on-text-color: #e6eff0;
+  --button-on-text-color: var(--brand-light);
   --button-off-text-color: #000;
 
-  --button-debug-background: #803636;
+  --button-debug-background: color(var(--brand-danger) w(+5%));
 }
 
 .options {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .button {

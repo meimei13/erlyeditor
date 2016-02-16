@@ -1,0 +1,35 @@
+@import "../../../variables";
+
+:root {
+  --panel-width: 22em;
+
+  --input-background-color: color(var(--brand-black) shade(10%));
+  --input-text-color: color(var(--brand-light) shade(40%));
+
+  --button-background-color: color(var(--brand-black) tint(6%));
+}
+
+.panel {
+  width: var(--panel-width);
+}
+
+.content,
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 2;
+}
+
+.input {
+  flex: 2;
+  font-size: 1.2rem;
+  color: var(--input-text-color);
+  background-color: var(--input-background-color);
+}
+
+.button {
+  background-color: var(--button-background-color);
+}

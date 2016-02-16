@@ -1,12 +1,14 @@
+@import "../../../variables";
+
 :root {
-  --tooltip-background: color(#232c32 shade(20%));
-  --tooltip-text-color: #e8eff0;
+  --tooltip-background: color(var(--brand-black) shade(20%));
+  --tooltip-text-color: var(--brand-light);
   --tooltip-padding: 0.4rem;
   --tooltip-z-index: 100;
-  --tooltip-font-family: "Roboto";
+  --tooltip-font-family: var(--font-family);
   --tooltip-font-size: 1rem;
   --tooltip-border-radius: 2px;
-  --tooltip-animation-curve: cubic-bezier(0.4, 0, 0.2, 1);
+  --tooltip-animation-curve: var(--animation-curve);
 }
 
 .container {

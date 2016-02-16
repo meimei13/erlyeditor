@@ -40,6 +40,6 @@ export default [
   { test: /\.woff2(\?.+)?$/, query: { mimetype: 'application/font-woff2', ...query.font.url }, ...loader.font.url },
   { test: /\.ttf(\?.+)?$/, query: { mimetype: 'application/octet-stream', ...query.font.url }, ...loader.font.url },
   { test: /\.eot(\?.+)?$/, query: query.font, ...loader.font.file },
-  { test: /\.svg(\?.+)?$/, include: [paths.modules, paths.scripts], loader: 'svg-inline' }
+  { test: /\.svg(\?.+)?$/, include: [paths.scripts, paths.lib], loader: 'file' },
 ];
 /* eslint-enable max-len */

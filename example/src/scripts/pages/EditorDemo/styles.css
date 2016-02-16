@@ -1,0 +1,9 @@
+.root {
+  composes: box from "styles/layout";
+  background-color: #111;
+  box-sizing: border-box;
+}
+
+.fullscreenEditor {
+  width: 100vw;
+}

@@ -1,0 +1,30 @@
+@import "../../../../../variables.css";
+
+:root {
+  --layer-surface-background-color: color(var(--brand-black) tint(2%));
+  --layer-surface-over-background-color: color(var(--layer-surface-background-color) tint(4%));
+}
+
+.layer-surface {
+  width: 100%;
+  box-shadow: inset 0 0 2px 1px rgba(#000, 0.2);
+  background: url("./bg.svg");
+
+  &.droppable {
+    background-color: var(--layer-surface-background-color);
+
+    &.over {
+      background-color: var(--layer-surface-over-background-color);
+    }
+  }
+
+  &.over {
+    background-color: var(--red);
+  }
+}
+
+.list {
+  display: flex;
+  white-space: normal;
+  height: 100%;
+}

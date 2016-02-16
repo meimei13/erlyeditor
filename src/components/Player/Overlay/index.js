@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import css from 'react-css-modules';
 
-import { videoStateType, percentageType } from '../../propTypes';
+import { videoStateShape, percentageShape } from '../../propTypes';
 import Spinner from './Spinner';
 import DebugMonitor from './DebugMonitor';
 import ErrorBox from './ErrorBox';
@@ -55,10 +55,10 @@ Overlay.propTypes = {
   debug: bool,
   currentTime: number,
   duration: number,
-  percentage: percentageType,
-  error: videoStateType,
-  readyState: videoStateType,
-  networkState: videoStateType,
+  percentage: percentageShape,
+  error: videoStateShape,
+  readyState: videoStateShape,
+  networkState: videoStateShape,
   onTogglePlay: func
 };
 

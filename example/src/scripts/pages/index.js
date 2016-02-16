@@ -1,2 +1,12 @@
-export { default as notFound } from './NotFound';
-export { default as demo } from './Demo';
+export demoIndex from './DemoIndex';
+export uiKit from './UIKit';
+
+export html5VideoDemo from './Html5VideoDemo';
+
+export playerDemo from './PlayerDemo';
+export editorDemo from './EditorDemo';
+export dndTutorial from './DnDTutorial';
+export dndNaiveDragDemo from './DnDNaiveDragDemo';
+export dndCustomLayerDemo from './DnDCustomLayerDemo';
+export designerDemo from './DesignerDemo';
+export notFound from './NotFound';

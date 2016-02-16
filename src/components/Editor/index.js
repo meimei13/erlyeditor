@@ -1,38 +1,76 @@
+import flow from 'lodash/flow';
+import pick from 'lodash/pick';
+import mapValues from 'lodash/mapValues';
+
+import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
-import merge from 'lodash/merge';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import css from 'react-css-modules';
 
+import { selector } from '../../modules/editor';
+
+import * as layerActions from '../../modules/editor/layers/actions';
+import * as filterActions from '../../modules/editor/filters/actions';
 import * as videoActions from '../../modules/html5video/actions';
 import * as playerActions from '../../modules/player/actions';
 
 import {
   videoProps,
-  videoActionsType,
-  playerActionsType
+  videoActionsShape,
+  playerActionsShape,
+  filterTypeShape,
+  layerShape
 } from '../propTypes';
+
+import tooltip from '../hoc/tooltip';
+import Button from '../Button';
 
 import Player from '../Player';
 import Html5Video from '../Html5Video';
 
+import CustomDragLayer from './CustomDragLayer';
+import MainToolbar from './MainToolbar';
+import MainPanel from './MainPanel';
+import { Panel as FiltersPanel } from './Filters';
+import { Panel as LayersPanel } from './Layers';
+import PropertyEditor from './PropertyEditor';
+import Inspector from './Inspector';
+
+import FilterTypeDragPreview from './Filters/FilterDragPreview';
+import FilterDragPreview from './Layers/Layer/FilterDragPreview';
+import LayerDragPreview from './Layers/LayerDragPreview';
+
 import styles from './styles';
 
-const { bool, number, shape } = PropTypes;
+const TooltipButton = tooltip(Button);
+const { bool, number, string, arrayOf, shape } = PropTypes;
 
-const videos = [
-  'http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_h264.mov',
-  'http://users.wfu.edu/yipcw/atg/vid/katamari-star8-10s-h264.mov',
-  'http://media.w3.org/2010/05/sintel/trailer.mp4',
-  'http://media.w3.org/2010/05/video/movie_300.mp4',
-  'https://google.com'
-];
+// preview components for
+// various draggable item types
+const previews = {
+  filterType: FilterTypeDragPreview,
+  filter: FilterDragPreview,
+  layer: LayerDragPreview
+};
 
 export class Editor extends Component {
   static propTypes = {
+    className: string,
+
+    filterTypes: arrayOf(filterTypeShape).isRequired,
+    layers: arrayOf(layerShape).isRequired,
+
+    snapToGrid: bool,
+    cellSize: number,
+
+    source: string.isRequired,
+
     actions: shape({
-      video: videoActionsType.isRequired,
-      player: playerActionsType.isRequired
+      video: videoActionsShape.isRequired,
+      player: playerActionsShape.isRequired
     }),
 
     player: shape({
@@ -44,18 +82,22 @@ export class Editor extends Component {
     video: shape(videoProps).isRequired
   };
 
-  api = {
-    toggleMute: () => this.video.toggleMute(),
-    toggleLoop: () => this.video.toggleLoop(),
-    togglePlay: () => this.video.togglePlay(),
-    toggleFullScreen: () => this.video.toggleFullScreen(),
-    setVolume: v => this.video.setVolume(v),
-    setPlaybackRate: v => this.video.setPlaybackRate(v),
-    seek: offset => this.video.seek(offset)
+  static defaultProps = {
+    snapToGrid: true,
+    cellSize: 10
+  };
+
+  state = {
+    snapToGrid: this.props.snapToGrid,
+    cellSize: this.props.cellSize
   };
 
   render() {
     const {
+      className,
+      source,
+      filterTypes,
+      layers,
       actions,
       video,
       player: {
@@ -66,29 +108,53 @@ export class Editor extends Component {
     } = this.props;
 
     const size = { width, height };
+    const { snapToGrid, cellSize } = this.state;
 
     return (
-      <Player api={this.api}
-        actions={actions.player}
-        { ...{ ...size, video } }
-        {...player}>
-        <Html5Video ref={r => this.video = r}
-          {...video}
-          {...size}
-          actions={actions.video}
-          src={videos[0]} />
-      </Player>
+      <div styleName='editor' className={className}>
+        <div styleName='main'>
+          <FiltersPanel filterTypes={filterTypes} />
+          <Player actions={actions.player}
+            width={width}
+            { ...{ ...player, video } }>
+            <Html5Video preload='auto'
+              { ...{ ...size, ...video } }
+              actions={actions.video}
+              src={source}
+            />
+          </Player>
+          <Inspector layers={layers} />
+        </div>
+        <MainToolbar />
+        <MainPanel>
+          <LayersPanel
+            {...{ snapToGrid, cellSize } }
+            actions={pick(actions, 'layer', 'filter')}
+            layers={layers}
+          />
+          <PropertyEditor />
+        </MainPanel>
+        <CustomDragLayer {...{ snapToGrid, cellSize, previews } } />
+      </div>
     );
   }
 }
 
-const selectProps = (state, ownProps) => merge(state.editor, ownProps);
+const actionsMap = {
+  player: playerActions,
+  video: videoActions,
+  layer: layerActions,
+  filter: filterActions
+};
+
 const selectActions = dispatch => ({
-  actions: {
-    player: bindActionCreators(playerActions, dispatch),
-    video: bindActionCreators(videoActions, dispatch)
-  }
+  actions: mapValues(actionsMap, actions => bindActionCreators(actions, dispatch))
 });
 
-export const StyledEditor = css(Editor, styles, { allowMultiple: true });
-export default connect(selectProps, selectActions)(StyledEditor);
+/* eslint-disable new-cap */
+export default flow(
+  css(styles, { allowMultiple: true }),
+  connect(selector, selectActions),
+  DragDropContext(HTML5Backend)
+)(Editor);
+/* eslint-enable new-cap */

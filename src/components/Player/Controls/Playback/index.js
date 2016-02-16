@@ -26,6 +26,8 @@ export const Playback = (props) => {
     <div className={className} styleName='playback'>
       {onPrevious &&
         <TooltipButton filled disabled
+          className={styles.button}
+          tooltipTop
           tooltipText='previous'
           delay={1000}
           icon='skip_previous'
@@ -34,6 +36,8 @@ export const Playback = (props) => {
       }
       {onDecreasePlaybackRate &&
         <TooltipButton filled
+          className={styles.button}
+          tooltipTop
           tooltipText='descrease playback rate'
           delay={1000}
           disabled={error || playbackRate < 0.5}
@@ -42,11 +46,14 @@ export const Playback = (props) => {
         />
       }
       <Button disabled={error}
+        className={styles.button}
         icon={paused ? 'play_arrow' : 'pause' }
         onClick={onTogglePlay}
       />
       {onIncreasePlaybackRate &&
         <TooltipButton filled
+          className={styles.button}
+          tooltipTop
           tooltipText='increase playback rate'
           delay={1000}
           disabled={error || playbackRate > 3.75}
@@ -56,6 +63,8 @@ export const Playback = (props) => {
       }
       {onNext &&
         <TooltipButton filled disabled
+          className={styles.button}
+          tooltipTop
           tooltipText='next'
           delay={1000}
           icon='skip_next'

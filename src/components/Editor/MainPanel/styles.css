@@ -1,0 +1,9 @@
+@import "../../../variables";
+
+:root {
+  --main-panel-background-color: var(--brand-black);
+}
+
+.mainPanel {
+  background-color: var(--main-panel-background-color);
+}

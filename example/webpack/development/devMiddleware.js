@@ -5,7 +5,7 @@ export default {
   headers: { 'Access-Control-Allow-Origin': '*' },
   watchOptions: {
     // polling always just works, everywhere, anytime,
-    // but east your CPU! be carefull ^__^
+    // but eats your CPU! be carefull ^__^
     poll: false,
     aggregateTimeout: 100
   },

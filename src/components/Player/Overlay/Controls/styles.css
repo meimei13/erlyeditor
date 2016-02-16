@@ -1,5 +1,7 @@
+@import "../../../../variables";
+
 :root {
-  --toggle-play-button-color: #e8eff0;
+  --toggle-play-button-color: var(--brand-light);
   --toggle-play-button-hover-color: color(var(--toggle-play-button-color) a(60%));
 }
 

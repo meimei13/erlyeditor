@@ -19,7 +19,6 @@
     "no-else-return": 0,
     "react/jsx-key": 1,
     "react/jsx-no-literals": 1,
-    "react/jsx-pascal-case": 1,
     "react/no-direct-mutation-state": 2,
     "jsx-quotes": [2, "prefer-single"],
 

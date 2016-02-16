@@ -20,7 +20,6 @@ A simple video editing tool. Test assignment for Erlyvideo. WIP.
 - [Usage](#usage)
       - [Intro](#intro)
       - [Setup](#setup)
-        - [Step](#step)
       - [Roboto Font and Material Design Icons](#roboto-font-and-material-design-icons)
       - [Customization](#customization)
       - [Components](#components)
@@ -29,8 +28,8 @@ A simple video editing tool. Test assignment for Erlyvideo. WIP.
       - [Build erlyeditor](#build-erlyeditor)
     - [Testing and Linting](#testing-and-linting)
     - [Examples](#examples)
-      - [Building and testing the examples](#building-and-testing-the-examples)
-      - [Tools](#tools)
+    - [Tools](#tools)
+    - [Notes on implementation](#notes-on-implementation)
 - [Testing](#testing)
 - [Resources](#resources)
   - [Ideas](#ideas)
@@ -109,20 +108,37 @@ do this simple `import { QuxComponent } from 'erlyeditor/components/QuxComponent
 
 #### Components
 
-Also you can use other components as well. Here is the full list:
+Also you can use other components as well.  
 
 * `Html5Video`
 * `Player`
+
+UI kit:
+
 * `Icon`
+* `Badge`
 * `Button`
+* `ButtonGroup`
+* `Input`
 * `Slider`
-* `hoc/tooltip` - high-order component for tooltips
+* `List`, `List.Item`, `List.Subheader`, `List.Divider`
+* `Panel`, `Panel.Header`, `Panel.Footer`, `Panel.Content`
+* `Layer`
+
+High-order components:
+
+* `tooltip`
+* `hoverable`
 
 Every component is exported in 2 different ways:
 * To import *unstyled* version use `import { FooComponent } from erlyeditor`
 * To import *styled* use `import FooComponent from 'erlyeditor`
 
-There is no `FlashVideo` component, unfortunately. See below
+There is no `FlashVideo` component, unfortunately. See [implementing FlashVideo
+component](#implementing-flashvideo-component) to get some ideas of how it could
+be accomplished.
+
+_In a real project UI components should be extracted into separate package._
 
 # Development
 
@@ -183,7 +199,7 @@ run `npm install && npm start`. It will
 take a while to start, but after the site is built, you can access the examples
 by opening [http://localhost:3001/](http://localhost:3001/).
 
-#### Tools
+### Tools
 
 For a smooth dev process you can install these tools (not required):
 
@@ -205,6 +221,24 @@ To turn it on simply specify the **DEBUG** environment variable:
 - `DEBUG=app:webpack` &mdash; to see app-related webpack output.
 - `DEBUG=app:*` &mdash; to see everything.
 
+### Notes on implementation
+
+I use refs to [access child video components](https://facebook.github.io/react/docs/more-about-refs.html#summary).
+The typical use case for refs is that the parent component is already aware of what it's children are
+and just needs to gain reference to them. In my case using refs wasn't so straight forward.
+I am supplying a component for other developers to use and they may add any number of <Video />s.
+
+If you're going to implement your own video component it should provide
+the following public API methods (according to videoAPIShape):
+
+* toggleMute
+* toggleLoop
+* togglePlay
+* toggleFullScreen
+* setVolume(value)
+* setPlaybackRate(value)
+* seek(time)
+
 # Testing
 
 Packages I use for testing:
@@ -221,15 +255,17 @@ Packages I use for testing:
 Make sure that you've read this [npm-module-checklist](https://github.com/bahmutov/npm-module-checklist) before
 starting to build your own npm package.
 
+* [survivejs.com, authoring libraries](http://survivejs.com/webpack_react/authoring_libraries/)
+* [survivejs, webpack & react](https://github.com/survivejs/webpack_react)
 * [react-css-modules](https://github.com/gajus/react-css-modules) - Seamless mapping of class names to CSS modules inside of React components.
 * [react-hotkeys](https://github.com/Chrisui/react-hotkeys) + [exploring-hotkeys-and-focus-in-react](http://chrispearce.co/exploring-hotkeys-and-focus-in-react/)
+* [the future of drag & drop APIs](https://medium.com/@dan_abramov/the-future-of-drag-and-drop-apis-249dfea7a15f#.y5t9x2f7h) by Dan Abramov
 
 ## Ideas
 
 Check this out: [react-gl](https://github.com/ProjectSeptemberInc/gl-react).
 [One of the examples](http://projectseptemberinc.github.io/gl-react-dom/Examples/VideoBlur/) places canvas over `video` to apply blurring and customize HUE.
 This technique makes possible to implement really cool effects.
-
 
 ### Implementing FlashVideo component
 

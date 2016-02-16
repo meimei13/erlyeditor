@@ -1,3 +1,9 @@
+:root {
+  --icon-normal-font-size: 2rem;
+  --icon-small-font-size: 1.2rem;
+  --icon-big-font-size: 7rem;
+}
+
 .icon {
   font-family: "Material Icons";
   font-weight: normal;
@@ -28,15 +34,15 @@
 
 .small {
   composes: icon;
-  font-size: 1.6rem;
+  font-size: var(--icon-small-font-size);
 }
 
 .normal {
   composes: icon;
-  font-size: 2.4rem;
+  font-size: var(--icon-normal-font-size);
 }
 
 .big {
   composes: icon;
-  font-size: 7rem;
+  font-size: var(--icon-big-font-size);
 }

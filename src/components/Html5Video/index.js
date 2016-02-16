@@ -1,14 +1,14 @@
 import pick from 'lodash/pick';
-import throttle from 'lodash/throttle';
+import { throttle } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
 
 import * as storage from '../../lib/storage';
 
 import {
+  videoProps,
   videoOwnProps,
-  videoStateProps,
-  videoActionsType
+  videoActionsShape
 } from '../propTypes';
 
 import styles from './styles';
@@ -20,9 +20,8 @@ const { string, node } = PropTypes;
 */
 export default class Html5Video extends Component {
   static propTypes = {
-    ...videoOwnProps,
-    ...videoStateProps,
-    actions: videoActionsType,
+    ...videoProps,
+    actions: videoActionsShape.isRequired,
     className: string,
     children: node
   };
@@ -30,23 +29,22 @@ export default class Html5Video extends Component {
   static defaultProps = {
     preload: 'metadata',
     autoPlay: false,
-    autoBuffer: false,
     controls: false
   };
 
   constructor(props) {
     super(props);
 
-    this.throttledHandleProgress = throttle(this.handleProgress, 1500).bind(this);
-    this.throttledHandleSuspend = throttle(this.handleSuspend, 1500).bind(this);
-    this.throttledHandleTimeUpdate = throttle(this.handleTimeUpdate, 1000).bind(this);
-    this.throttledHandleVolumeChange = throttle(this.handleVolumeChange, 50).bind(this);
+    this.handleProgress = this.handleProgress.bind(this);
+    this.handleSuspend = this.handleSuspend.bind(this);
+    this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
   }
 
   componentDidMount() {
     this.video.addEventListener('loadstart', this.handleLoadStart);
-    this.video.addEventListener('progress', this.throttledHandleProgress);
-    this.video.addEventListener('suspend', this.throttledHandleSuspend);
+    this.video.addEventListener('progress', this.handleProgress);
+    this.video.addEventListener('suspend', this.handleSuspend);
     this.video.addEventListener('abort', this.handleAbort);
     if (this.video.children.length) {
       const source = this.video.children[this.video.children.length - 1];
@@ -65,12 +63,12 @@ export default class Html5Video extends Component {
     this.video.addEventListener('seeked', this.handleSeeked);
     this.video.addEventListener('ended', this.handleEnded);
     this.video.addEventListener('durationchange', this.handleDurationChange);
-    this.video.addEventListener('timeupdate', this.throttledHandleTimeUpdate);
+    this.video.addEventListener('timeupdate', this.handleTimeUpdate);
     this.video.addEventListener('play', this.handlePlay);
     this.video.addEventListener('pause', this.handlePause);
     this.video.addEventListener('ratechange', this.handleRateChange);
     this.video.addEventListener('resize', this.handleResize);
-    this.video.addEventListener('volumechange', this.throttledHandleVolumeChange);
+    this.video.addEventListener('volumechange', this.handleVolumeChange);
 
     this.props.actions.init({
       readyState: this.video.readyState,
@@ -81,8 +79,8 @@ export default class Html5Video extends Component {
 
   componentWillUnmount() {
     this.video.removeEventListener('loadstart', this.handleLoadStart);
-    this.video.removeEventListener('progress', this.throttledHandleProgress);
-    this.video.removeEventListener('suspend', this.throttledHandleSuspend);
+    this.video.removeEventListener('progress', this.handleProgress);
+    this.video.removeEventListener('suspend', this.handleSuspend);
     this.video.removeEventListener('abort', this.handleAbort);
     if (this.video.children.length) {
       const source = this.video.children[this.video.children.length - 1];
@@ -101,12 +99,12 @@ export default class Html5Video extends Component {
     this.video.removeEventListener('seeked', this.handleSeeked);
     this.video.removeEventListener('ended', this.handleEnded);
     this.video.removeEventListener('durationchange', this.handleDurationChange);
-    this.video.removeEventListener('timeupdate', this.throttledHandleTimeUpdate);
+    this.video.removeEventListener('timeupdate', this.handleTimeUpdate);
     this.video.removeEventListener('play', this.handlePlay);
     this.video.removeEventListener('pause', this.handlePause);
     this.video.removeEventListener('ratechange', this.handleRateChange);
     this.video.removeEventListener('resize', this.handleResize);
-    this.video.removeEventListener('volumechange', this.throttledHandleVolumeChange);
+    this.video.removeEventListener('volumechange', this.handleVolumeChange);
   }
 
   // API
@@ -153,13 +151,20 @@ export default class Html5Video extends Component {
   // Handlers
 
   handleLoadStart = () => this.props.actions.loadStart(this.video.networkState);
-  handleProgress = () => {
+
+  @throttle(1500)
+  handleProgress() {
     if (!this.video.buffered.length) return;
+
     const bufferedTime = this.video.buffered.end(this.video.buffered.length - 1);
     this.props.actions.progress(this.video.networkState, bufferedTime);
-  };
+  }
 
-  handleSuspend = () => this.props.actions.suspend(this.video.networkState);
+  @throttle(1500)
+  handleSuspend() {
+    this.props.actions.suspend(this.video.networkState);
+  }
+
   handleAbort = () => this.props.actions.abort(this.video.networkState, this.video.error.code);
   handleError = () => this.props.actions.error(this.video.networkState, this.video.error.code);
   handleEmptied = () => this.props.actions.emptied(this.video.networkState);
@@ -182,7 +187,12 @@ export default class Html5Video extends Component {
   handleSeeked = () => this.props.actions.seeked(this.video.currentTime);
   handleEnded = () => this.props.actions.ended(this.video.currentTime);
   handleDurationChange = () => this.props.actions.durationChange(this.video.duration);
-  handleTimeUpdate = () => this.props.actions.timeUpdate(this.video.currentTime);
+
+  @throttle(1000)
+  handleTimeUpdate() {
+    this.props.actions.timeUpdate(this.video.currentTime);
+  }
+
   handlePlay = () => this.props.actions.play();
   handlePause = () => this.props.actions.pause();
   handleRateChange = () => this.props.actions.rateChange(this.video.playbackRate);
@@ -192,10 +202,13 @@ export default class Html5Video extends Component {
     size: this.getSize()
   });
 
-  handleVolumeChange = () => this.props.actions.volumeChange(
-    this.video.volume,
-    this.video.muted
-  );
+  @throttle(50)
+  handleVolumeChange() {
+    this.props.actions.volumeChange(
+      this.video.volume,
+      this.video.muted
+    );
+  }
 
   getSize() {
     return {
@@ -215,11 +228,11 @@ export default class Html5Video extends Component {
 
   render() {
     const { className, ...props } = this.props;
-    const videoProps = pick(props, Object.keys(videoOwnProps));
+    const ownProps = pick(props, Object.keys(videoOwnProps));
 
     return (
       <video styleName='video' className={className}
-        ref={ref => this.video = ref} {...videoProps}>
+        ref={ref => this.video = ref} {...ownProps}>
         {this.renderSources()}
       </video>
     );

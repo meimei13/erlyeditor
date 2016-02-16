@@ -26,10 +26,11 @@ mp4/h264/aac ( https://peach.blender.org/download/ h264 moov подойдет )
   Редактор должен уметь показывать сохраненный набор фильтров в textarea
   и позволять загружать в ту же textarea сохраненные фильтры. 
 
-  Реализация яваскрипт-кода ожидается на React.js   Кроссплатформенность не
-  требуется, можно выбрать браузер.
+  Реализация яваскрипт-кода ожидается на React.js  
+  Кроссплатформенность не требуется, можно выбрать браузер.
 
 CAVEATS:
 
 - [ ] don't use spread props transfering with react-css-modules cuz https://github.com/gajus/react-css-modules/issues/58
 - [ ] react-css-modules styleName attribute doesn't work when there is a Motion parent component (from react-motion)
+- [ ] you will encounter a lot of styles={undefined}, it's a hack to make react-css-modules work (see issue above)

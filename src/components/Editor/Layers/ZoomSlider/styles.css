@@ -1,0 +1,15 @@
+@import "../../../../variables";
+
+:root {
+  --zoom-slider-background-color: var(--brand-black);
+}
+
+.zoom-slider {
+  background-color: var(--zoom-slider-background-color);
+}
+
+.button {
+}
+
+.slider {
+}

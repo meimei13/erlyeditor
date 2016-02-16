@@ -44,19 +44,17 @@ export default async (req, res) => {
 
       const status = getStatus(renderProps.routes, 200);
 
+      /* eslint-disable no-console */
       console.info(`
-           location = ${location.pathname},
-           original url = ${req.originalUrl},
-           status = ${status}
+            location = ${location.pathname},
+            original url = ${req.originalUrl},
+            status = ${status}
       `);
+      /* eslint-enable no-console */
 
-      try {
-        const routerProps = { ...renderProps, location };
-        const html = await render(history, store, routerProps);
-        res.status(status).send(html);
-      } catch (err) {
-        res.status(500).send(err.stack);
-      }
+      const routerProps = { ...renderProps, location };
+      const html = await render(history, store, routerProps);
+      res.status(status).send(html);
     } else {
       res.status(404).send('not found');
     }

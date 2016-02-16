@@ -6,7 +6,7 @@ import styles from './styles';
 
 const { bool, number, string, func, node } = PropTypes;
 
-export const tooltip = (ComposedComponent) => class extends Component {
+export const tooltip = ComposedComponent => class extends Component {
   static propTypes = {
     className: string,
     tooltipText: string,
@@ -79,9 +79,11 @@ export const tooltip = (ComposedComponent) => class extends Component {
         onMouseLeave={this.handleMouseLeave}
         onClick={this.handleClick}>
         {children}
-        <span className={tooltipClass}>
-          {tooltipText}
-        </span>
+        {tooltipText &&
+          <span className={tooltipClass}>
+            {tooltipText}
+          </span>
+        }
       </ComposedComponent>
     );
   }

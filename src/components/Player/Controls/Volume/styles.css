@@ -1,11 +1,15 @@
-:root {
-  --container-background: rgba(#232c32, 0.8);
+@import "../../../../variables";
 
-  --fill-color: color(#e8eff0 shade(20%));
+:root {
+  --container-background: rgba(var(--brand-black), 0.8);
+
+  --fill-color: color(var(--brand-light) shade(20%));
   --fill-background: linear-gradient(to bottom, var(--fill-color) 0, color(var(--fill-color) shade(20%)) 100%);
 }
 
 .volume {
+  display: flex;
+  height: 100%;
   z-index: 12;
 }
 
@@ -18,7 +22,7 @@
 
 .box {
   position: absolute;
-  bottom: 4.8rem;
+  bottom: 2em;
   right: 1rem;
   background: var(--container-background);
   border-radius: 2px 2px 0 0;

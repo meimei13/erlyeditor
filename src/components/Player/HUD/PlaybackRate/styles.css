@@ -1,5 +1,7 @@
+@import "../../../../variables";
+
 :root {
-  --playback-rate-text-color: #e8eff0;
+  --playback-rate-text-color: var(--brand-light);
   --playback-rate-background: rgba(#000, 0.6);
 }
 
