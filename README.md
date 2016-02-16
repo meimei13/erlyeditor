@@ -187,6 +187,7 @@ npm run lint
 ### Examples
 
 ![player UI](https://raw.githubusercontent.com/vyorkin-personal/erlyeditor/master/docs/screens/player.png)
+![filters UI](https://raw.githubusercontent.com/vyorkin-personal/erlyeditor/master/docs/screens/filters.png)
 
 Erlyeditor comes with examples to demonstrate its usage.
 When adding a new example, please adhere to the style and format of the existing examples,
