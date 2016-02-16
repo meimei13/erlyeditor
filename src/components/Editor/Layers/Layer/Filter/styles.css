@@ -6,8 +6,8 @@
   --filter-background-color: color(var(--brand-success) lightness(-15%));
   --filter-hover-background-color: color(var(--filter-background-color) tint(10%));
   --filter-text-color: var(--brand-light);
-  --filter-font-size: 1.2rem;
-  --filter-border-color: color(var(--brand-light) a(60%));
+  --filter-font-size: 1rem;
+  --filter-border-color: color(var(--brand-light) a(50%));
   --filter-border-radius: 4px;
 }
 
@@ -21,19 +21,26 @@
   box-sizing: border-box;
   user-select: none;
   box-shadow: 0 0 1px 0 rgba(#000, 0.4);
-  border: 1px solid var(--filter-border-color);
   border-radius: var(--filter-border-radius);
-
+  border: 1px solid var(--filter-border-color);
 }
 
-.enabled {
+.visible {
+}
+
+.hidden {
+  border-style: dashed;
+}
+
+.unlocked {
+
   &:hover {
     background-color: var(--filter-hover-background-color);
     opacity: 0.8;
   }
 }
 
-.disabled {
+.locked {
   opacity: 0.6;
 }
 
@@ -41,7 +48,10 @@
   flex: 2;
   margin: 0;
   text-align: center;
+  text-transform: uppercase;
+  font-family: var(--font-family);
   font-size: var(--filter-font-size);
+  font-weight: normal;
   color: var(--filter-text-color);
 
   &:hover { color: var(--filter-text-color); }

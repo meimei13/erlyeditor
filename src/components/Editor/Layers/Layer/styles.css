@@ -7,7 +7,7 @@
 
 .layer {
   display: flex;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.4em;
   width: 100%;
   height: var(--layer-height);
   border: 1px solid var(--layer-border-color);

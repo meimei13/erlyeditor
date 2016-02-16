@@ -6,3 +6,7 @@
 .panel {
   width: 100%;
 }
+
+.content {
+  padding: 0;
+}

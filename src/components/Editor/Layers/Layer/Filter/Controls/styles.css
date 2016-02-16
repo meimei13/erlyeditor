@@ -1,5 +1,5 @@
 :root {
-  --button-width: 1.4em;
+  --button-width: 1.2em;
 }
 
 .filter-controls {
@@ -8,5 +8,5 @@
 }
 
 .filterButton {
-  width: 1.4em;
+  width: var(--button-width);
 }

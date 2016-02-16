@@ -1,4 +1,4 @@
-import merge from 'lodash/merge';
+// import merge from 'lodash/merge';
 import sortBy from 'lodash/sortBy';
 import { createSelector } from 'reselect';
 
@@ -29,7 +29,6 @@ import { createSelector } from 'reselect';
  * ├─ type
  * ├─ filters(object)
  * │  ├─ filter1
- * │  │  ├─ layerId
  * │  │  ├─ type
  * │  │  ├─ timeline
  * │  │  ├─ attributes
@@ -38,7 +37,6 @@ import { createSelector } from 'reselect';
  * │  │  ...
  * │  │
  * │  └─ filterN
- * │     ├─ layerId
  * │     ├─ type
  * │     ├─ timeline
  * │     ├─ attributes

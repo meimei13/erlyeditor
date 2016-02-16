@@ -4,8 +4,8 @@
   --filter-height: 70px;
   --filter-drag-preview-background-color: color(var(--brand-success) lightness(-20%));
   --filter-text-color: var(--brand-light);
-  --filter-font-size: 1.2rem;
-  --filter-border-color: color(var(--brand-light) a(60%));
+  --filter-font-size: 1rem;
+  --filter-border-color: color(var(--brand-light) a(50%));
   --filter-border-radius: 4px;
 
   --tick-background-color: var(--filter-drag-preview-background-color);
@@ -19,18 +19,23 @@
   overflow: hidden;
   padding: 0.2em 0.4em;
   box-sizing: border-box;
-  border: 1px solid var(--filter-border-color);
   border-radius: var(--filter-border-radius);
+  border: 1px solid var(--filter-border-color);
+}
+
+.visible {
+}
+
+.hidden {
+  border-style: dashed;
 }
 
 .tick {
-  composes: filter-drag-preview;
   background-color: var(--tick-background-color);
   opacity: 1;
 }
 
 .tock {
-  composes: filter-drag-preview;
   background-color: var(--tock-background-color);
   opacity: 0.8;
 }
@@ -39,6 +44,9 @@
   flex: 2;
   margin: 0;
   text-align: center;
+  text-transform: uppercase;
+  font-family: var(--font-family);
   font-size: var(--filter-font-size);
+  font-weight: normal;
   color: var(--filter-text-color);
 }

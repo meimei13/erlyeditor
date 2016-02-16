@@ -7,5 +7,8 @@ export default shape({
   destroy: func.isRequired,
 
   move: func.isRequired,
-  resize: func.isRequired
+  resize: func.isRequired,
+
+  toggleVisibility: func.isRequired,
+  toggleLocked: func.isRequired
 });

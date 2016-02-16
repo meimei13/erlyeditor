@@ -1,7 +1,9 @@
 @import "../../../../../variables.css";
 
 :root {
-  --header-background-color: color(var(--brand-black) lightness(-4%));
+  --header-wide-width: 7em;
+
+  --header-background-color: color(var(--brand-black) lightness(-8%));
   --header-background:
     linear-gradient(
       to bottom,
@@ -16,8 +18,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 0.25em 0.4em;
-  background: var(--header-background);
-  border-radius: 4px 0 0 4px;
+  background-color: var(--header-background-color);
+  border-right: 1px solid var(--brand-black);
 }
 
 .title {
@@ -32,6 +34,7 @@
 }
 
 .wide {
+  width: var(--header-wide-width);
 }
 
 .narrow {

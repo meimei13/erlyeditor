@@ -4,6 +4,7 @@ import css from 'react-css-modules';
 
 import {
   filterShape,
+  filterTypeShape,
   filterActionsShape,
   layerActionsShape
 } from '../../../propTypes';
@@ -34,6 +35,7 @@ export class Layer extends Component {
     type: string.isRequired,
     attributes: object,
     filters: arrayOf(filterShape),
+    filterTypes: arrayOf(filterTypeShape).isRequired,
     editable: bool,
     disabled: bool,
     locked: bool,
@@ -54,8 +56,12 @@ export class Layer extends Component {
   }
 
   @autobind
-  handleMoveFilter(id, offset) {
-    this.props.actions.filter.update(id, { offset });
+  handleMoveFilter(filterId, sourceLayerId, targetLayerId, offset) {
+    if (sourceLayerId !== targetLayerId) {
+      this.props.actions.layer.removeFilter(sourceLayerId, filterId);
+      this.props.actions.layer.addFilter(targetLayerId, filterId);
+    }
+    this.props.actions.filter.move(filterId, offset);
   }
 
   @autobind
@@ -64,16 +70,14 @@ export class Layer extends Component {
     this.props.actions.filter.destroy(id);
   }
 
-  @autobind
-  handleToggleDisabled(id) {
-    this.props.actions.filter.toggleDisabled(id);
-  }
-
   render() {
     const {
       className,
+
       snapToGrid,
       cellSize,
+      filters,
+      filterTypes,
 
       id,
       name,
@@ -83,7 +87,8 @@ export class Layer extends Component {
       disabled,
       locked,
       single,
-      filters
+
+      actions
     } = this.props;
 
     const { expanded } = this.state;
@@ -99,9 +104,12 @@ export class Layer extends Component {
     };
 
     const surfaceProps = {
+      id,
+      type,
       snapToGrid,
       cellSize,
-      filters
+      filters,
+      filterTypes
     };
 
     return (
@@ -110,9 +118,10 @@ export class Layer extends Component {
           onToggleExpanded={this.handleToggleExpanded}
         />
         <Surface {...surfaceProps}
-          onMove={this.handleMoveFilter}
-          onDestroy={this.handleDestroyFilter}
-          onToggleDisabled={this.handleToggleDisabled}
+          onMoveFilter={this.handleMoveFilter}
+          onDestroyFilter={this.handleDestroyFilter}
+          onToggleFilterVisibility={actions.filter.toggleVisibility}
+          onToggleFilterLocked={actions.filter.toggleLocked}
         />
       </div>
     );

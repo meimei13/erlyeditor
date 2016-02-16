@@ -36,7 +36,7 @@ export class Controls extends Component {
     } = this.props;
 
     return (
-      <ButtonGroup className={styles.controls} small filled>
+      <ButtonGroup className={styles.controls} neutral small>
         <TooltipButton
           icon={single ? 'adjust' : 'lens'}
           onClick={onToggleSingle}

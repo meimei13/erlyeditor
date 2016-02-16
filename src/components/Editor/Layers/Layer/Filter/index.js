@@ -16,21 +16,26 @@ export class Filter extends Component {
     ...filterProps,
     className: string,
     onDestroy: func.isRequired,
-    onToggleDisabled: func.isRequired
+    onToggleVisibility: func.isRequired,
+    onToggleLocked: func.isRequired
   };
 
   @autobind
-  handleDestroy() {
-    if (this.props.onDestroy) {
-      this.props.onDestroy(this.props.id);
-    }
+  handleToggleVisibility() {
+    const { id, onToggleVisibility } = this.props;
+    onToggleVisibility(id);
   }
 
   @autobind
-  handleToggleDisabled() {
-    if (this.props.onToggleDisabled) {
-      this.props.onToggleDisabled(this.props.id);
-    }
+  handleToggleLocked() {
+    const { id, onToggleLocked } = this.props;
+    onToggleLocked(id);
+  }
+
+  @autobind
+  handleDestroy() {
+    const { id, onDestroy } = this.props;
+    onDestroy(id);
   }
 
   render() {
@@ -38,14 +43,16 @@ export class Filter extends Component {
       id,
       layerId,
       timeline,
-      disabled,
+      visible,
+      locked,
       appearance
     } = this.props;
 
     const { duration } = timeline;
 
-    const state = disabled ? 'disabled' : 'enabled';
-    const styleName = cn('filter', state);
+    const state = locked ? 'locked' : 'unlocked';
+    const visibility = visible ? 'visible' : 'hidden';
+    const styleName = cn('filter', visibility, state);
     const style = {
       width: duration,
       backgroundColor: appearance.color
@@ -58,10 +65,10 @@ export class Filter extends Component {
         <h6 styleName='title'>
           {`${id}-${layerId}`}
         </h6>
-        <Controls
-          disabled={disabled}
+        <Controls {...{ locked, visible } }
+          onToggleVisibility={this.handleToggleVisibility}
+          onToggleLocked={this.handleToggleLocked}
           onDestroy={this.handleDestroy}
-          onToggleDisabled={this.handleToggleDisabled}
         />
       </div>
     );

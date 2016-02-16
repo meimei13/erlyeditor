@@ -18,7 +18,7 @@ const filterTypes = {
     name: 'cut',
     description: 'lets you cut a part of video',
     appearance: {
-      color: '#ad8e00'
+      color: '#232c32'
     },
     timeline: {
       offset: 0,

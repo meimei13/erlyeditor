@@ -3,6 +3,7 @@ import css from 'react-css-modules';
 import cn from 'classnames';
 
 import {
+  filterTypeShape,
   layerShape,
   layerActionsShape,
   filterActionsShape
@@ -38,6 +39,7 @@ export class LayersPanel extends Component {
     children: node,
 
     layers: arrayOf(layerShape).isRequired,
+    filterTypes: arrayOf(filterTypeShape).isRequired,
 
     snapToGrid: bool,
     cellSize: number,
@@ -57,6 +59,7 @@ export class LayersPanel extends Component {
       className,
       children,
       layers,
+      filterTypes,
       snapToGrid,
       cellSize,
       actions
@@ -65,11 +68,13 @@ export class LayersPanel extends Component {
     const layerProps = {
       snapToGrid,
       cellSize,
+      filterTypes,
       actions
     };
 
     return (
       <Panel className={cn(className, styles.panel)}
+        contentClassName={styles.content}
         footer={this.renderFooter()}>
         {/*<Timeline />*/}
         <List>

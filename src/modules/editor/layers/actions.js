@@ -1,5 +1,6 @@
 import { createAction as action } from 'redux-act';
 
+export const create = action('layer.create');
 export const destroy = action('layer.destroy', id => ({ id }));
 export const move = action('layer.move', (id, index) => ({ id, index }));
 

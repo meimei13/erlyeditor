@@ -3,7 +3,7 @@
 :root {
   --panel-width: 22em;
 
-  --input-background-color: color(var(--brand-black) shade(10%));
+  --input-background-color: color(var(--brand-black) lightness(-8%));
   --input-text-color: color(var(--brand-light) shade(40%));
 
   --button-background-color: color(var(--brand-black) tint(6%));

@@ -2,7 +2,6 @@ import flow from 'lodash/flow';
 import pick from 'lodash/pick';
 import mapValues from 'lodash/mapValues';
 
-import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -25,9 +24,6 @@ import {
   layerShape
 } from '../propTypes';
 
-import tooltip from '../hoc/tooltip';
-import Button from '../Button';
-
 import Player from '../Player';
 import Html5Video from '../Html5Video';
 
@@ -45,7 +41,6 @@ import LayerDragPreview from './Layers/LayerDragPreview';
 
 import styles from './styles';
 
-const TooltipButton = tooltip(Button);
 const { bool, number, string, arrayOf, shape } = PropTypes;
 
 // preview components for
@@ -110,6 +105,13 @@ export class Editor extends Component {
     const size = { width, height };
     const { snapToGrid, cellSize } = this.state;
 
+    const layersPanelProps = {
+      snapToGrid,
+      cellSize,
+      layers,
+      filterTypes
+    };
+
     return (
       <div styleName='editor' className={className}>
         <div styleName='main'>
@@ -127,10 +129,8 @@ export class Editor extends Component {
         </div>
         <MainToolbar />
         <MainPanel>
-          <LayersPanel
-            {...{ snapToGrid, cellSize } }
+          <LayersPanel {...layersPanelProps }
             actions={pick(actions, 'layer', 'filter')}
-            layers={layers}
           />
           <PropertyEditor />
         </MainPanel>

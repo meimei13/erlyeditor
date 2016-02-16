@@ -2,18 +2,23 @@ import pick from 'lodash/pick';
 
 export const dragSourceProps = [
   'id',
-  'layerId',
   'type',
+  'layerId',
   'timeline',
-  'disabled',
+  'visible',
+  'locked',
+  'attributes',
   'appearance'
 ];
 
 export default {
-  canDrag(props, _monitor) {
-    return !props.disabled;
+  canDrag({ locked }, _monitor) {
+    return !locked;
   },
 
+  // *
+  // return the information that should be available
+  // to the drop targets about the drag source
   beginDrag(props) {
     return pick(props, dragSourceProps);
   }

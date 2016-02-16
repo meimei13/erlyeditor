@@ -1,4 +1,5 @@
 import flow from 'lodash/flow';
+import pick from 'lodash/pick';
 
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
@@ -6,20 +7,23 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import css from 'react-css-modules';
 
 import { filterProps } from '../../../../propTypes';
+import draggable from '../../../../hoc/draggable';
 import ItemTypes from '../../../ItemTypes';
 import Filter from '../Filter';
 
 import getTransformStyle from './getTransformStyle';
-import dragSource from './dragSource';
+import dragSource, { dragSourceProps } from './dragSource';
 import styles from './styles';
 
-const { func } = PropTypes;
+const { string, func } = PropTypes;
 
 export class DraggableFilter extends Component {
   static propTypes = {
     ...filterProps,
+    layerId: string.isRequired,
     onDestroy: func.isRequired,
-    onToggleDisabled: func.isRequired,
+    onToggleVisibility: func.isRequired,
+    onToggleLocked: func.isRequired,
     connectDragPreview: func.isRequired
   };
 
@@ -36,18 +40,12 @@ export class DraggableFilter extends Component {
   render() {
     /* eslint-disable react/prop-types */
     const {
-      id,
-      layerId,
-      type,
-      attributes,
       timeline,
-      disabled,
-      appearance,
       onDestroy,
-      onToggleDisabled,
+      onToggleVisibility,
+      onToggleLocked,
       isDragging,
-      connectDragSource,
-      ...props
+      connectDragSource
     } = this.props;
     /* eslint-ensable react/prop-types */
 
@@ -55,21 +53,12 @@ export class DraggableFilter extends Component {
     const style = getTransformStyle(timeline);
     const known = { styleName, style };
 
-    const transferredProps = {
-      id,
-      layerId,
-      type,
-      timeline,
-      attributes,
-      disabled,
-      appearance,
-      onDestroy,
-      onToggleDisabled
-    };
-
     return connectDragSource(
       <div {...known}>
-        <Filter {...transferredProps} />
+        <Filter { ...{
+          ...{ onDestroy, onToggleVisibility, onToggleLocked },
+          ...pick(this.props, dragSourceProps)
+        } } />
       </div>
     );
   }

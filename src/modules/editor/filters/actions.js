@@ -1,5 +1,10 @@
 import { createAction as action } from 'redux-act';
 
+export const create = action('filter.create', filterType => ({ filterType }));
 export const destroy = action('filter.destroy', id => ({ id }));
-export const toggleDisabled = action('filter.toggleDisabled', id => ({ id }));
-export const update = action('filter.update', (id, timeline) => ({ id, ...timeline }));
+
+export const move = action('filter.move', (id, offset) => ({ id, offset }));
+export const resize = action('filter.resize', (id, duration) => ({ id, duration }));
+
+export const toggleLocked = action('filter.toggleLocked', id => ({ id }));
+export const toggleVisibility = action('filter.toggleVisibility', id => ({ id }));

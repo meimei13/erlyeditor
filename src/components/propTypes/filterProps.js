@@ -6,10 +6,10 @@ const { bool, string, object } = PropTypes;
 
 export default {
   id: string.isRequired,
-  layerId: string.isRequired,
   type: string.isRequired,
   attributes: object,
   timeline: filterTimelineShape.isRequired,
-  disabled: bool,
+  visible: bool,
+  locked: bool,
   appearance: object.isRequired
 };

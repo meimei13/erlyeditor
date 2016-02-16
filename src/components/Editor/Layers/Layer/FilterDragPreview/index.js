@@ -1,12 +1,13 @@
 import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
+import cn from 'classnames';
 
 import { filterTimelineShape } from '../../../../propTypes';
 
 import styles from './styles';
 
-const { object, string } = PropTypes;
+const { bool, object, string } = PropTypes;
 
 export class FilterDragPreview extends Component {
   static propTypes = {
@@ -14,6 +15,8 @@ export class FilterDragPreview extends Component {
     layerId: string.isRequired,
     type: string.isRequired,
     timeline: filterTimelineShape.isRequired,
+    visible: bool,
+    locked: bool,
     appearance: object.isRequired
   };
 
@@ -41,6 +44,8 @@ export class FilterDragPreview extends Component {
       timeline: {
         duration
       },
+      visible,
+      locked,
       appearance
     } = this.props;
 
@@ -50,8 +55,13 @@ export class FilterDragPreview extends Component {
       backgroundColor: appearance.color
     };
 
+    const animation = tick ? 'tick' : 'tock';
+    const visibility = visible ? 'visible' : 'hidden';
+    const styleName = cn('filter-drag-preview', visibility, animation);
+    const known = { styleName, style };
+
     return (
-      <div styleName={tick ? 'tick' : 'tock' } style={style}>
+      <div {...known}>
         <h6 styleName='title'>
           {`${id}-${layerId}`}
         </h6>
@@ -60,4 +70,4 @@ export class FilterDragPreview extends Component {
   }
 }
 
-export default css(FilterDragPreview, styles);
+export default css(FilterDragPreview, styles, { allowMultiple: true });

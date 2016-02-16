@@ -1,0 +1,15 @@
+.draggable {
+  position: absolute;
+}
+
+.normal {
+  composes: draggable;
+  height: 100%;
+  opacity: 1;
+}
+
+.dragging {
+  composes: draggable;
+  height: 0;
+  opacity: 0;
+}

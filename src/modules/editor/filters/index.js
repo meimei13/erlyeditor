@@ -2,22 +2,33 @@ import omit from 'lodash/omit';
 import { createReducer } from 'redux-act';
 import initialState from './initialState';
 import {
+  create,
   destroy,
-  toggleDisabled,
-  update
+  move,
+  resize,
+  toggleLocked,
+  toggleVisibility
 } from './actions';
 
 export default createReducer({
+  [create]: (s, { filterType }) => s,
   [destroy]: (s, { id }) => omit(s, id),
 
-  [toggleDisabled]: (state, { id }) => {
+  [toggleLocked]: (state, { id }) => {
     const filter = state[id];
-    const disabled = !filter.disabled;
+    const locked = !filter.locked;
 
-    return { ...state, [id]: { ...filter, disabled } };
+    return { ...state, [id]: { ...filter, locked } };
   },
 
-  [update]: (state, { id, offset, duration }) => {
+  [toggleVisibility]: (state, { id }) => {
+    const filter = state[id];
+    const visible = !filter.visible;
+
+    return { ...state, [id]: { ...filter, visible } };
+  },
+
+  [move]: (state, { id, offset }) => {
     const filter = state[id];
     const timeline = filter.timeline;
 
@@ -25,10 +36,20 @@ export default createReducer({
       ...state,
       [id]: {
         ...filter,
-        timeline: {
-          offset: offset || timeline.offset,
-          duration: duration || timeline.duration
-        }
+        timeline: { ...timeline, offset }
+      }
+    };
+  },
+
+  [resize]: (state, { id, duration }) => {
+    const filter = state[id];
+    const timeline = filter.timeline;
+
+    return {
+      ...state,
+      [id]: {
+        ...filter,
+        timeline: { ...timeline, duration }
       }
     };
   }

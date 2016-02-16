@@ -1,48 +1,48 @@
 export default {
   cut1: {
     id: 'cut1',
-    layerId: 'main',
     type: 'cut',
-    disabled: false,
+    visible: true,
+    locked: false,
     timeline: {
       offset: 30,
       duration: 210
     },
     appearance: {
-      color: '#ad8e00'
+      color: '#232c32'
     }
   },
   cut2: {
     id: 'cut2',
-    layerId: 'main',
     type: 'cut',
-    disabled: false,
+    visible: true,
+    locked: false,
     timeline: {
       offset: 250,
       duration: 80
     },
     appearance: {
-      color: '#ad8e00'
+      color: '#232c32'
     }
   },
   cut3: {
     id: 'cut3',
-    layerId: 'main',
     type: 'cut',
-    disabled: true,
+    visible: true,
+    locked: true,
     timeline: {
       offset: 400,
       duration: 100
     },
     appearance: {
-      color: '#ad8e00'
+      color: '#232c32'
     }
   },
   overlay1: {
     id: 'overlay1',
-    layerId: 'layer1',
     type: 'overlay',
-    disabled: false,
+    visible: false,
+    locked: false,
     timeline: {
       offset: 10,
       duration: 100
@@ -59,11 +59,11 @@ export default {
   },
   blur1: {
     id: 'blur1',
-    layerId: 'layer1',
     type: 'blur',
-    disabled: true,
+    visible: false,
+    locked: true,
     timeline: {
-      offset: 210,
+      offset: 320,
       duration: 100
     },
     attributes: {
@@ -75,12 +75,12 @@ export default {
   },
   hue1: {
     id: 'hue1',
-    layerId: 'layer2',
     type: 'hue',
-    disabled: false,
+    visible: true,
+    locked: false,
     timeline: {
-      offset: 120,
-      duration: 60
+      offset: 280,
+      duration: 320
     },
     attributes: {
       value: 0.6

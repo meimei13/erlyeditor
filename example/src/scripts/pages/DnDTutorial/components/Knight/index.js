@@ -9,15 +9,12 @@ import styles from './styles';
 const { func, bool } = PropTypes;
 
 const knightSource = {
-  // *
-  // return the information then should be available
-  // to the drop targets about the drag source
   beginDrag(props, monitor, component) {
     // Return the data describing the dragged item:
     //
     // for filter it would be filter type, etc.
     // something that describes draggable source
-    return {}; // <-- dragSource.getItem returns this
+    return {}; // <-- monitor.getItem returns this
   },
 
   // -

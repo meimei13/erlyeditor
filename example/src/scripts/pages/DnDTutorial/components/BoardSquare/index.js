@@ -17,7 +17,7 @@ const squareTarget = {
   },
 
   // -
-  // he drop result and will be available to the drag source
+  // returned value will be available to the drag source
   // in its endDrag method as monitor.getDropResult()
   drop(props, _monitor) {
     moveKnight(props.x, props.y);

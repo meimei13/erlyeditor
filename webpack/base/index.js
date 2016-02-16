@@ -34,6 +34,7 @@ const externals = {
   'react-redux': 'commonjs react-redux',
   'redux-act': 'commonjs redux-act',
   'redux-thunk': 'commonjs redux-thunk',
+  'redux-loop': 'commonjs redux-loop',
   'redux-undo': 'commonjs redux-undo',
   'redux-from': 'commonjs redux-form',
   'reselect': 'commonjs reselect',

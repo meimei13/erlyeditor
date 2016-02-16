@@ -11,15 +11,17 @@ export const ButtonGroup = props => {
     className,
     buttonClassName,
     children,
+    vertical,
+    neutral,
     filled,
     big,
     small,
     ...other
   } = props;
 
+  const orientation = vertical ? 'vertical' : 'horizontal';
   const size = small ? 'small' : big ? 'big' : 'normal';
-  const fill = filled ? 'filled' : 'neutral';
-  const styleName = cn('button-group', size, fill);
+  const styleName = cn('button-group', orientation, size, { filled });
 
   const known = { styleName, className };
 
@@ -29,6 +31,7 @@ export const ButtonGroup = props => {
         button &&
           React.cloneElement(button, {
             className: cn(button.props.className, buttonClassName, styles.button),
+            neutral: neutral || button.props.neutral,
             filled: filled || button.props.filled,
             big: big || button.props.big,
             small: small || button.props.small
@@ -42,12 +45,16 @@ ButtonGroup.propTypes = {
   className: string,
   buttonClassName: string,
   children: node.isRequired,
+  vertical: bool,
+  neutral: bool,
   filled: bool,
   small: bool,
   big: bool
 };
 
 ButtonGroup.defaultProps = {
+  vertical: false,
+  neutral: false,
   filled: false,
   small: false,
   big: false

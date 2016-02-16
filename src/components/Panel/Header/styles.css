@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
   background-color: var(--header-background-color);
   color: var(--header-text-color);
 }

@@ -6,4 +6,5 @@
 
 .mainPanel {
   background-color: var(--main-panel-background-color);
+  padding: 0.4em 0;
 }

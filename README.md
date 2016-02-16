@@ -261,6 +261,7 @@ starting to build your own npm package.
 * [react-css-modules](https://github.com/gajus/react-css-modules) - Seamless mapping of class names to CSS modules inside of React components.
 * [react-hotkeys](https://github.com/Chrisui/react-hotkeys) + [exploring-hotkeys-and-focus-in-react](http://chrispearce.co/exploring-hotkeys-and-focus-in-react/)
 * [the future of drag & drop APIs](https://medium.com/@dan_abramov/the-future-of-drag-and-drop-apis-249dfea7a15f#.y5t9x2f7h) by Dan Abramov
+* [redux-architecture](https://github.com/jarvisaoieong/redux-architecture)
 
 ## Ideas
 

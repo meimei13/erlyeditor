@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import css from 'react-css-modules';
 
 import tooltip from '../../../../../hoc/tooltip';
-import Badge from '../../../../../Badge';
 import Button from '../../../../../Button';
 import ButtonGroup from '../../../../../ButtonGroup';
 
@@ -13,9 +12,11 @@ const { bool, func } = PropTypes;
 
 export const Controls = props => {
   const {
-    disabled,
-    onDestroy,
-    onToggleDisabled
+    visible,
+    locked,
+    onToggleVisibility,
+    onToggleLocked,
+    onDestroy
   } = props;
 
   return (
@@ -31,11 +32,19 @@ export const Controls = props => {
         />
         <TooltipButton
           neutral
-          icon={disabled ? 'visibility' : 'visibility_off'}
+          icon={locked ? 'lock_outline' : 'lock'}
           tooltipTop
           tooltipDelay={1200}
-          tooltipText={disabled ? 'enable' : 'disable'}
-          onClick={onToggleDisabled}
+          tooltipText={locked ? 'unlock' : 'lock'}
+          onClick={onToggleLocked}
+        />
+        <TooltipButton
+          neutral
+          icon={visible ? 'visibility_off' : 'visibility'}
+          tooltipTop
+          tooltipDelay={1200}
+          tooltipText={visible ? 'hide' : 'show'}
+          onClick={onToggleVisibility}
         />
       </ButtonGroup>
     </div>
@@ -43,9 +52,11 @@ export const Controls = props => {
 };
 
 Controls.propTypes = {
-  disabled: bool,
+  visible: bool,
+  locked: bool,
   onDestroy: func.isRequired,
-  onToggleDisabled: func.isRequired
+  onToggleVisibility: func.isRequired,
+  onToggleLocked: func.isRequired
 };
 
 export default css(Controls, styles);
