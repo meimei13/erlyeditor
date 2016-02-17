@@ -3,6 +3,7 @@
 :root {
   --layer-surface-background-color: color(var(--brand-black) tint(2%));
   --layer-surface-over-background-color: color(var(--layer-surface-background-color) tint(4%));
+  --layer-surface-forbidden-background-color: color(var(--red) lightness(-12%));
 }
 
 .layer-surface {
@@ -19,7 +20,7 @@
   }
 
   &.over {
-    background-color: var(--red);
+    background-color: var(--layer-surface-forbidden-background-color);
   }
 }
 

@@ -33,6 +33,7 @@
 }
 
 .unlocked {
+  cursor: pointer;
 
   &:hover {
     background-color: var(--filter-hover-background-color);

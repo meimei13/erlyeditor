@@ -16,7 +16,7 @@ const filterTypes = {
   cut: {
     layerTypes: ['video'],
     name: 'cut',
-    description: 'lets you cut a part of video',
+    description: 'lets you cut a part of the video',
     appearance: {
       color: '#232c32'
     },

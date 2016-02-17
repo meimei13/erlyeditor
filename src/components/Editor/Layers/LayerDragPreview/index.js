@@ -10,7 +10,7 @@ export class LayerDragPreview extends Component {
 
   render() {
     return (
-      <div styleName='layer-drap-preview'>
+      <div styleName='layer-drag-preview'>
         <Layer {...this.props} />
       </div>
     );

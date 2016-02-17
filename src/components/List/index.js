@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import css from 'react-css-modules';
+import cn from 'classnames';
 
 import Item from './Item';
 import Subheader from './Subheader';
@@ -13,16 +14,17 @@ export const List = (props) => {
   const {
     className,
     children,
+    vertical,
     selectable,
     ...other
   } = props;
 
-  return (
-    <ul styleName='list'
-      className={className}
-      {...other }
-      styles={undefined}>
+  const orientation = vertical ? 'vertical' : 'horizontal';
+  const styleName = cn('list', orientation);
+  const known = { styleName, className };
 
+  return (
+    <ul { ...{ ...known, ...other } } styles={undefined}>
       {React.Children.map(children, item =>
         item.type === Item ?
           React.cloneElement(item, {
@@ -37,7 +39,13 @@ export const List = (props) => {
 List.propTypes = {
   className: string,
   children: node,
+  vertical: bool,
   selectable: bool
+};
+
+List.defaultProps = {
+  vertical: true,
+  selectable: false
 };
 
 List.Subheader = Subheader;

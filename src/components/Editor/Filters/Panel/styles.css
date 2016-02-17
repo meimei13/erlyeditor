@@ -20,12 +20,19 @@
 }
 
 .list {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
+  flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   flex: 2;
+}
+
+.listExpanded {
+  composes: list;
+}
+
+.listCollapsed {
+  composes: list;
+  align-items: center;
 }
 
 .item { margin: var(--list-item-margin); }

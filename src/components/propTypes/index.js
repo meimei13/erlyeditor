@@ -3,6 +3,7 @@
 // * for objects use Props postfix
 // * respectively for shapes use Shape
 
+export filterTypeProps from './filterTypeProps';
 export filterTypeShape from './filterTypeShape';
 export filterProps from './filterProps';
 export filterTimelineShape from './filterTimelineShape';

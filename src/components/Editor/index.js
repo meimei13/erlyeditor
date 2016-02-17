@@ -15,6 +15,7 @@ import * as layerActions from '../../modules/editor/layers/actions';
 import * as filterActions from '../../modules/editor/filters/actions';
 import * as videoActions from '../../modules/html5video/actions';
 import * as playerActions from '../../modules/player/actions';
+import * as editorActions from '../../modules/editor/actions';
 
 import {
   videoProps,
@@ -35,13 +36,19 @@ import { Panel as LayersPanel } from './Layers';
 import PropertyEditor from './PropertyEditor';
 import Inspector from './Inspector';
 
-import FilterTypeDragPreview from './Filters/FilterDragPreview';
+import FilterTypeDragPreview from './Filters/FilterDragPreview.js';
 import FilterDragPreview from './Layers/Layer/FilterDragPreview';
-import LayerDragPreview from './Layers/LayerDragPreview';
+import { LayerDragPreview } from './Layers';
 
 import styles from './styles';
 
-const { bool, number, string, arrayOf, shape } = PropTypes;
+const {
+  bool,
+  number,
+  string,
+  arrayOf,
+  shape
+} = PropTypes;
 
 // preview components for
 // various draggable item types
@@ -115,7 +122,9 @@ export class Editor extends Component {
     return (
       <div styleName='editor' className={className}>
         <div styleName='main'>
-          <FiltersPanel filterTypes={filterTypes} />
+          <FiltersPanel filterTypes={filterTypes}
+            onCreateFilter={actions.editor.createFilter}
+          />
           <Player actions={actions.player}
             width={width}
             { ...{ ...player, video } }>
@@ -144,11 +153,15 @@ const actionsMap = {
   player: playerActions,
   video: videoActions,
   layer: layerActions,
-  filter: filterActions
+  filter: filterActions,
+  editor: editorActions
 };
 
 const selectActions = dispatch => ({
-  actions: mapValues(actionsMap, actions => bindActionCreators(actions, dispatch))
+  actions: mapValues(
+    actionsMap,
+    actions => bindActionCreators(actions, dispatch)
+  )
 });
 
 /* eslint-disable new-cap */

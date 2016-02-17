@@ -1,11 +1,17 @@
 import snap from '../../../../../lib/snap';
+import ItemTypes from '../../../ItemTypes';
 
 export default {
   // -
   canDrop(props, monitor) {
     const { type, filterTypes } = props;
+
+    const sourceType = monitor.getItemType();
     const item = monitor.getItem();
-    const filterType = filterTypes.find(ft => ft.name === item.type);
+
+    const typePropName = sourceType === ItemTypes.FilterType ? 'name' : 'type';
+    const itemType = item[typePropName];
+    const filterType = filterTypes.find(ft => ft.name === itemType);
 
     if (filterType) {
       // layer types on which filter can be placed (dropped)
@@ -27,18 +33,27 @@ export default {
       cellSize
     } = props;
 
+    const sourceType = monitor.getItemType();
     // the item being dropped
     const item = monitor.getItem();
-    const { timeline } = item;
 
-    // difference between the last recorded client offset of the pointer
-    // and the client offset when current the drag operation has started
-    const delta = monitor.getDifferenceFromInitialOffset();
+    if (sourceType === ItemTypes.FilterType) {
+      return {
+        layerId: id,
+        type: item.name
+      };
+    } else if (sourceType === ItemTypes.Filter) {
+      const { timeline } = item;
 
-    const x = Math.floor(timeline.offset + delta.x);
-    const offset = snapToGrid ? snap(x, cellSize) : x;
+      // difference between the last recorded client offset of the pointer
+      // and the client offset when current the drag operation has started
+      const delta = monitor.getDifferenceFromInitialOffset();
 
-    // update filter position on a timeline
-    component.moveFilter(item.id, item.layerId, id, offset);
+      const x = Math.floor(timeline.offset + delta.x);
+      const offset = snapToGrid ? snap(x, cellSize) : x;
+
+      // update filter position on a timeline
+      component.moveFilter(item.id, item.layerId, id, offset);
+    }
   }
 };

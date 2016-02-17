@@ -75,7 +75,7 @@ export class Surface extends Component {
       <div { ...{ styleName, className } }>
         <List className={styles.list}>
           {filters.map(filter =>
-            <List.Item key={filter.id} selectable>
+            <List.Item key={filter.id}>
               <DraggableFilter {...filter}
                 layerId={id}
                 onToggleVisibility={onToggleFilterVisibility}
@@ -99,6 +99,9 @@ const collect = (connect, monitor) => ({
 /* eslint-disable new-cap */
 export default flow(
   css(styles, { allowMultiple: true }),
-  DropTarget(ItemTypes.Filter, dropTarget, collect)
+  DropTarget([
+    ItemTypes.FilterType,
+    ItemTypes.Filter
+  ], dropTarget, collect)
 )(Surface);
 /* eslint-enable new-cap */

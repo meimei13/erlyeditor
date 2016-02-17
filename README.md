@@ -129,6 +129,7 @@ High-order components:
 
 * `tooltip`
 * `hoverable`
+* `draggable` - HOC to use with [react-dnd](https://github.com/gaearon/react-dnd)
 
 Every component is exported in 2 different ways:
 * To import *unstyled* version use `import { FooComponent } from erlyeditor`
@@ -212,7 +213,8 @@ Updates are arriving automatically as PR's, thanks to [greenkeeper](http://green
 If you want to check for updates manually: [npm-check-updates](https://github.com/tjunnone/npm-check-updates)
 
 After building in `dist` directory you can find webpack stats file named `webpack.stats.json` and
-feed it to [webpack stats analyzer](http://webpack.github.io/analyse/) to see
+feed it to [webpack stats analyzer](http://webpack.github.io/analyse/) or
+[webpack chart](http://alexkuz.github.io/webpack-chart/) to see
 some useful info about your bundle.
 
 The [debug](https://www.npmjs.com/package/debug) package is used for debugging.
@@ -262,6 +264,7 @@ starting to build your own npm package.
 * [react-hotkeys](https://github.com/Chrisui/react-hotkeys) + [exploring-hotkeys-and-focus-in-react](http://chrispearce.co/exploring-hotkeys-and-focus-in-react/)
 * [the future of drag & drop APIs](https://medium.com/@dan_abramov/the-future-of-drag-and-drop-apis-249dfea7a15f#.y5t9x2f7h) by Dan Abramov
 * [redux-architecture](https://github.com/jarvisaoieong/redux-architecture)
+* [unidirectional UI architectures](http://staltz.com/unidirectional-user-interface-architectures.html)
 
 ## Ideas
 

@@ -32,6 +32,14 @@
   }
 }
 
+.normal {
+  cursor: grab;
+}
+
+.dragging {
+  cursor: move;
+}
+
 .squared {
   width: var(--filter-width);
   height: var(--filter-height);

@@ -8,16 +8,17 @@ import List from '../../../List';
 import Panel from '../../Panel';
 
 import SearchBar from '../SearchBar';
-import Filter from '../Filter';
+import DraggableFilter from '../DraggableFilter';
 
 import styles from './styles';
 
-const { string, arrayOf } = PropTypes;
+const { string, func, arrayOf } = PropTypes;
 
 export class FiltersPanel extends Component {
   static propTypes = {
     className: string,
-    filterTypes: arrayOf(filterTypeShape).isRequired
+    filterTypes: arrayOf(filterTypeShape).isRequired,
+    onCreateFilter: func.isRequired
   };
 
   renderSearchBar() {
@@ -27,7 +28,8 @@ export class FiltersPanel extends Component {
   render() {
     const {
       className,
-      filterTypes
+      filterTypes,
+      onCreateFilter
     } = this.props;
 
     return (
@@ -37,14 +39,20 @@ export class FiltersPanel extends Component {
         headerClassName={styles.panelHeader}
         header={this.renderSearchBar()}
         title='filters'>
+
         {expanded =>
-          <List className={styles.list}>
+          <List vertical={!expanded}
+            className={expanded ? styles.listExpanded : styles.listCollapsed}>
+
             {filterTypes.map(filter =>
               <List.Item key={filter.name}
                 className={expanded ? styles.itemBig : styles.itemSmall}
-                selectable
                 disabled={filter.disabled}>
-                <Filter {...filter} circle={!expanded} />
+
+                <DraggableFilter {...filter}
+                  onCreateFilter={onCreateFilter}
+                  circle={!expanded}
+                />
               </List.Item>
             )}
           </List>

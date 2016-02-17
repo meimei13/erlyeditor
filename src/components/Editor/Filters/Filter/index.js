@@ -2,20 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
 import cn from 'classnames';
 
-import tooltip from '../../../hoc/tooltip';
 import styles from './styles';
 
 const { bool, string, object } = PropTypes;
-const TooltipBlock = tooltip(React.DOM.div);
 
 export class Filter extends Component {
   static propTypes = {
     className: string,
-    disabled: bool,
     name: string.isRequired,
     description: string.isRequired,
     appearance: object.isRequired,
-    circle: bool
+    circle: bool,
+    disabled: bool,
+    isDragging: bool
   };
 
   static defaultProps = {
@@ -26,14 +25,15 @@ export class Filter extends Component {
   render() {
     const {
       className,
-      disabled,
       name,
-      description,
       appearance,
-      circle
+      circle,
+      isDragging
     } = this.props;
 
-    const styleName = cn('filter', circle ? 'circle' : 'squared');
+    const shape = circle ? 'circle' : 'squared';
+    const state = isDragging ? 'dragging' : 'normal';
+    const styleName = cn('filter', shape, state);
     const style = {
       backgroundColor: appearance.color
     };
@@ -46,4 +46,5 @@ export class Filter extends Component {
   }
 }
 
+export { styles };
 export default css(Filter, styles, { allowMultiple: true });

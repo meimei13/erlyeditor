@@ -11,7 +11,8 @@ export default ({ common, dunno }) => [
         icon: 'content_cut',
         handler: dunno.split,
         tooltipTop: true,
-        tooltipDelay: 400
+        tooltipDelay: 400,
+        disabled: true
       }
     ]
   },
@@ -25,7 +26,8 @@ export default ({ common, dunno }) => [
         small: true,
         handler: common.undo,
         tooltipTop: true,
-        tooltipDelay: 800
+        tooltipDelay: 800,
+        disabled: true
       },
       {
         title: 'redo',
@@ -34,7 +36,8 @@ export default ({ common, dunno }) => [
         small: true,
         handler: common.redo,
         tooltipTop: true,
-        tooltipDelay: 800
+        tooltipDelay: 800,
+        disabled: true
       }
     ]
   }

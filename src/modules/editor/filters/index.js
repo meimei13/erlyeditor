@@ -2,7 +2,6 @@ import omit from 'lodash/omit';
 import { createReducer } from 'redux-act';
 import initialState from './initialState';
 import {
-  create,
   destroy,
   move,
   resize,
@@ -11,7 +10,6 @@ import {
 } from './actions';
 
 export default createReducer({
-  [create]: (s, { filterType }) => s,
   [destroy]: (s, { id }) => omit(s, id),
 
   [toggleLocked]: (state, { id }) => {

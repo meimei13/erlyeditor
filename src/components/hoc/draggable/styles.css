@@ -1,10 +1,9 @@
 .draggable {
-  position: absolute;
 }
 
 .normal {
   composes: draggable;
-  height: 100%;
+  height: auto;
   opacity: 1;
 }
 

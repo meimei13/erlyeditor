@@ -1,3 +1,6 @@
 import { createAction as action } from 'redux-act';
 
-export const noop = action('editor.noop');
+export const createFilter = action(
+  'editor.createFilter',
+  (layerId, type) => ({ layerId, type })
+);

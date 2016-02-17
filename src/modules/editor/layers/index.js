@@ -31,6 +31,7 @@ export default createReducer({
       }
     };
   },
+
   [removeFilter]: (state, { id, filterId }) => {
     const layer = state[id];
     const filters = layer.filters.filter(f => f !== filterId);

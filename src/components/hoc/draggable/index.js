@@ -15,10 +15,11 @@ const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging()
 });
 
-export default (type, source) =>
+const unstyled = () => ({});
+
+export default (type, source, getStyle = unstyled) =>
   /* eslint-disable new-cap */
   ComposedComponent => {
-
     class HOC extends Component {
       static propTypes = {
         className: string,
@@ -54,8 +55,14 @@ export default (type, source) =>
           connectDragSource
         };
 
+        const own = {
+          styleName,
+          className,
+          style: getStyle(this.props)
+        };
+
         return connectDragSource(
-          <div {...{ styleName, className } }>
+          <div {...own}>
             <ComposedComponent {...{ ...known, ...other } } />
           </div>
         );
@@ -63,6 +70,8 @@ export default (type, source) =>
     }
 
     return flow(
+      css(styles, { allowMultiple: true }),
+      DragSource(type, source, collect)
     )(HOC);
   };
   /* eslint-enable new-cap */

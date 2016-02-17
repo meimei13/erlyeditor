@@ -1,6 +1,5 @@
 import { createAction as action } from 'redux-act';
 
-export const create = action('filter.create', filterType => ({ filterType }));
 export const destroy = action('filter.destroy', id => ({ id }));
 
 export const move = action('filter.move', (id, offset) => ({ id, offset }));

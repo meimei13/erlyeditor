@@ -1,15 +1,10 @@
 .draggable-filter {
-  position: absolute;
 }
 
 .normal {
   composes: draggable-filter;
-  height: 100%;
-  opacity: 1;
 }
 
 .dragging {
   composes: draggable-filter;
-  height: 0;
-  opacity: 0;
 }

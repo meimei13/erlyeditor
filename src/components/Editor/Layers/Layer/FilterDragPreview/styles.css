@@ -30,16 +30,6 @@
   border-style: dashed;
 }
 
-.tick {
-  background-color: var(--tick-background-color);
-  opacity: 1;
-}
-
-.tock {
-  background-color: var(--tock-background-color);
-  opacity: 0.8;
-}
-
 .title {
   flex: 2;
   margin: 0;
@@ -49,4 +39,14 @@
   font-size: var(--filter-font-size);
   font-weight: normal;
   color: var(--filter-text-color);
+}
+
+.tick {
+  background-color: var(--tick-background-color);
+  opacity: 1;
+}
+
+.tock {
+  background-color: var(--tock-background-color);
+  opacity: 0.8;
 }
