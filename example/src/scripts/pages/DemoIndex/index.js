@@ -14,6 +14,7 @@ export const Index = () => (
       <li><Link styleName='link' to={'/editor-demo'}>{`Editor component demo`}</Link></li>
       <li><Link styleName='link' to={'/dnd-naive-drag-demo'}>{`DnD naive drag demo`}</Link></li>
       <li><Link styleName='link' to={'/dnd-custom-layer-demo'}>{`DnD custom layer demo`}</Link></li>
+      <li><Link styleName='link' to={'/react-gl-demo'}>{`react-gl demo`}</Link></li>
       <li>
         <Link styleName='link' to={'/dnd-tutorial'}>
           {`react-dnd tutorial (chess knight)`}

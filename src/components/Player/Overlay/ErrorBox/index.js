@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import css from 'react-css-modules';
 
-import { videoStateShape } from '../../../propTypes';
 import styles from './styles';
+
+const { number, string } = PropTypes;
 
 export const ErrorBox = ({ code, title, body }) => (
   <div styleName='error-box'>
@@ -18,6 +19,10 @@ export const ErrorBox = ({ code, title, body }) => (
   </div>
 );
 
-ErrorBox.propTypes = videoStateShape;
+ErrorBox.propTypes = {
+  code: number,
+  title: string,
+  body: string
+};
 
 export default css(ErrorBox, styles);

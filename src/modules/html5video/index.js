@@ -32,10 +32,10 @@ import {
 import initialState from './initialState';
 
 const reducer = createReducer({
-  [init]: (state, { duration }) => ({ ...state, duration: Math.floor(duration) }),
+  [init]: (state, { duration }) => ({ ...state, duration }),
   [loadedMetadata]: (state, { duration, size }) => ({
     ...state,
-    duration: Math.floor(duration),
+    duration,
     size
   }),
   [canPlay]: s => ({ ...s, canPlay: true }),
@@ -45,7 +45,7 @@ const reducer = createReducer({
     return { ...state, percentage: { ...percentage, buffered } };
   },
   [resize]: (state, { size }) => ({ ...state, size }),
-  [durationChange]: (s, { duration }) => ({ ...s, duration: Math.floor(duration) }),
+  [durationChange]: (s, { duration }) => ({ ...s, duration }),
   [play]: s => ({ ...s, paused: false }),
   [pause]: s => ({ ...s, paused: true }),
   [seeking]: s => ({ ...s, seeking: true }),

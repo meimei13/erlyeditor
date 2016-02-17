@@ -9,4 +9,5 @@ export dndTutorial from './DnDTutorial';
 export dndNaiveDragDemo from './DnDNaiveDragDemo';
 export dndCustomLayerDemo from './DnDCustomLayerDemo';
 export designerDemo from './DesignerDemo';
+export reactGLDemo from './ReactGLDemo';
 export notFound from './NotFound';

@@ -188,7 +188,7 @@ export default class Html5Video extends Component {
   handleEnded = () => this.props.actions.ended(this.video.currentTime);
   handleDurationChange = () => this.props.actions.durationChange(this.video.duration);
 
-  @throttle(1000)
+  @throttle(100)
   handleTimeUpdate() {
     this.props.actions.timeUpdate(this.video.currentTime);
   }
@@ -202,7 +202,7 @@ export default class Html5Video extends Component {
     size: this.getSize()
   });
 
-  @throttle(50)
+  @throttle(10)
   handleVolumeChange() {
     this.props.actions.volumeChange(
       this.video.volume,

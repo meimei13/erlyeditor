@@ -11,5 +11,6 @@ export default {
   src: string,
   poster: string,
   width: number,
-  height: number
+  height: number,
+  crossOrigin: string
 };

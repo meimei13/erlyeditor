@@ -17,10 +17,5 @@ export default [
     test: /\.js$/,
     loader: 'babel',
     include: [paths.src]
-  },
-  {
-    test: /\.svg(\?.+)?$/,
-    include: [paths.src],
-    loader: 'file'
   }
 ];

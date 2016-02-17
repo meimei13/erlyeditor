@@ -5,6 +5,7 @@
 }
 
 .mainPanel {
-  background-color: var(--main-panel-background-color);
+  position: relative;
   padding: 0.4em 0;
+  background-color: var(--main-panel-background-color);
 }

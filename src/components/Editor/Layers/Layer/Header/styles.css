@@ -3,7 +3,7 @@
 :root {
   --header-wide-width: 7em;
 
-  --header-background-color: color(var(--brand-black) lightness(-8%));
+  --header-background-color: color(var(--brand-black) shade(-8%));
   --header-background:
     linear-gradient(
       to bottom,

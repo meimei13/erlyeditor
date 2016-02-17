@@ -4,6 +4,7 @@
 }
 
 .panel {
+  position: relative;
   width: 100%;
 }
 

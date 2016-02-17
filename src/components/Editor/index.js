@@ -33,12 +33,17 @@ import MainToolbar from './MainToolbar';
 import MainPanel from './MainPanel';
 import { Panel as FiltersPanel } from './Filters';
 import { Panel as LayersPanel } from './Layers';
+import Timeline from './Timeline';
 import PropertyEditor from './PropertyEditor';
 import Inspector from './Inspector';
 
 import FilterTypeDragPreview from './Filters/FilterDragPreview.js';
 import FilterDragPreview from './Layers/Layer/FilterDragPreview';
 import { LayerDragPreview } from './Layers';
+
+const FilterChainSurface = __CLIENT__ ?
+  require('./FilterChainSurface').default :
+  void 0;
 
 import styles from './styles';
 
@@ -94,12 +99,35 @@ export class Editor extends Component {
     cellSize: this.props.cellSize
   };
 
-  render() {
+  api = {
+    toggleMute: () => this.video.toggleMute(),
+    toggleLoop: () => this.video.toggleLoop(),
+    togglePlay: () => this.video.togglePlay(),
+    toggleFullScreen: () => this.video.toggleFullScreen(),
+    setVolume: v => this.video.setVolume(v),
+    setPlaybackRate: v => this.video.setPlaybackRate(v),
+    seek: offset => this.video.seek(offset)
+  };
+
+  renderVideo(size) {
     const {
-      className,
+      video,
       source,
-      filterTypes,
-      layers,
+      actions
+    } = this.props;
+
+    return (
+      <Html5Video ref={r => this.video = r}
+        preload='auto'
+        src={source}
+        actions={actions.video}
+        { ...{ ...size, ...video } }
+      />
+    );
+  }
+
+  renderPlayer() {
+    const {
       actions,
       video,
       player: {
@@ -110,7 +138,41 @@ export class Editor extends Component {
     } = this.props;
 
     const size = { width, height };
-    const { snapToGrid, cellSize } = this.state;
+    const playerProps = {
+      ...player,
+      api: this.api,
+      actions: actions.player,
+      width,
+      video
+    };
+
+    const videoEl = this.renderVideo(size);
+
+    return (
+      <Player {...playerProps}>
+        {FilterChainSurface ?
+          <FilterChainSurface {...size}>
+            {videoEl}
+          </FilterChainSurface> :
+          videoEl
+        }
+      </Player>
+    );
+  }
+
+  render() {
+    const {
+      className,
+      filterTypes,
+      video,
+      layers,
+      actions
+    } = this.props;
+
+    const {
+      snapToGrid,
+      cellSize
+    } = this.state;
 
     const layersPanelProps = {
       snapToGrid,
@@ -122,28 +184,27 @@ export class Editor extends Component {
     return (
       <div styleName='editor' className={className}>
         <div styleName='main'>
-          <FiltersPanel filterTypes={filterTypes}
+          <FiltersPanel
+            filterTypes={filterTypes}
             onCreateFilter={actions.editor.createFilter}
           />
-          <Player actions={actions.player}
-            width={width}
-            { ...{ ...player, video } }>
-            <Html5Video preload='auto'
-              { ...{ ...size, ...video } }
-              actions={actions.video}
-              src={source}
-            />
-          </Player>
+          {this.renderPlayer()}
           <Inspector layers={layers} />
         </div>
         <MainToolbar />
         <MainPanel>
-          <LayersPanel {...layersPanelProps }
-            actions={pick(actions, 'layer', 'filter')}
-          />
+          <LayersPanel
+            {...layersPanelProps }
+            actions={pick(actions, 'layer', 'filter')} >
+            <Timeline {...video} onSeek={this.api.seek} />
+          </LayersPanel>
           <PropertyEditor />
         </MainPanel>
-        <CustomDragLayer {...{ snapToGrid, cellSize, previews } } />
+        <CustomDragLayer { ...{
+          snapToGrid,
+          cellSize,
+          previews
+        } } />
       </div>
     );
   }

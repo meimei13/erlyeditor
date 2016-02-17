@@ -58,7 +58,8 @@ const filterTypes = {
       color: '#117442'
     },
     defaults: {
-      value: 0.7
+      factor: 2,
+      passes: 4
     },
     timeline: {
       offset: 0,

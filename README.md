@@ -226,11 +226,6 @@ To turn it on simply specify the **DEBUG** environment variable:
 
 ### Notes on implementation
 
-I use refs to [access child video components](https://facebook.github.io/react/docs/more-about-refs.html#summary).
-The typical use case for refs is that the parent component is already aware of what it's children are
-and just needs to gain reference to them. In my case using refs wasn't so straight forward.
-I am supplying a component for other developers to use and they may add any number of <Video />s.
-
 If you're going to implement your own video component it should provide
 the following public API methods (according to videoAPIShape):
 

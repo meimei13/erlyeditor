@@ -12,7 +12,8 @@ export default ({ common, dunno }) => [
         handler: dunno.split,
         tooltipTop: true,
         tooltipDelay: 400,
-        disabled: true
+        disabled: true,
+        small: true
       }
     ]
   },

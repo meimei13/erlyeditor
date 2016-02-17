@@ -7,7 +7,7 @@ import { name } from '../../package';
 import postcss from './postcss';
 import eslint from './eslint';
 import plugins from './plugins';
-import laoders from './loaders';
+import loaders from './loaders';
 
 const noParse = [
 ];
@@ -41,6 +41,9 @@ const externals = {
   'reduce-reducers': 'commonjs reduce-reducers',
   'classnames': 'commonjs classnames',
   'invariant': 'commonjs invariant',
+  'gl-react': 'commonjs gl-react',
+  'gl-react-dom': 'commonjs gl-react-dom',
+  'glsl-fast-gaussian-blur': 'commonjs glsl-fast-gaussian-blur',
 
   // TODO: export the only parts of lodash (packages) I use
 
@@ -89,8 +92,7 @@ export default {
     libraryTarget: 'umd'
   },
 
-  module: { noParse },
-  laoders,
+  module: { loaders, noParse },
   plugins,
   externals,
 

@@ -24,6 +24,7 @@ export default (
     <Route path='/dnd-naive-drag-demo' component={pages.dndNaiveDragDemo} />
     <Route path='/dnd-custom-layer-demo' component={pages.dndCustomLayerDemo} />
     <Route path='/designer-demo' component={pages.designerDemo} />
+    <Route path='/react-gl-demo' component={pages.reactGLDemo} />
     <Route path='*' component={pages.notFound} status={404} />
   </Route>
 );

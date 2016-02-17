@@ -1,4 +1,4 @@
-// import merge from 'lodash/merge';
+import merge from 'lodash/merge';
 import sortBy from 'lodash/sortBy';
 import { createSelector } from 'reselect';
 
@@ -58,8 +58,8 @@ export const layersSelector = createSelector(
 );
 
 export default createSelector(
-  // (s, props) => merge(s.editor, props),
-  s => s.editor,
+  (s, props) => merge(s.editor, props),
+  // s => s.editor,
   layersSelector,
   ({ layerTypes, filterTypes, filters, ...editor }, layers) => ({
     ...editor,

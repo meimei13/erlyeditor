@@ -47,6 +47,8 @@ export class SeekBar extends Component {
       seeking
     } = this.props;
 
+    const max = Math.floor(duration);
+
     return (
       <div className={className} styleName='seek-bar'>
         {percentage && <Progress className={progressClassName} {...percentage} />}
@@ -55,7 +57,7 @@ export class SeekBar extends Component {
           fillClassName={styles.fill}
           markerClassName={styles.marker}
           min={0}
-          max={duration}
+          max={max}
           step={step}
           disabled={disabled}
           value={currentTime}

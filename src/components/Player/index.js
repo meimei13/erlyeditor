@@ -6,6 +6,7 @@ import { HotKeys } from 'react-hotkeys';
 
 import {
   videoProps,
+  videoAPIShape,
   playbackRateShape,
   playerActionsShape
 } from '../propTypes';
@@ -19,7 +20,13 @@ import Controls from './Controls';
 
 import styles from './styles';
 
-const { bool, number, string, node, shape } = PropTypes;
+const {
+  bool,
+  number,
+  string,
+  node,
+  shape
+} = PropTypes;
 
 const vimKeyMap = {
   rewind10: 'h',
@@ -34,7 +41,7 @@ const vimKeyMap = {
 export class Player extends Component {
   static propTypes = {
     className: string,
-    children: node.isRequired,
+    children: node,
 
     debug: bool,
     hovered: bool,
@@ -43,6 +50,7 @@ export class Player extends Component {
     playbackRate: playbackRateShape,
 
     actions: playerActionsShape.isRequired,
+    api: videoAPIShape.isRequired,
     video: shape(videoProps).isRequired
   };
 
@@ -56,39 +64,39 @@ export class Player extends Component {
     }
   };
 
-  handleToggleMute = () => this.sendCommand('toggleMute');
-  handleToggleLoop = () => this.sendCommand('toggleLoop');
-  handleTogglePlay = () => this.sendCommand('togglePlay');
-  handleToggleFullScreen = () => this.sendCommand('toggleFullScreen');
-  handleVolumeChange = volume => this.sendCommand('setVolume', volume);
-  handleSeek = offset => this.sendCommand('seek', offset);
-
   handleDecreasePlaybackRate = () => this.setPlaybackRate(-1);
   handleIncreasePlaybackRate = () => this.setPlaybackRate(+1);
 
   setPlaybackRate = factor => {
-    const { video, playbackRate: { min, max, step } } = this.props;
+    const {
+      video,
+      api,
+      playbackRate: {
+        min,
+        max,
+        step
+      }
+    } = this.props;
+
     const value = clamp(video.playbackRate + step * factor, min, max);
-    this.sendCommand('setPlaybackRate', value);
+    api.setPlaybackRate(value);
   };
-
-  sendCommand = (command, ...args) =>
-    Object.values(this.refs).forEach(r => r[command](...args));
-
-  renderVideos() {
-    return React.Children.map(this.props.children, (video, index) =>
-      React.cloneElement(video, { ref: `video-${index}` }));
-  }
 
   renderContainer() {
     if (!React.Children.count) return null;
 
-    const { debug, video, hovered } = this.props;
+    const {
+      children,
+      debug,
+      video,
+      api,
+      hovered
+    } = this.props;
 
     return (
       <div styleName='container'>
-        {this.renderVideos()}
-        <Overlay {...video} debug={debug} onTogglePlay={this.handleTogglePlay}>
+        {children}
+        <Overlay {...video} debug={debug} onTogglePlay={api.togglePlay}>
           <HUD {...video} hovered={hovered} />
         </Overlay>
       </div>
@@ -96,10 +104,18 @@ export class Player extends Component {
   }
 
   render() {
-    const { className, width, height, actions, video, hovered } = this.props;
+    const {
+      className,
+      width,
+      height,
+      actions,
+      api,
+      video,
+      hovered
+    } = this.props;
 
     const keyboardHandlers = {
-      togglePlay: this.handleTogglePlay,
+      togglePlay: api.togglePlay,
       decreasePlaybackRate: this.handleDecreasePlaybackRate,
       increasePlaybackRate: this.handleIncreasePlaybackRate
     };
@@ -116,18 +132,18 @@ export class Player extends Component {
         <SeekBar {...video}
           disabled={Boolean(video.error)}
           step={1}
-          onSeek={this.handleSeek}
+          onSeek={api.seek}
         />
         <Info />
         <Controls {...video}
           error={Boolean(video.error)}
           visible={hovered}
           onToggleDebugMonitor={actions.toggleDebugMonitor}
-          onVolumeChange={this.handleVolumeChange}
-          onTogglePlay={this.handleTogglePlay}
-          onToggleMute={this.handleToggleMute}
-          onToggleLoop={this.handleToggleLoop}
-          onToggleFullScreen={this.handleToggleFullScreen}
+          onVolumeChange={api.setVolume}
+          onTogglePlay={api.togglePlay}
+          onToggleMute={api.toggleMute}
+          onToggleLoop={api.toggleLoop}
+          onToggleFullScreen={api.toggleFullScreen}
           onDecreasePlaybackRate={this.handleDecreasePlaybackRate}
           onIncreasePlaybackRate={this.handleIncreasePlaybackRate}
         />

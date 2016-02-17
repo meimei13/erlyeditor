@@ -41,5 +41,14 @@ export default [
   { test: /\.ttf(\?.+)?$/, query: { mimetype: 'application/octet-stream', ...query.font.url }, ...loader.font.url },
   { test: /\.eot(\?.+)?$/, query: query.font, ...loader.font.file },
   { test: /\.svg(\?.+)?$/, include: [paths.scripts, paths.lib], loader: 'file' },
+  {
+    test: /\.(glsl|frag|vert)$/,
+    loaders: ['raw', 'glslify'],
+    include: [
+      paths.modules,
+      paths.scripts,
+      paths.lib
+    ]
+  }
 ];
 /* eslint-enable max-len */

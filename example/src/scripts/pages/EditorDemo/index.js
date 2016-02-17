@@ -12,7 +12,7 @@ export class EditorDemo extends Component {
       <div styleName='root'>
         <Editor className={styles.fullscreenEditor}
           source={sources[0]}
-          player={{ width: 440, height: 200 }}
+          player={{ width: 640, height: 480 }}
         />
       </div>
     );

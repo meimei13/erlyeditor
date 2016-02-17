@@ -16,7 +16,6 @@ import Button from '../../../Button';
 import Panel from '../../Panel';
 import ContextToolbar from '../../ContextToolbar';
 
-import Timeline from '../Timeline';
 import ZoomSlider from '../ZoomSlider';
 import Layer from '../Layer';
 
@@ -76,14 +75,13 @@ export class LayersPanel extends Component {
       <Panel className={cn(className, styles.panel)}
         contentClassName={styles.content}
         footer={this.renderFooter()}>
-        {/*<Timeline />*/}
+        {children}
         <List>
           {layers.map(layer =>
             <List.Item key={layer.id}>
               <Layer {...{ ...layer, ...layerProps } } />
             </List.Item>
           )}
-          {children}
         </List>
       </Panel>
     );
