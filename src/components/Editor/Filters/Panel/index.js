@@ -37,6 +37,7 @@ export class FiltersPanel extends Component {
         expanded={false}
         className={cn(className, styles.panel)}
         headerClassName={styles.panelHeader}
+        contentClassName={styles.panelContent}
         header={this.renderSearchBar()}
         title='filters'>
 

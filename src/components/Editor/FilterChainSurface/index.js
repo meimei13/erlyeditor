@@ -5,6 +5,8 @@ import { Surface } from 'gl-react-dom';
 import css from 'react-css-modules';
 
 import { filterShape } from '../../propTypes';
+
+import { Overlay } from './renderers';
 import styles from './styles';
 
 const {
@@ -16,6 +18,10 @@ const {
 } = PropTypes;
 
 export class FilterChainSurface extends Component {
+  builtInRenderers = {
+    overlay: Overlay
+  };
+
   static propTypes = {
     children: node.isRequired,
 
@@ -27,7 +33,7 @@ export class FilterChainSurface extends Component {
     autoRedraw: bool,
 
     filters: arrayOf(filterShape),
-    renderers: object.isRequired
+    renderers: object
   };
 
   static defaultProps = {
@@ -36,13 +42,24 @@ export class FilterChainSurface extends Component {
     autoRedraw: true
   };
 
-  @autobind
-  renderFilter(children, filter) {
-    const { type, attributes } = filter;
-    const { renderers, width, height } = this.props;
+  getRenderer(type) {
+    const renderers = {
+      ...this.builtInRenderers,
+      ...this.props.renderers
+    };
 
     const Renderer = renderers[type];
     invariant(Renderer, `Renderer of type ${type} is not registered`);
+
+    return Renderer;
+  }
+
+  @autobind
+  renderFilter(children, filter) {
+    const { type, attributes } = filter;
+    const { width, height } = this.props;
+
+    const Renderer = this.getRenderer(type);
 
     return React.createElement(Renderer, {
       ...attributes,

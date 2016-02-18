@@ -43,7 +43,6 @@ const externals = {
   'invariant': 'commonjs invariant',
   'gl-react': 'commonjs gl-react',
   'gl-react-dom': 'commonjs gl-react-dom',
-  'glsl-fast-gaussian-blur': 'commonjs glsl-fast-gaussian-blur',
 
   // TODO: export the only parts of lodash (packages) I use
 

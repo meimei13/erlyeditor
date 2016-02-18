@@ -21,7 +21,10 @@ import {
   videoProps,
   videoActionsShape,
   playerActionsShape,
+
+  layerTypeShape,
   filterTypeShape,
+
   layerShape
 } from '../propTypes';
 
@@ -37,16 +40,6 @@ import Timeline from './Timeline';
 import PropertyEditor from './PropertyEditor';
 import Inspector from './Inspector';
 
-import FilterTypeDragPreview from './Filters/FilterDragPreview.js';
-import FilterDragPreview from './Layers/Layer/FilterDragPreview';
-import { LayerDragPreview } from './Layers';
-
-import {
-  Overlay,
-  Blur,
-  Hue
-} from './FilterChainSurface/renderers';
-
 const FilterChainSurface = __CLIENT__ ?
   require('./FilterChainSurface').default :
   void 0;
@@ -60,37 +53,16 @@ const {
   bool,
   number,
   string,
+  object,
   arrayOf,
   shape
 } = PropTypes;
-
-// preview components for
-// various draggable item types
-const previews = {
-  filterType: FilterTypeDragPreview,
-  filter: FilterDragPreview,
-  layer: LayerDragPreview
-};
-
-const filterGroups = {
-  behavioral: ['cut'],
-  presentational: [
-    'overlay',
-    'blur',
-    'hue'
-  ]
-};
-
-const filterRenderers = {
-  overlay: Overlay,
-  blur: Blur,
-  hue: Hue
-};
 
 export class Editor extends Component {
   static propTypes = {
     className: string,
 
+    layerTypes: object.isRequired,
     filterTypes: arrayOf(filterTypeShape).isRequired,
     layers: arrayOf(layerShape).isRequired,
 
@@ -110,7 +82,9 @@ export class Editor extends Component {
       debug: bool
     }).isRequired,
 
-    video: shape(videoProps).isRequired
+    video: shape(videoProps).isRequired,
+
+    filterRenderers: object
   };
 
   static defaultProps = {
@@ -152,7 +126,8 @@ export class Editor extends Component {
 
   renderPlayer() {
     const {
-      filters,
+      layers,
+      filterRenderers,
       actions,
       video,
       player: {
@@ -171,17 +146,20 @@ export class Editor extends Component {
       video
     };
 
-    const presentationalFilters = filters.filter(
-      ({ type }) => filterGroups.presentational.indexOf(type) !== 0
+    const filters = this.props.filters.filter(
+      ({ layerId }) => layers.find(l => l.id === layerId).presentational
     );
+    // ^----- sorry for this, I need to get it working,
+    // will come back here later, promise
+
     const videoEl = this.renderVideo(size);
 
     return (
       <Player {...playerProps}>
         {FilterChainSurface ?
           <FilterChainSurface {...size}
-            renderers={filterRenderers}
-            filters={presentationalFilters}>
+            filters={filters}
+            renderers={filterRenderers} >
             {videoEl}
           </FilterChainSurface> :
           videoEl
@@ -230,7 +208,7 @@ export class Editor extends Component {
           </LayersPanel>
           <PropertyEditor />
         </MainPanel>
-        <CustomDragLayer { ...{ snapToGrid, cellSize, previews } } /> </div>
+        <CustomDragLayer { ...{ snapToGrid, cellSize } } /> </div>
     );
   }
 }

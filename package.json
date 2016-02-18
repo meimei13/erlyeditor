@@ -63,7 +63,6 @@
     "git-issues": "1.2.0",
     "gl-react": "2.2.0",
     "gl-react-dom": "2.2.0",
-    "glsl-fast-gaussian-blur": "1.0.2",
     "glslify": "5.0.2",
     "glslify-loader": "1.0.2",
     "ignore-styles": "1.2.0",
@@ -171,8 +170,7 @@
     "react-dnd-html5-backend": "^2.0.0",
     "invariant": "^2.2.0",
     "gl-react": "^2.2.0",
-    "gl-react-dom": "^2.2.0",
-    "glsl-fast-gaussian-blur": "^1.0.0"
+    "gl-react-dom": "^2.2.0"
   },
   "repository": {
     "type": "git",

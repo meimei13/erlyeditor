@@ -63,7 +63,7 @@ export default createSelector(
   layersSelector,
   ({ layerTypes, filterTypes, filters, ...editor }, layers) => ({
     ...editor,
-    layerTypes: Object.values(layerTypes),
+    layerTypes,
     filterTypes: Object.values(filterTypes),
     filters: Object.values(filters),
     layers

@@ -45,6 +45,7 @@ export const editor = createReducer({
 
     const newFilter = {
       type,
+      layerId,
       id: newFilterId,
       timeline,
       appearance,
