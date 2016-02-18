@@ -41,9 +41,18 @@ import FilterTypeDragPreview from './Filters/FilterDragPreview.js';
 import FilterDragPreview from './Layers/Layer/FilterDragPreview';
 import { LayerDragPreview } from './Layers';
 
+import {
+  Overlay,
+  Blur,
+  Hue
+} from './FilterChainSurface/renderers';
+
 const FilterChainSurface = __CLIENT__ ?
   require('./FilterChainSurface').default :
   void 0;
+
+// ^---- its just a draft version, right? (:
+// TODO: there are defenitely a better way to make SSR work
 
 import styles from './styles';
 
@@ -61,6 +70,21 @@ const previews = {
   filterType: FilterTypeDragPreview,
   filter: FilterDragPreview,
   layer: LayerDragPreview
+};
+
+const filterGroups = {
+  behavioral: ['cut'],
+  presentational: [
+    'overlay',
+    'blur',
+    'hue'
+  ]
+};
+
+const filterRenderers = {
+  overlay: Overlay,
+  blur: Blur,
+  hue: Hue
 };
 
 export class Editor extends Component {
@@ -128,6 +152,7 @@ export class Editor extends Component {
 
   renderPlayer() {
     const {
+      filters,
       actions,
       video,
       player: {
@@ -146,12 +171,17 @@ export class Editor extends Component {
       video
     };
 
+    const presentationalFilters = filters.filter(
+      ({ type }) => filterGroups.presentational.indexOf(type) !== 0
+    );
     const videoEl = this.renderVideo(size);
 
     return (
       <Player {...playerProps}>
         {FilterChainSurface ?
-          <FilterChainSurface {...size}>
+          <FilterChainSurface {...size}
+            renderers={filterRenderers}
+            filters={presentationalFilters}>
             {videoEl}
           </FilterChainSurface> :
           videoEl
@@ -178,7 +208,8 @@ export class Editor extends Component {
       snapToGrid,
       cellSize,
       layers,
-      filterTypes
+      filterTypes,
+      duration: video.duration
     };
 
     return (
@@ -189,23 +220,17 @@ export class Editor extends Component {
             onCreateFilter={actions.editor.createFilter}
           />
           {this.renderPlayer()}
-          <Inspector layers={layers} />
+          {/*<Inspector layers={layers} />*/}
         </div>
         <MainToolbar />
         <MainPanel>
-          <LayersPanel
-            {...layersPanelProps }
-            actions={pick(actions, 'layer', 'filter')} >
+          <LayersPanel {...layersPanelProps}
+            actions={pick(actions, 'layer', 'filter')}>
             <Timeline {...video} onSeek={this.api.seek} />
           </LayersPanel>
           <PropertyEditor />
         </MainPanel>
-        <CustomDragLayer { ...{
-          snapToGrid,
-          cellSize,
-          previews
-        } } />
-      </div>
+        <CustomDragLayer { ...{ snapToGrid, cellSize, previews } } /> </div>
     );
   }
 }

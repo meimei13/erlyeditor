@@ -42,19 +42,17 @@ export class Filter extends Component {
     const {
       id,
       layerId,
-      timeline,
       visible,
       locked,
-      appearance
+      appearance,
+      width
     } = this.props;
-
-    const { duration } = timeline;
 
     const state = locked ? 'locked' : 'unlocked';
     const visibility = visible ? 'visible' : 'hidden';
     const styleName = cn('filter', visibility, state);
     const style = {
-      width: duration,
+      width,
       backgroundColor: appearance.color
     };
 
@@ -63,7 +61,7 @@ export class Filter extends Component {
     return (
       <div {...known}>
         <h6 styleName='title'>
-          {`${id}-${layerId}`}
+          {`${id} - ${layerId}`}
         </h6>
         <Controls {...{ locked, visible } }
           onToggleVisibility={this.handleToggleVisibility}

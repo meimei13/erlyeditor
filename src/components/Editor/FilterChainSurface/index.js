@@ -1,16 +1,19 @@
+import invariant from 'invariant';
+import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import { Surface } from 'gl-react-dom';
 import css from 'react-css-modules';
 
-import {
-  Hue,
-  Blur,
-  Overlay
-}from './renderers';
-
+import { filterShape } from '../../propTypes';
 import styles from './styles';
 
-const { bool, number, node } = PropTypes;
+const {
+  bool,
+  number,
+  object,
+  node,
+  arrayOf
+} = PropTypes;
 
 export class FilterChainSurface extends Component {
   static propTypes = {
@@ -21,7 +24,10 @@ export class FilterChainSurface extends Component {
 
     eventsThrough: bool,
     visibleContent: bool,
-    autoRedraw: bool
+    autoRedraw: bool,
+
+    filters: arrayOf(filterShape),
+    renderers: object.isRequired
   };
 
   static defaultProps = {
@@ -30,39 +36,35 @@ export class FilterChainSurface extends Component {
     autoRedraw: true
   };
 
-  state = {
-    blur: 2,
-    blurPasses: 2,
-    hue: 140
-  };
+  @autobind
+  renderFilter(children, filter) {
+    const { type, attributes } = filter;
+    const { renderers, width, height } = this.props;
+
+    const Renderer = renderers[type];
+    invariant(Renderer, `Renderer of type ${type} is not registered`);
+
+    return React.createElement(Renderer, {
+      ...attributes,
+      width,
+      height
+    }, children);
+  }
 
   render() {
     const {
       children,
       width,
       height,
+      filters,
       ...other
     } = this.props;
 
-    const { blurPasses, blur, hue } = this.state;
-
-    const known = { width, height };
-
     return (
-      <Surface { ...{ ...known, ...other } }>
-        <Blur width={width} height={height} passes={blurPasses} factor={blur}>
-          <Hue hue={hue}>
-            {children}
-          </Hue>
-        </Blur>
+      <Surface { ...{ ...{ width, height }, ...other } }>
+        {filters.reduceRight(this.renderFilter, children)}
       </Surface>
     );
-
-    // return (
-    //   <Surface { ...{ ...known, ...other } }>
-    //     {children}
-    //   </Surface>
-    // );
   }
 }
 

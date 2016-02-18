@@ -38,7 +38,8 @@ export const editor = createReducer({
     const filterType = filterTypes[type];
     const layer = layers[layerId];
 
-    const newFilterId = `${type}${++filterId}`;
+    const nextId = ++filterId;
+    const newFilterId = `${type}${nextId}`;
 
     const { timeline, appearance } = filterType;
 

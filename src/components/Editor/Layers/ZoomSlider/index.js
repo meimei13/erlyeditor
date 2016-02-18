@@ -39,12 +39,14 @@ export class ZoomSlider extends Component {
     return (
       <div styleName='zoom-slider'>
         {onZoomIn &&
-          <Button className={styles.button}
+          <Button neutral
+            className={styles.button}
             icon='zoom_in'
-            small circle
             onClick={onZoomIn} />
         }
-        <Slider sliderClassName={styles.slider}
+        <Slider
+          barClassName={styles.sliderBar}
+          sliderClassName={styles.slider}
           min={0}
           max={100}
           step={step}
@@ -52,9 +54,9 @@ export class ZoomSlider extends Component {
           onChange={this.handleZoom}
         />
         {onZoomOut &&
-          <Button className={styles.button}
+          <Button neutral
+            className={styles.button}
             icon='zoom_out'
-            small circle
             onClick={onZoomOut} />
         }
       </div>

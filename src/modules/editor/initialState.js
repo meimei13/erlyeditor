@@ -22,7 +22,7 @@ const filterTypes = {
     },
     timeline: {
       offset: 0,
-      duration: 100
+      duration: 10
     }
   },
   overlay: {
@@ -40,7 +40,7 @@ const filterTypes = {
     },
     timeline: {
       offset: 0,
-      duration: 100
+      duration: 10
     },
     editor: {
       x1: { type: 'number' },
@@ -63,7 +63,7 @@ const filterTypes = {
     },
     timeline: {
       offset: 0,
-      duration: 100
+      duration: 10
     }
   },
   hue: {
@@ -79,7 +79,7 @@ const filterTypes = {
     },
     timeline: {
       offset: 0,
-      duration: 100
+      duration: 10
     }
   }
 };

@@ -2,13 +2,15 @@ import pick from 'lodash/pick';
 
 export const dragSourceProps = [
   'id',
-  'type',
   'layerId',
+  'type',
   'timeline',
   'visible',
   'locked',
   'attributes',
-  'appearance'
+  'appearance',
+  'x',
+  'width'
 ];
 
 export default {

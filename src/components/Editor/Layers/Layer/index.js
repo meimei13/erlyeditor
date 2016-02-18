@@ -1,3 +1,4 @@
+import pick from 'lodash/pick';
 import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
@@ -50,6 +51,11 @@ export class Layer extends Component {
   state = { expanded: true };
 
   @autobind
+  handleToggleDestroy() {
+    this.props.actions.layer.destroy(this.props.id);
+  }
+
+  @autobind
   handleToggleExpanded() {
     const expanded = !this.state.expanded;
     this.setState({ expanded });
@@ -70,59 +76,58 @@ export class Layer extends Component {
     this.props.actions.filter.destroy(id);
   }
 
+  @autobind
+  renderHeader() {
+    const props = pick(
+      this.props,
+      'name',
+      'description',
+      'editable',
+      'disabled',
+      'locked',
+      'single'
+    );
+
+    return (
+      <Header {...props}
+        expanded={this.state.expanded}
+        onDestroy={this.handleDestroy}
+        onToggleExpanded={this.handleToggleExpanded}
+      />
+    );
+  }
+
+  @autobind
+  renderSurface() {
+    const actions = this.props.actions.filter;
+    const props = pick(
+      this.props,
+      'id',
+      'type',
+      'snapToGrid',
+      'cellSize',
+      'filters',
+      'filterTypes',
+      'duration'
+    );
+
+    return (
+      <Surface {...props}
+        onMoveFilter={this.handleMoveFilter}
+        onDestroyFilter={this.handleDestroyFilter}
+        onToggleFilterVisibility={actions.toggleVisibility}
+        onToggleFilterLocked={actions.toggleLocked}
+      />
+    );
+  }
+
   render() {
-    const {
-      className,
-
-      snapToGrid,
-      cellSize,
-      filters,
-      filterTypes,
-
-      id,
-      name,
-      description,
-      type,
-      editable,
-      disabled,
-      locked,
-      single,
-
-      actions
-    } = this.props;
-
-    const { expanded } = this.state;
-
-    const headerProps = {
-      name,
-      description,
-      editable,
-      disabled,
-      locked,
-      single,
-      expanded
-    };
-
-    const surfaceProps = {
-      id,
-      type,
-      snapToGrid,
-      cellSize,
-      filters,
-      filterTypes
-    };
+    const { className } = this.props;
 
     return (
       <div styleName='layer' className={className}>
-        <Header {...headerProps}
-          onToggleExpanded={this.handleToggleExpanded}
-        />
-        <Surface {...surfaceProps}
-          onMoveFilter={this.handleMoveFilter}
-          onDestroyFilter={this.handleDestroyFilter}
-          onToggleFilterVisibility={actions.filter.toggleVisibility}
-          onToggleFilterLocked={actions.filter.toggleLocked}
-        />
+        {this.renderHeader()}
+        {this.renderSurface()}
       </div>
     );
   }

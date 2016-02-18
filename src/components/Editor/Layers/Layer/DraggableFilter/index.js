@@ -13,16 +13,21 @@ import getStyle from './getStyle';
 import dragSource, { dragSourceProps } from './dragSource';
 import styles from './styles';
 
-const { bool, string, func } = PropTypes;
+const { bool, number, string, func } = PropTypes;
 
 export class DraggableFilter extends Component {
   static propTypes = {
     ...filterProps,
+
     layerId: string.isRequired,
-    isDragging: bool,
     onDestroy: func.isRequired,
     onToggleVisibility: func.isRequired,
-    onToggleLocked: func.isRequired
+    onToggleLocked: func.isRequired,
+
+    x: number.isRequired,
+    width: number.isRequired,
+
+    isDragging: bool
   };
 
   render() {

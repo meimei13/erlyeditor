@@ -11,7 +11,11 @@ export default {
 
     const typePropName = sourceType === ItemTypes.FilterType ? 'name' : 'type';
     const itemType = item[typePropName];
+
+    // TODO: lol, not a super-performant way to go
     const filterType = filterTypes.find(ft => ft.name === itemType);
+    // ^-- I should pass an Object instead of Array
+    // to the editor's root selector to avoid this `find` shit
 
     if (filterType) {
       // layer types on which filter can be placed (dropped)
@@ -43,17 +47,24 @@ export default {
         type: item.name
       };
     } else if (sourceType === ItemTypes.Filter) {
-      const { timeline } = item;
-
       // difference between the last recorded client offset of the pointer
       // and the client offset when current the drag operation has started
       const delta = monitor.getDifferenceFromInitialOffset();
 
-      const x = Math.floor(timeline.offset + delta.x);
-      const offset = snapToGrid ? snap(x, cellSize) : x;
+      const x = Math.floor(item.x + delta.x);
+      const x1 = snapToGrid ? snap(x, cellSize) : x;
 
       // update filter position on a timeline
-      component.moveFilter(item.id, item.layerId, id, offset);
+      component.moveFilter(item.id, item.layerId, id, x1);
+
+      return {
+        fitlerId: item.id,
+        sourceLayerId: item.layerId,
+        targetLayerId: id,
+        x1
+      };
     }
+
+    return null;
   }
 };

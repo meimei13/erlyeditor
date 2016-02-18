@@ -2,7 +2,7 @@ export default {
   main: {
     id: 'main',
     type: 'video',
-    filters: ['cut1', 'cut2', 'cut3'],
+    filters: [],
     order: 1,
     editable: false,
     disabled: false,
@@ -12,8 +12,8 @@ export default {
   layer1: {
     id: 'layer1',
     type: 'effect',
-    filters: ['overlay1', 'blur1'],
-    order: 2,
+    filters: [],
+    order: 1,
     editable: true,
     disabled: false,
     locked: false,
@@ -22,8 +22,28 @@ export default {
   layer2: {
     id: 'layer2',
     type: 'effect',
-    filters: ['hue1'],
+    filters: [],
+    order: 2,
+    editable: true,
+    disabled: false,
+    locked: false,
+    single: false
+  },
+  layer3: {
+    id: 'layer3',
+    type: 'effect',
+    filters: [],
     order: 3,
+    editable: true,
+    disabled: false,
+    locked: false,
+    single: false
+  },
+  layer4: {
+    id: 'layer4',
+    type: 'effect',
+    filters: [],
+    order: 4,
     editable: true,
     disabled: false,
     locked: false,

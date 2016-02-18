@@ -3,7 +3,8 @@ import transform from 'lodash/transform';
 export const combineTransform = (reducers, initialState = {}) =>
   (state = initialState, action) => ({
     ...state,
-    ...transform(reducers, (result, reducer, key) => result[key] = reducer(state[key], action), {})
+    ...transform(reducers, (result, reducer, key) =>
+      result[key] = reducer(state[key], action), {})
   });
 
 export const reduceIf = (reducer, predicate, options = { payload: true }) =>

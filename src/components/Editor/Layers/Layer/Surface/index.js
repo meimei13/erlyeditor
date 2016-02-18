@@ -1,6 +1,8 @@
 import flow from 'lodash/flow';
+import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
+import dimensions from 'react-dimensions';
 import css from 'react-css-modules';
 import cn from 'classnames';
 
@@ -8,8 +10,10 @@ import {
   filterShape,
   filterTypeShape
 } from '../../../../propTypes';
+
 import List from '../../../../List';
 import ItemTypes from '../../../ItemTypes';
+import snap from '../../../../../lib/snap';
 
 import DraggableFilter from '../DraggableFilter';
 import dropTarget from './dropTarget';
@@ -36,31 +40,80 @@ export class Surface extends Component {
     filterTypes: arrayOf(filterTypeShape),
     filters: arrayOf(filterShape),
 
-    isOver: bool,
-    canDrop: bool,
-    connectDropTarget: func.isRequired,
+    containerWidth: number.isRequired,
+    containerHeight: number.isRequired,
+
+    duration: number,
 
     onMoveFilter: func.isRequired,
     onToggleFilterVisibility: func.isRequired,
     onToggleFilterLocked: func.isRequired,
-    onDestroyFilter: func.isRequired
+    onDestroyFilter: func.isRequired,
+
+    isOver: bool,
+    canDrop: bool,
+    connectDropTarget: func.isRequired
   };
 
-  moveFilter(id, sourceLayerId, targetLayerId, offset) {
+  moveFilter(id, sourceLayerId, targetLayerId, x) {
+    const {
+      duration,
+      containerWidth
+    } = this.props;
+
+    // timeline.offset / duration = x / containerWidth <=>
+    const offset = x * duration / containerWidth;
+
     this.props.onMoveFilter(id, sourceLayerId, targetLayerId, offset);
+  }
+
+  @autobind
+  renderFilter(filter) {
+    const {
+      id,
+      snapToGrid,
+      cellSize,
+      onToggleFilterVisibility,
+      onToggleFilterLocked,
+      onDestroyFilter,
+      duration,
+      containerWidth
+    } = this.props;
+
+    const { timeline } = filter;
+
+    // timeline.offset / duration = x / containerWidth <=>
+    const x = (timeline.offset / duration) * containerWidth;
+
+    // timeline.duration / duration = width / containerWidth <=>
+    const width = (timeline.duration / duration) * containerWidth;
+
+    console.log(
+      `%c (${x}, ${width})`,
+      'background-color: darkred; color: #fff'
+    );
+
+    const filterProps = {
+      x: snapToGrid ? snap(x, cellSize) : x,
+      width: snapToGrid ? snap(width, cellSize) : width,
+      layerId: id
+    };
+
+    return (
+      <List.Item key={filter.id}>
+        <DraggableFilter {...{ ...filter, ...filterProps } }
+          onToggleVisibility={onToggleFilterVisibility}
+          onToggleLocked={onToggleFilterLocked}
+          onDestroy={onDestroyFilter}
+        />
+      </List.Item>
+    );
   }
 
   render() {
     const {
       className,
-
-      id,
       filters,
-
-      onToggleFilterVisibility,
-      onToggleFilterLocked,
-      onDestroyFilter,
-
       connectDropTarget,
       isOver,
       canDrop
@@ -74,16 +127,7 @@ export class Surface extends Component {
     return connectDropTarget(
       <div { ...{ styleName, className } }>
         <List className={styles.list}>
-          {filters.map(filter =>
-            <List.Item key={filter.id}>
-              <DraggableFilter {...filter}
-                layerId={id}
-                onToggleVisibility={onToggleFilterVisibility}
-                onToggleLocked={onToggleFilterLocked}
-                onDestroy={onDestroyFilter}
-              />
-            </List.Item>
-          )}
+          {filters.map(this.renderFilter)}
         </List>
       </div>
     );
@@ -102,6 +146,7 @@ export default flow(
   DropTarget([
     ItemTypes.FilterType,
     ItemTypes.Filter
-  ], dropTarget, collect)
+  ], dropTarget, collect),
+  dimensions()
 )(Surface);
 /* eslint-enable new-cap */

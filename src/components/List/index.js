@@ -10,7 +10,7 @@ import styles from './styles';
 
 const { bool, string, node } = PropTypes;
 
-export const List = (props) => {
+export const List = props => {
   const {
     className,
     children,

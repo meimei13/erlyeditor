@@ -3,21 +3,19 @@ import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
 import cn from 'classnames';
 
-import { filterTimelineShape } from '../../../../propTypes';
-
 import styles from './styles';
 
-const { bool, object, string } = PropTypes;
+const { number, bool, object, string } = PropTypes;
 
 export class FilterDragPreview extends Component {
   static propTypes = {
     id: string.isRequired,
     layerId: string.isRequired,
     type: string.isRequired,
-    timeline: filterTimelineShape.isRequired,
     visible: bool,
     locked: bool,
-    appearance: object.isRequired
+    appearance: object.isRequired,
+    width: number.isRequired
   };
 
   state = { tick: false };
@@ -41,9 +39,7 @@ export class FilterDragPreview extends Component {
     const {
       id,
       layerId,
-      timeline: {
-        duration
-      },
+      width,
       visible,
       locked,
       appearance
@@ -51,7 +47,7 @@ export class FilterDragPreview extends Component {
 
     const { tick } = this.state;
     const style = {
-      width: duration,
+      width,
       backgroundColor: appearance.color
     };
 
@@ -63,7 +59,7 @@ export class FilterDragPreview extends Component {
     return (
       <div {...known}>
         <h6 styleName='title'>
-          {`${id}-${layerId}`}
+          {`${id} - ${layerId}`}
         </h6>
       </div>
     );

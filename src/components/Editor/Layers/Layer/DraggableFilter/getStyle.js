@@ -1,6 +1,5 @@
-export default props => {
-  const { timeline: { offset } } = props;
-  const transform = `translate3d(${offset}px, 0, 0)`;
+export default ({ x }) => {
+  const transform = `translate3d(${x}px, 0, 0)`;
 
   return {
     position: 'absolute',
