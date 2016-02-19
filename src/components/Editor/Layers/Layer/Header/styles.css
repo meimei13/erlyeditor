@@ -20,6 +20,7 @@
   padding: 0.25em 0.4em;
   background-color: var(--header-background-color);
   border-right: 1px solid var(--brand-black);
+  box-sizing: border-box;
 }
 
 .title {
@@ -34,6 +35,7 @@
 }
 
 .wide {
+  min-width: var(--header-wide-width);
   width: var(--header-wide-width);
 }
 

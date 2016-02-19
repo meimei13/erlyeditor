@@ -46,7 +46,7 @@ export class Timeline extends Component {
 
     const shouldAnimate = played >= 1 && played <= 99;
     const animationPreset = {
-      stiffness: 80,
+      stiffness: 150,
       damping: 80
     };
 

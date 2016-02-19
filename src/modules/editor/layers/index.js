@@ -1,61 +1,15 @@
 import omit from 'lodash/omit';
 import { createReducer } from 'redux-act';
 
-import {
-  create,
-  destroy,
-  move,
-  addFilter,
-  removeFilter
-} from './actions';
+import * as actions from './actions';
+import * as reducers from './reducers';
 
-import initialState, { layerDefaults } from './initialState';
-
-let layerId = 10;
+import initialState from './initialState';
 
 export default createReducer({
-  [create]: (state, { type }) => {
-    const nextId = ++layerId;
-    const newLayerId = `${type}${nextId}`;
-
-    const newLayer = {
-      id: newLayerId,
-      type,
-      order: nextId,
-      ...layerDefaults
-    };
-
-    return {
-      ...state,
-      [newLayerId]: newLayer
-    };
-  },
-
-  [destroy]: (s, { id }) => omit(s, id),
-
-  // TODO: Impl move reducer
-  [move]: s => s,
-
-  [addFilter]: (state, { id, filterId }) => {
-    const layer = state[id];
-    const filters = layer.filters;
-
-    return {
-      ...state,
-      [id]: {
-        ...layer,
-        filters: [
-          ...filters,
-          filterId
-        ]
-      }
-    };
-  },
-
-  [removeFilter]: (state, { id, filterId }) => {
-    const layer = state[id];
-    const filters = layer.filters.filter(f => f !== filterId);
-
-    return { ...state, [id]: { ...layer, filters } };
-  }
+  [actions.create]: reducers.create,
+  [actions.destroy]: (s, { id }) => omit(s, id),
+  [actions.addFilter]: reducers.addFilter,
+  [actions.removeFilter]: reducers.removeFilter,
+  [actions.move]: s => s
 }, initialState);

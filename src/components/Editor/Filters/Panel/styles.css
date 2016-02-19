@@ -3,6 +3,9 @@
 :root {
   --container-background-color: var(--brand-black);
   --list-item-margin: 0.2em;
+
+  --content-width: 7em;
+  --content-height: 20em;
 }
 
 .container {
@@ -16,16 +19,17 @@
 }
 
 .panelContent {
-  width: 7em;
-  height: 20em;
+  min-width: var(--content-width);
+  width: var(--content-width);
+  height: var(--content-height);
+  padding: 1em;
   overflow: auto;
-  display: flex;
 }
 
 .list {
   flex-wrap: wrap;
   align-items: center;
-  align-content: center;
+  align-center: center;
   justify-content: center;
   flex: 2;
 }

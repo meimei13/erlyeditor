@@ -189,7 +189,7 @@ export default class Html5Video extends Component {
   handleEnded = () => this.props.actions.ended(this.video.currentTime);
   handleDurationChange = () => this.props.actions.durationChange(this.video.duration);
 
-  @throttle(1000)
+  @throttle(500)
   handleTimeUpdate() {
     if (this.props.onTimeUpdate) this.props.onTimeUpdate();
     this.props.actions.timeUpdate(this.video.currentTime);

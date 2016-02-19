@@ -7,13 +7,12 @@ export default ({ common, layer, filter }) => [
     actions: [
       {
         title: 'create',
-        description: 'create a new layer',
+        description: 'new layer',
         icon: 'add',
         handler: layer.create,
-        tooltipTop: true,
-        tooltipDelay: 400,
         disabled: false,
-        small: true
+        tooltipTop: true,
+        tooltipDelay: 1000
       }
     ]
   },
