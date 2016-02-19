@@ -13,7 +13,7 @@ import {
 
 import styles from './styles';
 
-const { string, node } = PropTypes;
+const { string, node, func } = PropTypes;
 
 /*
  * HTML 5 video player wrapper.
@@ -23,7 +23,8 @@ export default class Html5Video extends Component {
     ...videoProps,
     actions: videoActionsShape.isRequired,
     className: string,
-    children: node
+    children: node,
+    onTimeUpdate: func
   };
 
   static defaultProps = {
@@ -188,8 +189,8 @@ export default class Html5Video extends Component {
   handleEnded = () => this.props.actions.ended(this.video.currentTime);
   handleDurationChange = () => this.props.actions.durationChange(this.video.duration);
 
-  @throttle(100)
   handleTimeUpdate() {
+    if (this.props.onTimeUpdate) this.props.onTimeUpdate();
     this.props.actions.timeUpdate(this.video.currentTime);
   }
 

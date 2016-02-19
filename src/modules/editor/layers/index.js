@@ -9,11 +9,31 @@ import {
   removeFilter
 } from './actions';
 
-import initialState from './initialState';
+import initialState, { layerDefaults } from './initialState';
+
+let layerId = 10;
 
 export default createReducer({
-  [create]: s => s,
+  [create]: (state, { type }) => {
+    const nextId = ++layerId;
+    const newLayerId = `${type}${nextId}`;
+
+    const newLayer = {
+      id: newLayerId,
+      type,
+      order: nextId,
+      ...layerDefaults
+    };
+
+    return {
+      ...state,
+      [newLayerId]: newLayer
+    };
+  },
+
   [destroy]: (s, { id }) => omit(s, id),
+
+  // TODO: Impl move reducer
   [move]: s => s,
 
   [addFilter]: (state, { id, filterId }) => {

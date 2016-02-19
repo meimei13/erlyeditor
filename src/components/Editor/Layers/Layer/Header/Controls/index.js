@@ -9,10 +9,11 @@ import Button from '../../../../../Button';
 import styles from './styles';
 
 const TooltipButton = tooltip(Button);
-const { bool, func } = PropTypes;
+const { string, bool, func } = PropTypes;
 
 export class Controls extends Component {
   static propTypes = {
+    type: string,
     disabled: bool,
     locked: bool,
     single: bool,
@@ -26,6 +27,7 @@ export class Controls extends Component {
 
   render() {
     const {
+      type,
       disabled,
       locked,
       single,
@@ -36,6 +38,8 @@ export class Controls extends Component {
       onToggleSingle,
       onToggleExpanded
     } = this.props;
+
+    const canDelete = type !== 'video';
 
     return (
       <ButtonGroup small
@@ -76,6 +80,7 @@ export class Controls extends Component {
         />
         <TooltipButton
           neutral
+          disabled={!canDelete}
           tooltipTop
           tooltipDelay={1400}
           tooltipText='delete layer'

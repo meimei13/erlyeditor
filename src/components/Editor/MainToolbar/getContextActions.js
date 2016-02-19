@@ -1,15 +1,30 @@
 // modal contexts:
 // ??
 
-export default ({ common, dunno }) => [
+export default ({ common, layer, filter }) => [
   {
-    name: 'dunno',
+    name: 'layer',
+    actions: [
+      {
+        title: 'create',
+        description: 'create a new layer',
+        icon: 'add',
+        handler: layer.create,
+        tooltipTop: true,
+        tooltipDelay: 400,
+        disabled: false,
+        small: true
+      }
+    ]
+  },
+  {
+    name: 'filter',
     actions: [
       {
         title: 'split',
         description: 'split',
         icon: 'content_cut',
-        handler: dunno.split,
+        handler: filter.split,
         tooltipTop: true,
         tooltipDelay: 400,
         disabled: true,

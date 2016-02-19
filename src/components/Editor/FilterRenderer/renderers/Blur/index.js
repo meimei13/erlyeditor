@@ -28,7 +28,7 @@ function directionForPass(p, factor, total) {
   <Blur factor={20} passes={6} width={w} height={h}>{url}</Blur>
   */
 
-module.exports = GL.createComponent(
+export default GL.createComponent(
   ({ width, height, factor, children, passes, ...rest }) => {
     const rec = p => p <= 0 ? children :
       <Blur1D {...rest}
@@ -46,8 +46,8 @@ module.exports = GL.createComponent(
       passes: 2
     },
     propTypes: {
-      width: number,
-      height: number,
+      width: number.isRequired,
+      height: number.isRequired,
       factor: number.isRequired,
       children: any.isRequired,
       passes: number

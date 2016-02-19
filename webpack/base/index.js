@@ -4,6 +4,7 @@ import { render as prettyjson } from 'prettyjson';
 
 import { name } from '../../package';
 
+import { paths } from './utils';
 import postcss from './postcss';
 import eslint from './eslint';
 import plugins from './plugins';
@@ -41,6 +42,7 @@ const externals = {
   'reduce-reducers': 'commonjs reduce-reducers',
   'classnames': 'commonjs classnames',
   'invariant': 'commonjs invariant',
+  'react-canvas': 'commonjs react-canvas',
   'gl-react': 'commonjs gl-react',
   'gl-react-dom': 'commonjs gl-react-dom',
   'glsl-fast-gaussian-blur': 'commonjs glsl-fast-gaussian-blur',
@@ -92,7 +94,10 @@ export default {
     libraryTarget: 'umd'
   },
 
-  module: { loaders, noParse },
+  module: {
+    loaders,
+    noParse
+  },
   plugins,
   externals,
 

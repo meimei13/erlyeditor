@@ -22,13 +22,22 @@ const {
 } = PropTypes;
 
 export class MainToolbar extends Component {
+  static propTypes = {
+    onCreateLayer: func.isRequired
+  };
+
   render() {
+    const { onCreateLayer } = this.props;
+
     const contextActions = getContextActions({
       common: {
         undo: () => console.log('undo'),
         redo: () => console.log('redo')
       },
-      dunno: {
+      layer: {
+        create: onCreateLayer
+      },
+      filter: {
         split: () => console.log('split')
       }
     });

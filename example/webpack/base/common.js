@@ -37,7 +37,9 @@ export default {
     publicPath: '/'
   },
 
-  module: { noParse },
+  module: {
+    noParse
+  },
 
   postcss,
   eslint,

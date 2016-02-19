@@ -19,6 +19,11 @@
   border-top-right-radius: 0;
 }
 
+.panelContent {
+  height: 20em;
+  overflow: auto;
+}
+
 .list {
   flex-wrap: wrap;
   align-content: center;

@@ -10,6 +10,7 @@ import player from '../player';
 
 import initialState from './initialState';
 import {
+  update,
   createFilter
 } from './actions';
 
@@ -28,6 +29,20 @@ const filterDefaults = {
 };
 
 export const editor = createReducer({
+  [update]: ({ filters, ...state }, { currentTime }) => {
+    const activeFilters = Object.values(filters)
+      .filter(filter => {
+        const { offset, duration } = filter.timeline;
+        return currentTime >= offset && currentTime < (offset + duration);
+      }).map(f => f.id);
+
+    return {
+      ...state,
+      filters,
+      activeFilters
+    };
+  },
+
   [createFilter]: (state, { layerId, type }) => {
     const {
       filterTypes,
@@ -45,6 +60,7 @@ export const editor = createReducer({
 
     const newFilter = {
       type,
+      layerId,
       id: newFilterId,
       timeline,
       appearance,

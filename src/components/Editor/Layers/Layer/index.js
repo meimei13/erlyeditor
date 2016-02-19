@@ -51,7 +51,7 @@ export class Layer extends Component {
   state = { expanded: true };
 
   @autobind
-  handleToggleDestroy() {
+  handleDestroy() {
     this.props.actions.layer.destroy(this.props.id);
   }
 
@@ -81,6 +81,7 @@ export class Layer extends Component {
     const props = pick(
       this.props,
       'name',
+      'type',
       'description',
       'editable',
       'disabled',

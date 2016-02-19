@@ -49,6 +49,11 @@ export default [
       paths.scripts,
       paths.lib
     ]
+  },
+  {
+    test: /\.js$/,
+    include: /linebreak/,
+    loader: 'transform?brfs'
   }
 ];
 /* eslint-enable max-len */

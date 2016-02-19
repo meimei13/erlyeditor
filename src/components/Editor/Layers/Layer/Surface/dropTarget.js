@@ -10,6 +10,8 @@ export default {
     const item = monitor.getItem();
 
     const typePropName = sourceType === ItemTypes.FilterType ? 'name' : 'type';
+    // ^------- WRONG
+    // TODO: fix this shit, related to what I've said below
     const itemType = item[typePropName];
 
     // TODO: lol, not a super-performant way to go

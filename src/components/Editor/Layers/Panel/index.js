@@ -106,7 +106,10 @@ export class LayersPanel extends Component {
         footerClassName={styles.footer}
         footer={this.renderFooter()}>
         {children}
-        <List>{layers.map(this.renderLayer)}</List>
+        {layers.length > 0 ?
+          <List>{layers.map(this.renderLayer)}</List> :
+          <p>{'No layers'}</p>
+        }
       </Panel>
     );
   }

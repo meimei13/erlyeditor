@@ -1,7 +1,8 @@
 import flow from 'lodash/flow';
 import pick from 'lodash/pick';
 import mapValues from 'lodash/mapValues';
-
+import invariant from 'invariant';
+import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -37,18 +38,14 @@ import Timeline from './Timeline';
 import PropertyEditor from './PropertyEditor';
 import Inspector from './Inspector';
 
-import FilterTypeDragPreview from './Filters/FilterDragPreview.js';
-import FilterDragPreview from './Layers/Layer/FilterDragPreview';
-import { LayerDragPreview } from './Layers';
-
 import {
-  Overlay,
   Blur,
-  Hue
-} from './FilterChainSurface/renderers';
+  Hue,
+  Negative
+} from './FilterRenderer/renderers';
 
-const FilterChainSurface = __CLIENT__ ?
-  require('./FilterChainSurface').default :
+const FilterRenderer = __CLIENT__ ?
+  require('./FilterRenderer').default :
   void 0;
 
 // ^---- its just a draft version, right? (:
@@ -60,37 +57,47 @@ const {
   bool,
   number,
   string,
+  object,
   arrayOf,
   shape
 } = PropTypes;
 
-// preview components for
-// various draggable item types
-const previews = {
-  filterType: FilterTypeDragPreview,
-  filter: FilterDragPreview,
-  layer: LayerDragPreview
-};
 
 const filterGroups = {
   behavioral: ['cut'],
   presentational: [
     'overlay',
     'blur',
+    'negative',
     'hue'
   ]
 };
 
 const filterRenderers = {
-  overlay: Overlay,
   blur: Blur,
-  hue: Hue
+  hue: Hue,
+  negative: Negative
+};
+
+const filterProcessors = {
+  cut: (filter, api, video) => {
+    const { timeline } = filter;
+    const { currentTime } = video;
+
+    const timeStart = timeline.offset;
+    const timeEnd = timeline.offset + timeline.duration;
+
+    if (currentTime >= timeStart && currentTime < timeEnd) {
+      api.seek(timeEnd + 1);
+    }
+  }
 };
 
 export class Editor extends Component {
   static propTypes = {
     className: string,
 
+    layerTypes: object.isRequired,
     filterTypes: arrayOf(filterTypeShape).isRequired,
     layers: arrayOf(layerShape).isRequired,
 
@@ -110,7 +117,9 @@ export class Editor extends Component {
       debug: bool
     }).isRequired,
 
-    video: shape(videoProps).isRequired
+    video: shape(videoProps).isRequired,
+
+    activeFilters: arrayOf(string).isRequired
   };
 
   static defaultProps = {
@@ -133,17 +142,40 @@ export class Editor extends Component {
     seek: offset => this.video.seek(offset)
   };
 
+  @autobind
+  refresh() {
+    const { actions, video } = this.props;
+    actions.editor.update(video.currentTime);
+    this.processFilters();
+  }
+
+  processFilters() {
+    const { filters, video } = this.props;
+    const behavioralFilters = filters.filter(
+      ({ type }) => filterGroups.behavioral.indexOf(type) !== -1
+    );
+
+    behavioralFilters.forEach(filter => {
+      const { type } = filter;
+      const processor = filterProcessors[type];
+      invariant(processor, `No filter processor is registered for type ${type}`);
+      processor(filter, this.api, video);
+    });
+  }
+
+  @autobind
+  handleCreateLayer() {
+    this.props.actions.layer.create('effect');
+  }
+
   renderVideo(size) {
-    const {
-      video,
-      source,
-      actions
-    } = this.props;
+    const { video, source, actions } = this.props;
 
     return (
       <Html5Video ref={r => this.video = r}
         preload='auto'
         src={source}
+        onTimeUpdate={this.refresh}
         actions={actions.video}
         { ...{ ...size, ...video } }
       />
@@ -159,7 +191,8 @@ export class Editor extends Component {
         width,
         height,
         ...player
-      }
+      },
+      activeFilters
     } = this.props;
 
     const size = { width, height };
@@ -171,19 +204,21 @@ export class Editor extends Component {
       video
     };
 
-    const presentationalFilters = filters.filter(
-      ({ type }) => filterGroups.presentational.indexOf(type) !== 0
+    const presentationalFilters = filters.filter(({ id, type }) =>
+      filterGroups.presentational.indexOf(type) !== -1 &&
+      activeFilters.indexOf(id) !== -1
     );
+
     const videoEl = this.renderVideo(size);
 
     return (
       <Player {...playerProps}>
-        {FilterChainSurface ?
-          <FilterChainSurface {...size}
+        {FilterRenderer ?
+          <FilterRenderer {...size}
             renderers={filterRenderers}
             filters={presentationalFilters}>
             {videoEl}
-          </FilterChainSurface> :
+          </FilterRenderer> :
           videoEl
         }
       </Player>
@@ -222,7 +257,9 @@ export class Editor extends Component {
           {this.renderPlayer()}
           {/*<Inspector layers={layers} />*/}
         </div>
-        <MainToolbar />
+        <MainToolbar
+          onCreateLayer={this.handleCreateLayer}
+        />
         <MainPanel>
           <LayersPanel {...layersPanelProps}
             actions={pick(actions, 'layer', 'filter')}>
@@ -230,7 +267,7 @@ export class Editor extends Component {
           </LayersPanel>
           <PropertyEditor />
         </MainPanel>
-        <CustomDragLayer { ...{ snapToGrid, cellSize, previews } } /> </div>
+        <CustomDragLayer { ...{ snapToGrid, cellSize } } /> </div>
     );
   }
 }

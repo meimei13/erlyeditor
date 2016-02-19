@@ -4,6 +4,10 @@ import React, { Component, PropTypes } from 'react';
 import { DragLayer } from 'react-dnd';
 import css from 'react-css-modules';
 
+import FilterTypeDragPreview from '../Filters/FilterDragPreview.js';
+import FilterDragPreview from '../Layers/Layer/FilterDragPreview';
+import { LayerDragPreview } from '../Layers';
+
 import getItemStyle from './getItemStyle';
 import styles from './styles';
 
@@ -33,10 +37,20 @@ export class CustomDragLayer extends Component {
 
     // for each object type
     // we should have a preview component
-    previews: object.isRequired,
+    previews: object,
 
     snapToGrid: bool,
     cellSize: number.isRequired
+  };
+
+  static defaultProps = {
+    // preview components for
+    // various draggable item types
+    previews: {
+      filterType: FilterTypeDragPreview,
+      filter: FilterDragPreview,
+      layer: LayerDragPreview
+    }
   };
 
   renderPreview(item, itemType) {

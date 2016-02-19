@@ -15,6 +15,11 @@ export default [
   },
   {
     test: /\.js$/,
+    include: /linebreak/,
+    loader: 'transform?brfs'
+  },
+  {
+    test: /\.js$/,
     loader: 'babel',
     include: [paths.src]
   }

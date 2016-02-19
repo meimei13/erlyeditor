@@ -17,6 +17,7 @@ export class Header extends Component {
     name: string,
     description: string,
     expanded: bool,
+    onDestroy: func,
     onToggleLocked: func,
     onToggleDisabled: func,
     onToggleSingle: func,
@@ -32,11 +33,13 @@ export class Header extends Component {
     const {
       className,
       name,
+      type,
       description,
       disabled,
       locked,
       single,
       expanded,
+      onDestroy,
       onToggleLocked,
       onToggleDisabled,
       onToggleSingle,
@@ -48,10 +51,12 @@ export class Header extends Component {
     const styleName = cn('header', appearance);
 
     const controlsProps = {
+      type,
       disabled,
       locked,
       single,
       expanded,
+      onDestroy,
       onToggleLocked,
       onToggleDisabled,
       onToggleSingle,

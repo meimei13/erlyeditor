@@ -4,11 +4,22 @@
 const layerTypes = {
   video: {
     name: 'video',
-    description: 'video timeline layer'
+    description: 'video timeline layer',
+    behavioral: true,
+    presentational: false
   },
   effect: {
     name: 'effect',
-    description: 'effects layer'
+    description: 'effects layer',
+    behavioral: true,
+    presentational: true
+  }
+};
+
+const filterTypeDefaults = {
+  timeline: {
+    offset: 0,
+    duration: 10
   }
 };
 
@@ -20,15 +31,12 @@ const filterTypes = {
     appearance: {
       color: '#232c32'
     },
-    timeline: {
-      offset: 0,
-      duration: 10
-    }
+    ...filterTypeDefaults
   },
   overlay: {
     layerTypes: ['effect'],
     name: 'overlay',
-    description: '',
+    description: 'Use the power of rectangle!',
     appearance: {
       color: '#993333'
     },
@@ -38,53 +46,56 @@ const filterTypes = {
       x2: 100,
       y2: 120
     },
-    timeline: {
-      offset: 0,
-      duration: 10
-    },
     editor: {
       x1: { type: 'number' },
       y1: { type: 'number' },
       x2: { type: 'number' },
       y2: { type: 'number' }
-    }
+    },
+    ...filterTypeDefaults
   },
   blur: {
     layerTypes: ['effect'],
-    filters: ['blur1'],
     name: 'blur',
     description: '',
     appearance: {
-      color: '#117442'
+      color: '#ad8e00'
     },
     defaults: {
       factor: 2,
       passes: 4
     },
-    timeline: {
-      offset: 0,
-      duration: 10
-    }
+    ...filterTypeDefaults
   },
   hue: {
     layerTypes: ['effect'],
-    filters: ['hue1'],
     name: 'hue',
     description: '',
     appearance: {
       color: '#277686'
     },
     defaults: {
-      value: 0.5
+      hue: 140
     },
-    timeline: {
-      offset: 0,
-      duration: 10
-    }
+    ...filterTypeDefaults
+  },
+  negative: {
+    layerTypes: ['effect'],
+    name: 'negative',
+    description: '',
+    appearance: {
+      color: '#277686'
+    },
+    defaults: {
+      factor: 1
+    },
+    ...filterTypeDefaults
   }
 };
 
 export default {
+  activeFilters: [],
+
   snapToGrid: true,
   cellSize: 10,
 

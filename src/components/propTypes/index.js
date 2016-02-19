@@ -10,6 +10,7 @@ export filterTimelineShape from './filterTimelineShape';
 export filterActionsShape from './filterActionsShape';
 export filterShape from './filterShape';
 
+export layerTypeShape from './layerTypeShape';
 export layerProps from './layerProps';
 export layerActionsShape from './layerActionsShape';
 export layerShape from './layerShape';
