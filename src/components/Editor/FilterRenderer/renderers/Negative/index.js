@@ -8,10 +8,7 @@ export default GL.createComponent(
   ({ children: t, factor }) =>
   <GL.Node
     shader={shaders.negative}
-    uniforms={{
-      t,
-      factor
-    }}
+    uniforms={ { t, factor } }
   />,
   {
     displayName: 'Negative',

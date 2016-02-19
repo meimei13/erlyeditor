@@ -33,31 +33,25 @@ export class FiltersPanel extends Component {
     } = this.props;
 
     return (
-      <Panel collapsible
-        expanded={false}
+      <Panel
         className={cn(className, styles.panel)}
         headerClassName={styles.panelHeader}
         contentClassName={styles.panelContent}
         header={this.renderSearchBar()}
         title='filters'>
 
-        {expanded =>
-          <List vertical={!expanded}
-            className={expanded ? styles.listExpanded : styles.listCollapsed}>
-
+          <List vertical className={styles.list}>
             {filterTypes.map(filter =>
               <List.Item key={filter.name}
-                className={expanded ? styles.itemBig : styles.itemSmall}
+                className={styles.item}
                 disabled={filter.disabled}>
 
                 <DraggableFilter {...filter}
                   onCreateFilter={onCreateFilter}
-                  circle={!expanded}
                 />
               </List.Item>
             )}
           </List>
-        }
       </Panel>
     );
   }

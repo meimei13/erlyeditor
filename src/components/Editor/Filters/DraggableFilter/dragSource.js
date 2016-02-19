@@ -4,7 +4,6 @@ export const dragSourceProps = [
   'name',
   'description',
   'appearance',
-  'circle',
   'disabled'
 ];
 

@@ -21,7 +21,6 @@ DraggableFilter.propTypes = {
   name: string.isRequired,
   description: string.isRequired,
   appearance: object.isRequired,
-  circle: bool,
   disabled: bool,
   isDragging: bool
 };

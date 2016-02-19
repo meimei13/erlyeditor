@@ -41,7 +41,9 @@ import Inspector from './Inspector';
 import {
   Blur,
   Hue,
-  Negative
+  Negative,
+  CSB,
+  ColorMatrix
 } from './FilterRenderer/renderers';
 
 const FilterRenderer = __CLIENT__ ?
@@ -69,14 +71,18 @@ const filterGroups = {
     'overlay',
     'blur',
     'negative',
-    'hue'
+    'hue',
+    'csb',
+    'colorMatrix'
   ]
 };
 
 const filterRenderers = {
   blur: Blur,
   hue: Hue,
-  negative: Negative
+  negative: Negative,
+  csb: CSB,
+  colorMatrix: ColorMatrix
 };
 
 const filterProcessors = {

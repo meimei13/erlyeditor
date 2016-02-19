@@ -1,16 +1,12 @@
 @import "../../../../variables";
 
 :root {
-  --container-width: 10em;
   --container-background-color: var(--brand-black);
-
   --list-item-margin: 0.2em;
 }
 
 .container {
   display: flex;
-  max-width: var(--container-width);
-  width: var(--container-width);
   background-color: var(--container-background-color);
 }
 
@@ -20,33 +16,18 @@
 }
 
 .panelContent {
+  width: 7em;
   height: 20em;
   overflow: auto;
+  display: flex;
 }
 
 .list {
   flex-wrap: wrap;
+  align-items: center;
   align-content: center;
   justify-content: center;
   flex: 2;
 }
 
-.listExpanded {
-  composes: list;
-}
-
-.listCollapsed {
-  composes: list;
-  align-items: center;
-}
-
 .item { margin: var(--list-item-margin); }
-
-.itemBig {
-  composes: item;
-}
-
-.itemSmall {
-  composes: item;
-  border-radius: 50%;
-}

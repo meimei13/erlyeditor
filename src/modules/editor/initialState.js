@@ -90,6 +90,46 @@ const filterTypes = {
       factor: 1
     },
     ...filterTypeDefaults
+  },
+  csb: {
+    layerTypes: ['effect'],
+    name: 'csb',
+    description: 'Contrast, saturation, brightness',
+    appearance: {
+      color: '#993333'
+    },
+    defaults: {
+      contrast: 0.8,
+      saturation: 0.2,
+      brightness: 0.7
+    },
+    ...filterTypeDefaults
+  },
+  colorMatrix: {
+    layerTypes: ['effect'],
+    name: 'colorMatrix',
+    description: 'Color matrix',
+    appearance: {
+      color: '#ad8e00'
+    },
+    defaults: {
+      matrix: [
+        // red
+
+        1, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 1
+
+        // grayscale (approximative)
+
+        // 0.3, 0.3, 0.3, 0,
+        // 0.6, 0.6, 0.6, 0,
+        // 0.1, 0.1, 0.1, 0,
+        // 0, 0, 0, 1
+      ]
+    },
+    ...filterTypeDefaults
   }
 };
 

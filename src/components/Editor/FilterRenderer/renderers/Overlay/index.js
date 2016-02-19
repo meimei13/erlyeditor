@@ -26,8 +26,7 @@ const Overlay = props => {
 
   return (
     <Surface left={0} top={0} width={width} height={height}>
-      <Gradient style={gradientStyle}
-        colorStops={colorStops} />
+      <Gradient style={gradientStyle} colorStops={colorStops} />
     </Surface>
   );
 };

@@ -1,6 +1,6 @@
 import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
-import css from 'react-css-modules';
+import { spring, Motion } from 'react-motion';
 import cn from 'classnames';
 
 import { percentageShape } from '../../propTypes';
@@ -38,17 +38,32 @@ export class Timeline extends Component {
 
     const { buffered, played } = percentage;
 
-    const styleName = cn('timeline', disabled ? 'disabled' : 'enabled');
-    const lineStyle = {
-      right: `${100 - played}%`
+    const containerClasses = cn(
+      className,
+      styles.timeline,
+      disabled ? styles.disabled : styles.enabled
+    );
+
+    const shouldAnimate = played >= 1 && played <= 99;
+    const animationPreset = {
+      stiffness: 80,
+      damping: 80
+    };
+
+    const animationStyle = {
+      x: shouldAnimate ?
+        spring(played, animationPreset) :
+        played
     };
 
     return (
-      <div {...{ styleName, className } }>
-        <div styleName='line' style={lineStyle}></div>
-      </div>
+      <Motion style={animationStyle}>{({ x }) =>
+        <div className={containerClasses}>
+          <div className={styles.line} style={{ right: `${100 - x}%` }}></div>
+        </div>
+      }</Motion>
     );
   }
 }
 
-export default css(Timeline, styles, { allowMultiple: true });
+export default Timeline;

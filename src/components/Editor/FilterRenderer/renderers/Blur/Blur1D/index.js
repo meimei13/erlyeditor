@@ -6,11 +6,8 @@ const { number, array, any } = PropTypes;
 
 export default GL.createComponent(
   ({ width, height, direction, children: t, ...rest }) =>
-    <GL.Node
-      {...rest}
+    <GL.Node { ...{ ...{ width, height }, ...rest } }
       shader={shaders.blur1D}
-      width={width}
-      height={height}
       uniforms={{
         direction,
         resolution: [width, height],
@@ -20,8 +17,8 @@ export default GL.createComponent(
   {
     displayName: 'Blur1D',
     propTypes: {
-      width: number,
-      height: number,
+      width: number.isRequired,
+      height: number.isRequired,
       direction: array.isRequired,
       children: any.isRequired
     }

@@ -12,14 +12,12 @@ export class Filter extends Component {
     name: string.isRequired,
     description: string.isRequired,
     appearance: object.isRequired,
-    circle: bool,
     disabled: bool,
     isDragging: bool
   };
 
   static defaultProps = {
-    disabled: false,
-    circle: false
+    disabled: false
   };
 
   render() {
@@ -27,13 +25,11 @@ export class Filter extends Component {
       className,
       name,
       appearance,
-      circle,
       isDragging
     } = this.props;
 
-    const shape = circle ? 'circle' : 'squared';
     const state = isDragging ? 'dragging' : 'normal';
-    const styleName = cn('filter', shape, state);
+    const styleName = cn('filter', state);
     const style = {
       backgroundColor: appearance.color
     };
