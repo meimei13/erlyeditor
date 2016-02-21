@@ -1,43 +1,40 @@
-import React, { PropTypes } from 'react';
-import {
-  Surface,
-  Gradient
-} from 'react-canvas';
+import { PropTypes } from 'react';
+import GL from 'gl-react';
+import shaders from './shaders';
+import Rectangle from './Rectangle';
 
-const { number } = PropTypes;
+const { number, any } = PropTypes;
 
-const colorStops = [
-  { color: 'transparent', position: 0 },
-  { color: '#000', position: 1 }
-];
-
-const Overlay = props => {
+export default GL.createComponent(props => {
   const {
-    width, height,
-    x1, y1, x2, y2
+    width,
+    height,
+    x1, y1, x2, y2,
+    children: video
   } = props;
 
-  const gradientStyle = {
-    left: x1,
-    top: y1,
-    width: x2,
-    height: y2
-  };
+  const overlay = (
+    <Rectangle {...{
+      width, height,
+      x1, y1, x2, y2
+    } } />
+  );
 
   return (
-    <Surface left={0} top={0} width={width} height={height}>
-      <Gradient style={gradientStyle} colorStops={colorStops} />
-    </Surface>
+    <GL.Node {...{ width, height }}
+      shader={shaders.overlay}
+      uniforms={{ video, overlay }}
+    />
   );
-};
-
-Overlay.propTypes = {
-  x1: number.isRequired,
-  y1: number.isRequired,
-  x2: number.isRequired,
-  y2: number.isRequired,
-  width: number.isRequired,
-  height: number.isRequired
-};
-
-export default Overlay;
+}, {
+  displayName: 'Overlay',
+  propTypes: {
+    children: any.isRequired,
+    x1: number.isRequired,
+    y1: number.isRequired,
+    x2: number.isRequired,
+    y2: number.isRequired,
+    width: number.isRequired,
+    height: number.isRequired
+  }
+});

@@ -33,11 +33,7 @@ export default {
   // returned value will be available to the drag source
   // in its endDrag method as monitor.getDropResult()
   drop(props, monitor, component) {
-    const {
-      id,
-      snapToGrid,
-      cellSize
-    } = props;
+    const { id, snapToGrid, cellSize } = props;
 
     const sourceType = monitor.getItemType();
     // the item being dropped
@@ -53,7 +49,7 @@ export default {
       // and the client offset when current the drag operation has started
       const delta = monitor.getDifferenceFromInitialOffset();
 
-      const x = Math.floor(item.x + delta.x);
+      const x = item.x + delta.x;
       const x1 = snapToGrid ? snap(x, cellSize) : x;
 
       // update filter position on a timeline

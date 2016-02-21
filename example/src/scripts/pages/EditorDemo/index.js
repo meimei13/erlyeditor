@@ -11,7 +11,7 @@ export class EditorDemo extends Component {
     return (
       <div styleName='root'>
         <Editor className={styles.fullscreenEditor}
-          source={sources[0]}
+          source={sources[4]}
           player={{ width: 640, height: 480 }}
         />
       </div>

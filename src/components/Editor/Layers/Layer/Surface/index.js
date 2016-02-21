@@ -58,11 +58,22 @@ export class Surface extends Component {
   moveFilter(id, sourceLayerId, targetLayerId, x) {
     const {
       duration,
+      cellSize,
+      snapToGrid,
       containerWidth
     } = this.props;
 
+    // snap to time slot
+    const cellCount = Math.floor(containerWidth / cellSize);
+    const timeSlot = duration / cellCount;
+
     // timeline.offset / duration = x / containerWidth <=>
-    const offset = x * duration / containerWidth;
+    const val = x * duration / containerWidth;
+    const offset = snap(val, timeSlot);
+
+    console.log('timeSlot: ', timeSlot);
+    console.log('val: ', val);
+    console.log('offset: ', offset);
 
     this.props.onMoveFilter(id, sourceLayerId, targetLayerId, offset);
   }
@@ -71,8 +82,6 @@ export class Surface extends Component {
   renderFilter(filter) {
     const {
       id,
-      snapToGrid,
-      cellSize,
       onToggleFilterVisibility,
       onToggleFilterLocked,
       onDestroyFilter,
@@ -83,21 +92,17 @@ export class Surface extends Component {
     const { timeline } = filter;
 
     // timeline.offset / duration = x / containerWidth <=>
-    const x = (timeline.offset / duration) * containerWidth;
+    const x = containerWidth * timeline.offset / duration;
 
     // timeline.duration / duration = width / containerWidth <=>
-    const width = (timeline.duration / duration) * containerWidth;
+    const width = containerWidth * timeline.duration / duration;
 
     console.log(
       `%c (${x}, ${width})`,
       'background-color: darkred; color: #fff'
     );
 
-    const filterProps = {
-      x: snapToGrid ? snap(x, cellSize) : x,
-      width: snapToGrid ? snap(width, cellSize) : width,
-      layerId: id
-    };
+    const filterProps = { x, width, layerId: id };
 
     return (
       <List.Item key={filter.id}>

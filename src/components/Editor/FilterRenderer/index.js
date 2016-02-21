@@ -41,10 +41,18 @@ export class FilterChainSurface extends Component {
     autoRedraw: true
   };
 
+  builtInRenderers = {
+    overlay: Overlay
+  };
+
   getRenderer(type) {
     const { renderers } = this.props;
+    const renderersMap = {
+      ...this.builtInRenderers,
+      ...renderers
+    };
 
-    const Renderer = renderers[type];
+    const Renderer = renderersMap[type];
     invariant(Renderer, `Renderer of type ${type} is not registered`);
 
     return Renderer;
@@ -73,16 +81,12 @@ export class FilterChainSurface extends Component {
       ...other
     } = this.props;
 
-    const [overlayFilters, effectFilters] = partition(
-      filters, ({ type }) => type === 'overlay');
-
     // TODO: ok, I need to think of how to combine this
     // I'll just leave it as is for now, without overlay processing
     // Will comeback here later when the author of gl-react will respond
- 
     return (
       <Surface { ...{ ...{ width, height }, ...other } }>
-        {effectFilters.reduceRight(this.renderFilter, children)}
+        {filters.reduceRight(this.renderFilter, children)}
       </Surface>
     );
   }

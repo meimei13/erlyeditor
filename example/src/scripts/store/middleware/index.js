@@ -3,11 +3,7 @@ import promise from 'redux-promise';
 import { applyMiddleware } from 'redux';
 
 function getEnvMiddleware() {
-  if (__DEVELOPMENT__) {
-    return require('./development');
-  } else {
-    return require('./production');
-  }
+  return require('./development');
 }
 
 export function setup(router) {

@@ -19,7 +19,7 @@ const layerTypes = {
 const filterTypeDefaults = {
   timeline: {
     offset: 0,
-    duration: 10
+    duration: 40
   }
 };
 
@@ -41,8 +41,9 @@ const filterTypes = {
       color: '#993333'
     },
     defaults: {
-      x1: 10,
-      y1: 20,
+      color: '#111111',
+      x1: 200,
+      y1: 240,
       x2: 100,
       y2: 120
     },

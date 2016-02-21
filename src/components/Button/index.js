@@ -7,7 +7,7 @@ import styles from './styles';
 
 const { bool, string, node } = PropTypes;
 
-export const Button = (props) => {
+export const Button = props => {
   const {
     className,
     children,

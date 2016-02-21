@@ -57,6 +57,7 @@
 }
 
 .error {
+
   .input {
     border-bottom-color: var(--input-error-border-bottom-color);
   }

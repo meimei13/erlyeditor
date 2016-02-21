@@ -1,6 +1,9 @@
 import reduceReducers from 'reduce-reducers';
 import { createReducer } from 'redux-act';
 import { reduceAny } from '../reducers';
+
+import * as constants from './constants';
+
 import {
   updateReadyState,
   updateNetworkState,
@@ -22,11 +25,7 @@ import {
   rateChange,
   resize,
   volumeChange,
-  toggleLoop,
-  readyStateActions,
-  networkStateActions,
-  errorActions,
-  timeActions
+  toggleLoop
 } from './actions';
 
 import initialState from './initialState';
@@ -57,8 +56,8 @@ const reducer = createReducer({
 
 export default reduceReducers(
   reducer,
-  reduceAny(updateReadyState, readyStateActions),
-  reduceAny(updateNetworkState, networkStateActions),
-  reduceAny(updateError, errorActions),
-  reduceAny(updateCurrentTime, timeActions)
+  reduceAny(updateReadyState, constants.readyState),
+  reduceAny(updateNetworkState, constants.networkState),
+  reduceAny(updateError, constants.error),
+  reduceAny(updateCurrentTime, constants.time)
 );

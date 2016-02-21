@@ -64,7 +64,6 @@ const {
   shape
 } = PropTypes;
 
-
 const filterGroups = {
   behavioral: ['cut'],
   presentational: [
@@ -91,10 +90,11 @@ const filterProcessors = {
     const { currentTime } = video;
 
     const timeStart = timeline.offset;
-    const timeEnd = timeline.offset + timeline.duration;
+    const timeEnd = timeStart + timeline.duration;
 
     if (currentTime >= timeStart && currentTime < timeEnd) {
-      api.seek(timeEnd + 1);
+      api.seek(Math.ceil(timeEnd));
+      // ^--- this is wrong :D
     }
   }
 };
@@ -261,7 +261,7 @@ export class Editor extends Component {
             onCreateFilter={actions.editor.createFilter}
           />
           {this.renderPlayer()}
-          {/*<Inspector layers={layers} />*/}
+          <Inspector layers={layers} />
         </div>
         <MainToolbar
           onCreateLayer={this.handleCreateLayer}

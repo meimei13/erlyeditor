@@ -4,7 +4,6 @@ import { render as prettyjson } from 'prettyjson';
 
 import { name } from '../../package';
 
-import { paths } from './utils';
 import postcss from './postcss';
 import eslint from './eslint';
 import plugins from './plugins';

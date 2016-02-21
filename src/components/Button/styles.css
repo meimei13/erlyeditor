@@ -68,6 +68,7 @@
 }
 
 .rectangular {
+
   &.small {
     min-width: var(--button-small-size);
     max-height: var(--button-small-size);
