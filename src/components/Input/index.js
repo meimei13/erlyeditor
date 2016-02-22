@@ -85,7 +85,7 @@ export class Input extends Component {
     const elementType = multiline ? 'textarea' : 'input';
     const elementProps = {
       ...omit(other, 'onChange'),
-      className: cn(styles.input, inputClassName),
+      className: cn(inputClassName, styles.input),
       onChange: this.handleChange,
       type,
       ref: 'input',
@@ -111,7 +111,7 @@ export class Input extends Component {
             { ...{ small, big } } value={icon}
           />
         }
-        <span className={cn(barClassName, styles.bar)}></span>
+        {!multiline && <span className={cn(barClassName, styles.bar)}></span>}
         {label && <label className={cn(labelClassName, styles.label)}>{label}</label>}
         {error && <span className={cn(errorClassName, styles.error)}>{error}</span>}
         {maxLength &&

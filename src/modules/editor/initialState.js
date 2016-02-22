@@ -11,7 +11,7 @@ const layerTypes = {
   effect: {
     name: 'effect',
     description: 'effects layer',
-    behavioral: true,
+    behavioral: false,
     presentational: true
   }
 };
@@ -25,6 +25,7 @@ const filterTypeDefaults = {
 
 const filterTypes = {
   cut: {
+    id: 'cut',
     layerTypes: ['video'],
     name: 'cut',
     description: 'lets you cut a part of the video',
@@ -34,6 +35,7 @@ const filterTypes = {
     ...filterTypeDefaults
   },
   overlay: {
+    id: 'overlay',
     layerTypes: ['effect'],
     name: 'overlay',
     description: 'Use the power of rectangle!',
@@ -56,6 +58,7 @@ const filterTypes = {
     ...filterTypeDefaults
   },
   blur: {
+    id: 'blur',
     layerTypes: ['effect'],
     name: 'blur',
     description: '',
@@ -69,6 +72,7 @@ const filterTypes = {
     ...filterTypeDefaults
   },
   hue: {
+    id: 'hue',
     layerTypes: ['effect'],
     name: 'hue',
     description: '',
@@ -81,6 +85,7 @@ const filterTypes = {
     ...filterTypeDefaults
   },
   negative: {
+    id: 'negative',
     layerTypes: ['effect'],
     name: 'negative',
     description: '',
@@ -93,6 +98,7 @@ const filterTypes = {
     ...filterTypeDefaults
   },
   csb: {
+    id: 'csb',
     layerTypes: ['effect'],
     name: 'csb',
     description: 'Contrast, saturation, brightness',
@@ -107,6 +113,7 @@ const filterTypes = {
     ...filterTypeDefaults
   },
   colorMatrix: {
+    id: 'colorMatrix',
     layerTypes: ['effect'],
     name: 'colorMatrix',
     description: 'Color matrix',

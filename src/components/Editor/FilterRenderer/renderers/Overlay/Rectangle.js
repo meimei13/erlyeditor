@@ -7,8 +7,8 @@ import {
 const { number } = PropTypes;
 
 const colorStops = [
-  { color: '#000', position: 0 },
-  { color: '#000', position: 1 }
+  { color: '#ad8e00', position: 0 },
+  { color: '#f05050', position: 1 }
 ];
 
 const Rectangle = props => {

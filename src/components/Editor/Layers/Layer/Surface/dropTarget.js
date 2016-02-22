@@ -5,19 +5,11 @@ export default {
   // -
   canDrop(props, monitor) {
     const { type, filterTypes } = props;
-
     const sourceType = monitor.getItemType();
     const item = monitor.getItem();
-
-    const typePropName = sourceType === ItemTypes.FilterType ? 'name' : 'type';
-    // ^------- WRONG
-    // TODO: fix this shit, related to what I've said below
+    const typePropName = sourceType === ItemTypes.FilterType ? 'id' : 'type';
     const itemType = item[typePropName];
-
-    // TODO: lol, not a super-performant way to go
-    const filterType = filterTypes.find(ft => ft.name === itemType);
-    // ^-- I should pass an Object instead of Array
-    // to the editor's root selector to avoid this `find` shit
+    const filterType = filterTypes[itemType];
 
     if (filterType) {
       // layer types on which filter can be placed (dropped)

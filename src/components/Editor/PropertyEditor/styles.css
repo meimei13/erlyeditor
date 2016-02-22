@@ -1,7 +1,7 @@
 @import "../../../variables";
 
 :root {
-  --property-editor-panel-width: 18em;
+  --property-editor-panel-width: 17em;
 }
 
 .panel {

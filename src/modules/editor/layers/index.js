@@ -11,5 +11,5 @@ export default createReducer({
   [actions.destroy]: (s, { id }) => omit(s, id),
   [actions.addFilter]: reducers.addFilter,
   [actions.removeFilter]: reducers.removeFilter,
-  [actions.move]: s => s
+  [actions.move]: s => s,
 }, initialState);

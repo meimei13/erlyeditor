@@ -94,7 +94,6 @@ const filterProcessors = {
 
     if (currentTime >= timeStart && currentTime < timeEnd) {
       api.seek(Math.ceil(timeEnd));
-      // ^--- this is wrong :D
     }
   }
 };
@@ -104,7 +103,7 @@ export class Editor extends Component {
     className: string,
 
     layerTypes: object.isRequired,
-    filterTypes: arrayOf(filterTypeShape).isRequired,
+    filterTypes: object.isRequired,
     layers: arrayOf(layerShape).isRequired,
 
     snapToGrid: bool,
@@ -157,9 +156,8 @@ export class Editor extends Component {
 
   processFilters() {
     const { filters, video } = this.props;
-    const behavioralFilters = filters.filter(
-      ({ type }) => filterGroups.behavioral.indexOf(type) !== -1
-    );
+    const behavioralFilters = Object.values(filters)
+      .filter(({ type }) => filterGroups.behavioral.indexOf(type) !== -1);
 
     behavioralFilters.forEach(filter => {
       const { type } = filter;
@@ -210,10 +208,11 @@ export class Editor extends Component {
       video
     };
 
-    const presentationalFilters = filters.filter(({ id, type }) =>
-      filterGroups.presentational.indexOf(type) !== -1 &&
-      activeFilters.indexOf(id) !== -1
-    );
+    const presentationalFilters = Object.values(filters)
+      .filter(({ id, type }) =>
+        filterGroups.presentational.indexOf(type) !== -1 &&
+        activeFilters.indexOf(id) !== -1
+      );
 
     const videoEl = this.renderVideo(size);
 
@@ -261,7 +260,7 @@ export class Editor extends Component {
             onCreateFilter={actions.editor.createFilter}
           />
           {this.renderPlayer()}
-          <Inspector layers={layers} />
+          <Inspector />
         </div>
         <MainToolbar
           onCreateLayer={this.handleCreateLayer}

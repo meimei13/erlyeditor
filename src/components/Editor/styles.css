@@ -1,15 +1,15 @@
 @import "../../variables";
 
 :root {
-  --selection-background-color: color(var(--brand-black) tint(10%));
+  --selection-background-color: color(var(--brand-black) lightness(+20%));
   --selection-color: color(var(--brand-light) shade(16%));
 }
 
 .editor {
 
   ::selection {
-    color: var(--selection-color);
     background-color: var(--selection-background-color);
+    color: var(--selection-color);
   }
 }
 

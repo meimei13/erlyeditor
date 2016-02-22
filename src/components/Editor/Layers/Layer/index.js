@@ -4,8 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
 
 import {
-  filterShape,
-  filterTypeShape,
   filterActionsShape,
   layerActionsShape
 } from '../../../propTypes';
@@ -35,8 +33,8 @@ export class Layer extends Component {
     description: string.isRequired,
     type: string.isRequired,
     attributes: object,
-    filters: arrayOf(filterShape),
-    filterTypes: arrayOf(filterTypeShape).isRequired,
+    filters: object.isRequired,
+    filterTypes: object.isRequired,
     editable: bool,
     disabled: bool,
     locked: bool,

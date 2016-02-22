@@ -22,7 +22,8 @@ export const partial = combineTransform({
 
 export const editor = createReducer({
   [actions.update]: reducers.update,
-  [actions.createFilter]: reducers.createFilter
+  [actions.createFilter]: reducers.createFilter,
+  [actions.load]: (_, state) => state
 }, initialState);
 
 export default reduceReducers(editor, partial);

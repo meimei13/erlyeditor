@@ -1,5 +1,6 @@
 import merge from 'lodash/merge';
 import sortBy from 'lodash/sortBy';
+import pick from 'lodash/pick';
 import { createSelector } from 'reselect';
 
 // layerType  [1] - [*] layers  [1] - [*] filters
@@ -53,19 +54,16 @@ export const layersSelector = createSelector(
       .map(({ filters, ...layer }) => ({
         ...layer,
         ...layerTypes[layer.type],
-        filters: filters.map(id => filtersSource[id])
+        filters: pick(filtersSource, filters)
       }))
 );
 
 export default createSelector(
   (s, props) => merge(s.editor, props),
-  // s => s.editor,
   layersSelector,
-  ({ layerTypes, filterTypes, filters, ...editor }, layers) => ({
+  ({ layerTypes, ...editor }, layers) => ({
     ...editor,
     layerTypes,
-    filterTypes: Object.values(filterTypes),
-    filters: Object.values(filters),
     layers
   })
 );

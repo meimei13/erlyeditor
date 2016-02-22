@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import css from 'react-css-modules';
 import cn from 'classnames';
 
-import { filterTypeShape } from '../../../propTypes';
 import List from '../../../List';
 
 import Panel from '../../Panel';
@@ -12,12 +11,12 @@ import DraggableFilter from '../DraggableFilter';
 
 import styles from './styles';
 
-const { string, func, arrayOf } = PropTypes;
+const { string, func, object } = PropTypes;
 
 export class FiltersPanel extends Component {
   static propTypes = {
     className: string,
-    filterTypes: arrayOf(filterTypeShape).isRequired,
+    filterTypes: object.isRequired,
     onCreateFilter: func.isRequired
   };
 
@@ -26,11 +25,7 @@ export class FiltersPanel extends Component {
   }
 
   render() {
-    const {
-      className,
-      filterTypes,
-      onCreateFilter
-    } = this.props;
+    const { className, filterTypes, onCreateFilter } = this.props;
 
     return (
       <Panel
@@ -41,7 +36,7 @@ export class FiltersPanel extends Component {
         title='filters'>
 
           <List vertical className={styles.list}>
-            {filterTypes.map(filter =>
+            {Object.values(filterTypes).map(filter =>
               <List.Item key={filter.name}
                 className={styles.item}
                 disabled={filter.disabled}>

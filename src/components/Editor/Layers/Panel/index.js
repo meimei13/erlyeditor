@@ -5,30 +5,25 @@ import css from 'react-css-modules';
 import cn from 'classnames';
 
 import {
-  filterTypeShape,
   layerShape,
   layerActionsShape,
   filterActionsShape
 } from '../../../propTypes';
 
-import tooltip from '../../../hoc/tooltip';
 import List from '../../../List';
-import Button from '../../../Button';
 
 import Panel from '../../Panel';
-import ContextToolbar from '../../ContextToolbar';
 
 import ZoomSlider from '../ZoomSlider';
 import Layer from '../Layer';
 
-import getContextActions from './getContextActions';
 import styles from './styles';
 
-const TooltipButton = tooltip(Button);
 const {
   bool,
   number,
   string,
+  object,
   node,
   arrayOf,
   shape
@@ -40,7 +35,7 @@ export class LayersPanel extends Component {
     children: node,
 
     layers: arrayOf(layerShape).isRequired,
-    filterTypes: arrayOf(filterTypeShape).isRequired,
+    filterTypes: object.isRequired,
 
     snapToGrid: bool,
     cellSize: number,

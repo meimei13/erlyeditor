@@ -1,6 +1,7 @@
 import pick from 'lodash/pick';
 
 export const dragSourceProps = [
+  'id',
   'name',
   'description',
   'appearance',

@@ -6,11 +6,6 @@ import dimensions from 'react-dimensions';
 import css from 'react-css-modules';
 import cn from 'classnames';
 
-import {
-  filterShape,
-  filterTypeShape
-} from '../../../../propTypes';
-
 import List from '../../../../List';
 import ItemTypes from '../../../ItemTypes';
 import snap from '../../../../../lib/snap';
@@ -23,7 +18,7 @@ const {
   bool,
   number,
   string,
-  arrayOf,
+  object,
   func
 } = PropTypes;
 
@@ -37,8 +32,8 @@ export class Surface extends Component {
     snapToGrid: bool,
     cellSize: number,
 
-    filterTypes: arrayOf(filterTypeShape),
-    filters: arrayOf(filterShape),
+    filterTypes: object.isRequired,
+    filters: object.isRequired,
 
     containerWidth: number.isRequired,
     containerHeight: number.isRequired,
@@ -63,17 +58,11 @@ export class Surface extends Component {
       containerWidth
     } = this.props;
 
-    // snap to time slot
     const cellCount = Math.floor(containerWidth / cellSize);
     const timeSlot = duration / cellCount;
 
-    // timeline.offset / duration = x / containerWidth <=>
     const val = x * duration / containerWidth;
-    const offset = snap(val, timeSlot);
-
-    console.log('timeSlot: ', timeSlot);
-    console.log('val: ', val);
-    console.log('offset: ', offset);
+    const offset = snapToGrid ? snap(val, timeSlot) : val;
 
     this.props.onMoveFilter(id, sourceLayerId, targetLayerId, offset);
   }
@@ -82,6 +71,8 @@ export class Surface extends Component {
   renderFilter(filter) {
     const {
       id,
+      snapToGrid,
+      cellSize,
       onToggleFilterVisibility,
       onToggleFilterLocked,
       onDestroyFilter,
@@ -102,7 +93,11 @@ export class Surface extends Component {
       'background-color: darkred; color: #fff'
     );
 
-    const filterProps = { x, width, layerId: id };
+    const filterProps = {
+      x: snapToGrid ? snap(x, cellSize) : x,
+      width: snapToGrid ? snap(width, cellSize) : width,
+      layerId: id
+    };
 
     return (
       <List.Item key={filter.id}>
@@ -132,7 +127,7 @@ export class Surface extends Component {
     return connectDropTarget(
       <div { ...{ styleName, className } }>
         <List className={styles.list}>
-          {filters.map(this.renderFilter)}
+          {Object.values(filters).map(this.renderFilter)}
         </List>
       </div>
     );
