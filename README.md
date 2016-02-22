@@ -187,6 +187,12 @@ npm run lint
 
 ### Examples
 
+*video*:
+
+[![demo](http://img.youtube.com/vi/ZVZLrydoKOI/0.jpg)](http://www.youtube.com/watch?v=ZVZLrydoKOI)
+
+*screens*:
+
 ![player UI](https://raw.githubusercontent.com/vyorkin-personal/erlyeditor/master/docs/screens/player.png)
 ![filters UI](https://raw.githubusercontent.com/vyorkin-personal/erlyeditor/master/docs/screens/filters.png)
 
