@@ -17,7 +17,7 @@ const collect = (connect, monitor) => ({
 
 const unstyled = () => ({});
 
-export default (type, source, getStyle = unstyled) =>
+export default (type, source) =>
   /* eslint-disable new-cap */
   ComposedComponent => {
     class HOC extends Component {
@@ -55,14 +55,8 @@ export default (type, source, getStyle = unstyled) =>
           connectDragSource
         };
 
-        const own = {
-          styleName,
-          className,
-          style: getStyle(this.props)
-        };
-
         return connectDragSource(
-          <div {...own}>
+          <div {...{ styleName, className }}>
             <ComposedComponent {...{ ...known, ...other } } />
           </div>
         );

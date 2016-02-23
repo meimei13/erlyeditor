@@ -69,6 +69,11 @@ export class Layer extends Component {
   }
 
   @autobind
+  handleResizeFilter(filterId, offsetDelta, durationDelta, factor) {
+    this.props.actions.filter.resize(filterId, offsetDelta, durationDelta, factor);
+  }
+
+  @autobind
   handleDestroyFilter(id) {
     this.props.actions.layer.removeFilter(this.props.id, id);
     this.props.actions.filter.destroy(id);
@@ -113,6 +118,7 @@ export class Layer extends Component {
     return (
       <Surface {...props}
         onMoveFilter={this.handleMoveFilter}
+        onResizeFilter={this.handleResizeFilter}
         onDestroyFilter={this.handleDestroyFilter}
         onToggleFilterVisibility={actions.toggleVisibility}
         onToggleFilterLocked={actions.toggleLocked}

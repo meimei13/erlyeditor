@@ -25,15 +25,28 @@ export function move(state, { id, offset }) {
   };
 }
 
-export function resize(state, { id, duration }) {
+export function resize(state, payload) {
+  const {
+    id,
+    offsetDelta,
+    durationDelta,
+    factor
+  } = payload;
+
   const filter = state[id];
   const timeline = filter.timeline;
+
+  const offset = timeline.offset + (factor > 0 ? 0 : offsetDelta);
+  const duration = timeline.duration + durationDelta;
 
   return {
     ...state,
     [id]: {
       ...filter,
-      timeline: { ...timeline, duration }
+      timeline: {
+        offset,
+        duration
+      }
     }
   };
 }

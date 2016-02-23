@@ -57,9 +57,9 @@ export class CustomDragLayer extends Component {
     const { previews } = this.props;
     const Preview = previews[itemType];
 
-    invariant(Preview, `Preview of type "${itemType}" is not registered`);
+    // invariant(Preview, `Preview of type "${itemType}" is not registered`);
 
-    return <Preview {...item} />;
+    return Preview && <Preview {...item} />;
   }
 
   render() {

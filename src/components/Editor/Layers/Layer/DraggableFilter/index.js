@@ -9,7 +9,6 @@ import draggable from '../../../../hoc/draggable';
 import ItemTypes from '../../../ItemTypes';
 import Filter from '../Filter';
 
-import getStyle from './getStyle';
 import dragSource, { dragSourceProps } from './dragSource';
 import styles from './styles';
 
@@ -20,6 +19,7 @@ export class DraggableFilter extends Component {
     ...filterProps,
 
     layerId: string.isRequired,
+
     onDestroy: func.isRequired,
     onToggleVisibility: func.isRequired,
     onToggleLocked: func.isRequired,
@@ -39,7 +39,11 @@ export class DraggableFilter extends Component {
 
     return (
       <Filter { ...{
-        ...{ onDestroy, onToggleVisibility, onToggleLocked },
+        ...{
+          onDestroy,
+          onToggleVisibility,
+          onToggleLocked
+        },
         ...pick(this.props, dragSourceProps)
       } } />
     );
@@ -48,5 +52,5 @@ export class DraggableFilter extends Component {
 
 export default flow(
   css(styles),
-  draggable(ItemTypes.Filter, dragSource, getStyle)
+  draggable(ItemTypes.Filter, dragSource)
 )(DraggableFilter);

@@ -81,9 +81,6 @@ export class FilterChainSurface extends Component {
       ...other
     } = this.props;
 
-    // TODO: ok, I need to think of how to combine this
-    // I'll just leave it as is for now, without overlay processing
-    // Will comeback here later when the author of gl-react will respond
     return (
       <Surface { ...{ ...{ width, height }, ...other } }>
         {filters.reduceRight(this.renderFilter, children)}

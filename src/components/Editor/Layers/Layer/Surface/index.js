@@ -10,7 +10,7 @@ import List from '../../../../List';
 import ItemTypes from '../../../ItemTypes';
 import snap from '../../../../../lib/snap';
 
-import DraggableFilter from '../DraggableFilter';
+import ResizableFilter from '../ResizableFilter';
 import dropTarget from './dropTarget';
 import styles from './styles';
 
@@ -41,6 +41,8 @@ export class Surface extends Component {
     duration: number,
 
     onMoveFilter: func.isRequired,
+    onResizeFilter: func.isRequired,
+
     onToggleFilterVisibility: func.isRequired,
     onToggleFilterLocked: func.isRequired,
     onDestroyFilter: func.isRequired,
@@ -50,13 +52,10 @@ export class Surface extends Component {
     connectDropTarget: func.isRequired
   };
 
+  // TODO: It should be just 1 single function, not 2
+
   moveFilter(id, sourceLayerId, targetLayerId, x) {
-    const {
-      duration,
-      cellSize,
-      snapToGrid,
-      containerWidth
-    } = this.props;
+    const { duration, cellSize, snapToGrid, containerWidth } = this.props;
 
     const cellCount = Math.floor(containerWidth / cellSize);
     const timeSlot = duration / cellCount;
@@ -65,6 +64,32 @@ export class Surface extends Component {
     const offset = snapToGrid ? snap(val, timeSlot) : val;
 
     this.props.onMoveFilter(id, sourceLayerId, targetLayerId, offset);
+  }
+
+  @autobind
+  resizeFilter(id, x, width, factor) {
+    const { filters, duration, containerWidth } = this.props;
+    const timeline = filters[id].timeline;
+
+    // (timeline.offset + offsetDelta) / duration =
+    //                    (x + xDelta) / containerWidth
+    //
+    // <=>
+    //
+    // offsetDelta = (x + xDelta) * duration / containerWidth - timeline.offset
+
+    const offsetDelta = x * duration / containerWidth - timeline.offset;
+    const durationDelta = width * duration / containerWidth - timeline.duration;
+
+    // (timeline.offset + offsetDelta) / duration =
+    //                    (x + xDelta) / containerWidth
+
+    console.log(
+      `%c ${offsetDelta}, ${durationDelta}`,
+      'background-color: #ffa; color: #000'
+    );
+
+    this.props.onResizeFilter(id, offsetDelta, durationDelta, factor);
   }
 
   @autobind
@@ -82,10 +107,7 @@ export class Surface extends Component {
 
     const { timeline } = filter;
 
-    // timeline.offset / duration = x / containerWidth <=>
     const x = containerWidth * timeline.offset / duration;
-
-    // timeline.duration / duration = width / containerWidth <=>
     const width = containerWidth * timeline.duration / duration;
 
     console.log(
@@ -101,7 +123,8 @@ export class Surface extends Component {
 
     return (
       <List.Item key={filter.id}>
-        <DraggableFilter {...{ ...filter, ...filterProps } }
+        <ResizableFilter {...{ ...filter, ...filterProps } }
+          onResize={this.resizeFilter}
           onToggleVisibility={onToggleFilterVisibility}
           onToggleLocked={onToggleFilterLocked}
           onDestroy={onDestroyFilter}
