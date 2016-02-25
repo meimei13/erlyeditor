@@ -10,7 +10,7 @@
 
 # ErlyEditor
 
-A simple video editing tool. Test assignment for Erlyvideo. WIP.
+A simple video editing tool. Test assignment for Erlyvideo.
 
 # Table of contents
 
