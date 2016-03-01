@@ -1,4 +1,4 @@
-import mapValues from 'lodash/mapvalues';
+import { mapValues } from 'lodash';
 import resolve from './resolve';
 
 const rootSiblings = mapValues(resolve, v => v(''));

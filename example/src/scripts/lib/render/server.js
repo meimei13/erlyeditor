@@ -1,7 +1,7 @@
 import { RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 
-import Html from 'server/templates/html';
+import Html from 'server/templates/Html';
 import ServerError from 'pages/ServerError';
 
 import {

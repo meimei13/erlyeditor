@@ -1,5 +1,4 @@
-import mapKeys from 'lodash/mapkeys';
-
+import { mapKeys } from 'lodash';
 import {
   name as appName,
   description as appDescription,
