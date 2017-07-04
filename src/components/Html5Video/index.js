@@ -18,7 +18,7 @@ const { string, node, func } = PropTypes;
 /*
  * HTML 5 video player wrapper.
 */
-export default class Html5Video extends Component {
+export class Html5Video extends Component {
   static propTypes = {
     ...videoProps,
     actions: videoActionsShape.isRequired,
@@ -241,4 +241,4 @@ export default class Html5Video extends Component {
   }
 }
 
-export default css(Html5Video, styles, { allowMultiple: true });
+export default css (Html5Video, styles, { allowMultiple: true });
