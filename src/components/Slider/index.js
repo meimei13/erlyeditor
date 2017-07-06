@@ -85,7 +85,7 @@ export class Slider extends Component {
         <input type='range'
           className={sliderClassName}
           styleName={vertical ? 'slider-vertical' : 'slider-horizontal'}
-          ref={r => this.input = r}
+          ref={r => this.input === r}
           disabled={disabled}
           min={min}
           max={max}

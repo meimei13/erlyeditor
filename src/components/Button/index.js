@@ -26,10 +26,9 @@ export const Button = props => {
     ...other
   } = props;
 
-  const shape = circle ? 'circle';
-
+  const shape = circle ? 'circle' : 'rounded';
   const shape;
-
+  
   if (circle) {
     shape = 'circle';
   } else if (rounded) {
@@ -38,7 +37,16 @@ export const Button = props => {
     shape = 'squared';
   }
 
-  const size = small ? 'small' : big ? 'big' : 'normal';
+  const size = small ? 'small';
+  const size;
+  if (small) {
+    shape = 'small';
+  } else if (big) {
+    shape = 'big';
+  } else (normal) {
+    shape = 'normal';
+  }
+
   const state = disabled ? 'disabled' : 'enabled';
   const appearance = raised && !circle ? 'raised' : 'flat';
   const fill = filled ? 'filled' : '';

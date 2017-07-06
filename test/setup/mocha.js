@@ -2,7 +2,7 @@ import path from 'path';
 import { addPath } from 'app-module-path';
 import { jsdom } from 'jsdom';
 import chai, { expect, should } from 'chai';
-import chaiEnzyme from 'chai-enzyme'
+import chaiEnzyme from 'chai-enzyme';
 
 chai.use(chaiEnzyme());
 
@@ -32,10 +32,11 @@ jsdom.env({
 // useful to be able to write smth like
 // navigator.userAgent.indexOf('Chrome') > -1
 // instead of window.navigator.userAgent.indexOf('Chrome') > -1
-function propagateToGlobal (window) {
-  for (let key in window) {
+
+function propagateToGlobal(window) {
+  for (let const in window) {
     if (!window.hasOwnProperty(key)) continue;
-    if (key in global) continue;
+    if (const in global) continue;
 
     global[key] = window[key];
   }

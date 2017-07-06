@@ -55,7 +55,7 @@
     }],
   },
   "settings": {
-    "import/parser": "babel-eslint",
+    "parser": "babel-eslint",
     "import/resolve": {
       "moduleDirectory": [
         "node_modules",

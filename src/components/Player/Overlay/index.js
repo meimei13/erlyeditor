@@ -26,7 +26,16 @@ export const Overlay = (props) => {
     onTogglePlay
   } = props;
 
-  const styleName = error ? 'error' : paused ? 'faded' : 'transparent';
+  const styleName = error ? 'error' : paused;
+
+  const styleName;
+  if (error) {
+    styleName = 'error';
+  } else if (paused) {
+    styleName = 'faded';
+  } else {
+    styleName = 'transparent';
+  }
 
   return (
     <div { ...{ styleName, className } }
