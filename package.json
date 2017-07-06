@@ -189,7 +189,7 @@
     "build": "npm run clean && npm run build:lib && npm run build:umd && npm run build:umd:min",
     "build:lib": "babel src -d lib",
     "build:umd": "webpack src/index.js dist/erlyeditor.js --config webpack/development/index.babel.js",
-    "build:umd:min": "SET NODE_ENV=production webpack src/index.js dist/erlyeditor.min.js --config webpack/production/index.babel.js",
+    "build:umd:min": "NODE_ENV=production webpack src/index.js dist/erlyeditor.min.js --config webpack/production/index.babel.js",
     "check": "npm run lint && npm run test",
     "clean": "rimraf lib/*",
     "commit": "git-cz",
@@ -208,10 +208,11 @@
     "postversion": "git push && git push --tags && npm run clean && npm run docs:publish",
     "prepublish": "npm run clean && npm run build && $(npm bin)/pkgfiles",
     "preversion": "npm run clean && npm run check",
-    "test": "SET NODE_ENV=test mocha ./test/lib/**/*.test.js",
+    "test": "NODE_ENV=test mocha ./test/lib/**/*.test.js",
     "test:watch": "npm run test -- --watch",
     "test:cov": "babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "version": "npm run build",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "start": "node editor.js"
   }
 }
