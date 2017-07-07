@@ -46,9 +46,8 @@ import {
   ColorMatrix
 } from './FilterRenderer/renderers';
 
-const FilterRenderer = __CLIENT__ ?
-  require('./FilterRenderer').default :
-  void 0;
+let __CLIENT__;
+const FilterRenderer = __CLIENT__ ? require('./FilterRenderer').default : void 0;
 
 // ^---- its just a draft version, right? (:
 // TODO: there are defenitely a better way to make SSR work

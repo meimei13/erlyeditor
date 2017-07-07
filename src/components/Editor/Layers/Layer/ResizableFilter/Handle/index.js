@@ -53,7 +53,7 @@ export class Handle extends Component {
 
     return (
       <div {...{ styleName, className } }
-        ref={r => this.handle = r}
+        ref={(r) => this.handle = r}
         onMouseDown={this.handleMouseDown} />
     );
   }

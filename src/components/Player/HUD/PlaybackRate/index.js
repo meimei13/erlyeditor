@@ -22,10 +22,10 @@ export const PlaybackRate = (props) => {
       style={animationStyle}>{({ ...style }) =>
       <span className={cn(className, styles.playbackRate)} style={{
         ...style,
-        WebkitTransform: `translate3d(${x}rem, 0, 0)`,
-        transform: `translate3d(${x}rem, 0, 0)`
+        WebkitTransform: 'translate3d(${x}rem, 0, 0)',
+        transform: 'translate3d(${x}rem, 0, 0)'
       }}>
-        {`x ${value}`}
+        {'x ${value}'}
       </span>
     }</Motion>
   );

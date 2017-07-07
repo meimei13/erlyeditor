@@ -9,56 +9,61 @@
   "env": {
     "browser": true,
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "es6": true
   },
 
   "rules": {
     "comma-dangle": [1, "never"],
     "no-use-before-define": 0,
     "max-len": 0,
+    "no-return-assign": 0,
     "space-before-function-paren": [2, {
       "anonymous": "always",
       "named": "never"
-    }],
+  }],
 
-    "no-else-return": 0,
-    "react/jsx-key": 1,
-    "react/jsx-no-literals": 1,
-    "react/no-direct-mutation-state": 2,
-    "jsx-quotes": [2, "prefer-single"],
-    "prefer-const": 0,
-    "react/jsx-no-undef": 0,
-    "react/react-in-jsx-scope": 0,
-    "react/jsx-closing-bracket-location": 0,
-    "react/jsx-pascal-case": 0,
-    "react/jsx-no-bind": [1, {
-      "ignoreRefs": true
-    }],
+  "no-else-return": 0,
+  "react/jsx-key": 1,
+  "react/jsx-no-literals": 1,
+  "react/no-direct-mutation-state": 2,
+  "jsx-quotes": [2, "prefer-single"],
+  "prefer-const": 0,
+  "react/jsx-no-undef": 0,
+  "react/react-in-jsx-scope": 0,
+  "react/jsx-closing-bracket-location": 0,
+  "react/jsx-pascal-case": 0,
+  "react/prop-types": 0,
+  "react/jsx-no-bind": [1, {
+    "ignoreRefs": true
+  }],
 
-    "react/sort-comp": 0,
+  "react/sort-comp": 0,
 
-    "no-undef": 2,
-    "no-unused-vars": [2, {
-      "args": "after-used",
-      "argsIgnorePattern": "^_"
-    }],
+  "no-undef": 2,
+  "no-unused-vars": 0,
 
-    "id-length": [2, {
-      "min": 2,
-      "properties": "never",
-      "exceptions": [
-        "_",
-        "v", "x", "y", "z",
-        "i", "j", "k",
-        "m", "n",
-        "e", "c",
-        "r", "s", "a", "d",
-        "f"
+  "id-length": [2, {
+    "min": 2,
+    "properties": "never",
+    "exceptions": [
+      "_",
+      "v", "x", "y", "z",
+      "i", "j", "k",
+      "m", "n",
+      "e", "c",
+      "r", "s", "a", "d",
+      "f"
       ]
     }],
   },
+
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 7
+  },
+
   "settings": {
-    "parser": "babel-eslint",
     "import/resolve": {
       "moduleDirectory": [
         "node_modules",
@@ -66,9 +71,11 @@
       ]
     }
   },
+
   "globals": {
     "__DEVTOOLS__": true,
     "__DEVELOPMENT__": true,
     "__PRODUCTION__": true
   }
+
 }

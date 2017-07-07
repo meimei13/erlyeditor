@@ -9,6 +9,7 @@ import { filterShape } from '../../propTypes';
 
 import styles from './styles';
 
+let __CLIENT__;
 const Overlay = __CLIENT__ ? require('./renderers/Overlay') : void 0;
 // ^-- TODO: find a better way to do SSR
 

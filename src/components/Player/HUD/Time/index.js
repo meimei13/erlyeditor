@@ -24,8 +24,8 @@ export const Time = ({ className, currentTime, duration }) => {
 
       <span className={cn(className, styles.time)} style={{
         ...style,
-        WebkitTransform: `translate3d(${x}rem, 0, 0)`,
-        transform: `translate3d(${x}rem, 0, 0)`
+        WebkitTransform: 'translate3d(${x} rem, 0, 0)',
+        transform: 'translate3d( ${x} rem, 0, 0)'
       }}>
         {time}
       </span>

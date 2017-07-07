@@ -15,8 +15,7 @@ export const Icon = (props) => {
     ...other
   } = props;
 
-  const styleName = small ? 'small' : 'normal';
-  const styleName;
+  let styleName = small ? 'small' : 'normal';
   if (small) {
     styleName = 'small';
   } else if (big) {

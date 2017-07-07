@@ -26,24 +26,21 @@ export const Button = props => {
     ...other
   } = props;
 
-  const shape = circle ? 'circle' : 'rounded';
-  const shape;
-  
+  let shape = circle ? 'circle' : 'rounded';
   if (circle) {
     shape = 'circle';
   } else if (rounded) {
     shape = 'rounded';
-  } else (neutral) {
+  } else {
     shape = 'squared';
   }
 
-  const size = small ? 'small';
-  const size;
+  let size = small ? 'small' : 'normal';
   if (small) {
     shape = 'small';
   } else if (big) {
     shape = 'big';
-  } else (normal) {
+  } else {
     shape = 'normal';
   }
 

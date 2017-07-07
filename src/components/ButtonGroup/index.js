@@ -20,14 +20,13 @@ export const ButtonGroup = props => {
   } = props;
 
   const orientation = vertical ? 'vertical' : 'horizontal';
-  const size = small ? 'small' : 'big';
-  const size;
+  let size = small ? 'small' : 'big';
   if (small) {
     size = 'small';
-  } elseif (big) {
+  } else if (big) {
     size = 'big';
   } else {
-    size = normal;
+    size = 'normal';
   }
   const styleName = cn('button-group', orientation, size, { filled });
 

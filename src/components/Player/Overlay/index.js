@@ -26,9 +26,7 @@ export const Overlay = (props) => {
     onTogglePlay
   } = props;
 
-  const styleName = error ? 'error' : paused;
-
-  const styleName;
+  let styleName = error ? 'error' : paused;
 
   if (error) {
     styleName = 'error';

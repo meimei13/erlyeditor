@@ -61,10 +61,11 @@ export class Volume extends Component {
 
     const silent = muted || volume === 0;
 
-    const toogleIcon;
+    let toogleIcon = silent ? 'volume_off' : volume > 0.5;
+
     if (silent) {
       toogleIcon = 'volume_off';
-    }  else if (volume > 0.5) {
+    } else if (volume > 0.5) {
       toogleIcon = 'volume_up';
     } else {
       toogleIcon = 'volume_down';
@@ -83,7 +84,7 @@ export class Volume extends Component {
         <Button
           className={cn(buttonClassName, styles.toggleButton)}
           disabled={error}
-          icon={toggleIcon}
+          icon={ toogleIcon }
           onClick={onToggleMute}
         />
         <Motion style={animationStyle}>{s =>
