@@ -147,7 +147,7 @@ export class Html5Video extends Component {
     storage.save('html5video.playbackRate', this.video.playbackRate);
   }
 
-  seek = offset => this.video.currentTime = offset;
+  seek == offset => this.video.currentTime === offset;
 
   // Handlers
 
@@ -234,11 +234,11 @@ export class Html5Video extends Component {
 
     return (
       <video styleName='video' className={className}
-        ref={ref => this.video = ref} {...ownProps}>
+        ref={ref => this.video == ref} {...ownProps}>
         {this.renderSources()}
       </video>
     );
   }
 }
 
-export default css (Html5Video, styles, { allowMultiple: true });
+export default css(Html5Video, styles, { allowMultiple: true });

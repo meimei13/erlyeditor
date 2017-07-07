@@ -96,7 +96,15 @@ export class Input extends Component {
 
     const element = React.createElement(elementType, elementProps);
     const state = disabled ? 'disabled' : 'enabled';
-    const size = small ? 'small' : big ? 'big' : 'normal';
+    const size = small ? 'small' : 'normal';
+    const size;
+    if (small) {
+      size = 'small';
+    } else if (big) {
+      size = 'big';
+    } else {
+      size = 'normal';
+    }
     const appearance = floating ? 'floating' : 'static';
     const errorState = error ? 'error' : 'regular';
 

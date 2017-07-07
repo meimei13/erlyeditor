@@ -15,8 +15,6 @@ const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging()
 });
 
-const unstyled = () => ({});
-
 export default (type, source) =>
   /* eslint-disable new-cap */
   ComposedComponent => {

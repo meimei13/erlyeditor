@@ -29,6 +29,7 @@ export const Overlay = (props) => {
   const styleName = error ? 'error' : paused;
 
   const styleName;
+
   if (error) {
     styleName = 'error';
   } else if (paused) {

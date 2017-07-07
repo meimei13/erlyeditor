@@ -20,7 +20,7 @@ export const Time = ({ className, currentTime, duration }) => {
 
   return (
     <Motion defaultStyle={{ x: 0, opacity: 0 }}
-      style={animationStyle}>{({ x, ...style }) =>
+      style={animationStyle}>{({ ...style }) =>
 
       <span className={cn(className, styles.time)} style={{
         ...style,

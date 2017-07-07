@@ -11,13 +11,11 @@ export const networkNoSource = 3;
 export const networkStates = {
   [networkEmpty]: {
     title: 'NETWORK_EMPTY',
-    body: 'The element has not yet been initialized.
-    All attributes are in their initial states.'
+    body: 'The element has not yet been initialized. All attributes are in their initial states.'
   },
   [networkIdle]: {
     title: 'NETWORK_IDLE',
-    body: 'The elements resource selection algorithm is active and has selected a resource,
-    but it is not actually using the network at this time.'
+    body: 'The elements resource selection algorithm is active and has selected a resource, but it is not actually using the network at this time.'
   },
   [networkLoading]: {
     title: 'NETWORK_LOADING',

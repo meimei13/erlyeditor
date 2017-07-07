@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import css from 'react-css-modules';
-import cn from 'classnames';
 
 import styles from './styles';
 
@@ -16,7 +15,15 @@ export const Icon = (props) => {
     ...other
   } = props;
 
-  const styleName = small ? 'small' : big ? 'big' : 'normal';
+  const styleName = small ? 'small' : 'normal';
+  const styleName;
+  if (small) {
+    styleName = 'small';
+  } else if (big) {
+    styleName = 'big';
+  } else {
+    styleName = 'normal';
+  }
 
   return (
     <span { ...{ ...{ className, styleName }, ...other } }>

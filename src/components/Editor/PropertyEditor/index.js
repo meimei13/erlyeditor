@@ -18,8 +18,7 @@ export class PropertyEditor extends Component {
     return (
       <Panel className={cn(className, styles.panel)}
         headerClassName={styles.panelHeader}
-        title='properties'>
-      </Panel>
+        title='properties' />
     );
   }
 }

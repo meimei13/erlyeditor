@@ -3,6 +3,7 @@
     "plugin:react/recommended",
     "airbnb"
   ],
+
   "parser": "babel-eslint",
 
   "env": {
@@ -14,6 +15,7 @@
   "rules": {
     "comma-dangle": [1, "never"],
     "no-use-before-define": 0,
+    "max-len": 0,
     "space-before-function-paren": [2, {
       "anonymous": "always",
       "named": "never"
@@ -24,7 +26,7 @@
     "react/jsx-no-literals": 1,
     "react/no-direct-mutation-state": 2,
     "jsx-quotes": [2, "prefer-single"],
-
+    "prefer-const": 0,
     "react/jsx-no-undef": 0,
     "react/react-in-jsx-scope": 0,
     "react/jsx-closing-bracket-location": 0,
@@ -32,6 +34,7 @@
     "react/jsx-no-bind": [1, {
       "ignoreRefs": true
     }],
+
     "react/sort-comp": 0,
 
     "no-undef": 2,

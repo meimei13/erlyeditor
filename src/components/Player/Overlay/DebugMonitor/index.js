@@ -20,10 +20,10 @@ export const DebugMonitor = (props) => {
   return (
     <div styleName='debug-monitor'>
       <ul styleName='playback'>
-        <li><span styleName='label'>{`currentTime:`}</span>{currentTime}</li>
-        <li><span styleName='label'>{`duration:`}</span>{duration}</li>
-        <li><span styleName='label'>{`buffered:`}</span>{`${buffered}%`}</li>
-        <li><span styleName='label'>{`played:`}</span>{`${played}%`}</li>
+        <li><span styleName='label'>{'currentTime:'}</span>{currentTime}</li>
+        <li><span styleName='label'>{'duration:'}</span>{duration}</li>
+        <li><span styleName='label'>{'buffered:'}</span>{`${buffered}%`}</li>
+        <li><span styleName='label'>{'played:'}</span>{`${played}%`}</li>
       </ul>
       {networkState &&
         <dl styleName='network-state'>

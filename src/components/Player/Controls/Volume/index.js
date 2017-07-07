@@ -60,8 +60,15 @@ export class Volume extends Component {
     const { expanded } = this.state;
 
     const silent = muted || volume === 0;
-    const toggleIcon = silent ? 'volume_off' :
-      volume > 0.5 ? 'volume_up' : 'volume_down';
+
+    const toogleIcon;
+    if (silent) {
+      toogleIcon = 'volume_off';
+    }  else if (volume > 0.5) {
+      toogleIcon = 'volume_up';
+    } else {
+      toogleIcon = 'volume_down';
+    }
 
     const animationStyle = {
       opacity: spring(expanded && !error ? 1 : 0, presets.stiff),

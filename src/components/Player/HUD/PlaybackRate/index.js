@@ -19,7 +19,7 @@ export const PlaybackRate = (props) => {
 
   return (
     <Motion defaultStyle={{ x: 0, opacity: 0 }}
-      style={animationStyle}>{({ x, ...style }) =>
+      style={animationStyle}>{({ ...style }) =>
       <span className={cn(className, styles.playbackRate)} style={{
         ...style,
         WebkitTransform: `translate3d(${x}rem, 0, 0)`,

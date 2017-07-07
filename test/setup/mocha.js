@@ -34,9 +34,9 @@ jsdom.env({
 // instead of window.navigator.userAgent.indexOf('Chrome') > -1
 
 function propagateToGlobal(window) {
-  for (let const in window) {
+  for (let key in window) {
     if (!window.hasOwnProperty(key)) continue;
-    if (const in global) continue;
+    if (key in global) continue;
 
     global[key] = window[key];
   }
